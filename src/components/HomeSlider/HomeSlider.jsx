@@ -11,7 +11,8 @@ function PauseOnHover() {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 4000,
-    pauseOnHover: true
+    pauseOnHover: true,
+    arrows: false
   };
   return (
     <div className="slider-container">
