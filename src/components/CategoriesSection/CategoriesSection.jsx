@@ -87,7 +87,7 @@ function CategoriesSection() {
 
   return (
     <div className="category">
-      <h2>Browse By Category</h2>
+      <h2 className="ms-2">Browse By Category</h2>
       <Slider {...settings}>
         {data.map((item, index) => (
           <div key={index} className="cat mb-4">
