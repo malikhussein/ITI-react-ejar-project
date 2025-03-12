@@ -1,0 +1,28 @@
+/* Width of the side bar */
+.offcanvas.offcanvas-end {
+  width: 275px !important;
+}
+
+/* TODO: Make the wishlist when clicked turn to full red button */
+.nav-link.active {
+  position: relative;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+}
+
+/* Color the list an item button */
+.btn-primary {
+  background: #b72a67 !important;
+  border: #b72a67 !important;
+}
+
+.btn-primary:hover {
+  background: #a7265e !important;
+}
+
+.btn-primary:active {
+  background: #942153 !important; /* Even darker shade */
+  border: #942153 !important;
+}
