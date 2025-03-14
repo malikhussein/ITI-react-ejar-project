@@ -1,4 +1,4 @@
-import { create } from "zustand"; // Import Zustand for state management
+import { create } from "zustand"; 
 
 //  Zustand store for Wishlist
 const useWishlistStore = create((set) => ({
