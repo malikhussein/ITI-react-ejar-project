@@ -3,6 +3,7 @@ import HomeSlider from '../HomeSlider/HomeSlider'
 import CategoriesSection from '../CategoriesSection/CategoriesSection'
 import './HomePage.css'
 import StartRenting from '../StartRenting/StartRenting'
+import HomeItemsSection from '../HomeItemsSection/HomeItemsSection'
 
 function HomePage() {
   return (
@@ -12,6 +13,7 @@ function HomePage() {
           <HomeSlider />
           <CategoriesSection />
           <StartRenting />
+          <HomeItemsSection />
       </div>
     </>
   )

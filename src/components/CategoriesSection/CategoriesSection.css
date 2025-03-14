@@ -9,7 +9,7 @@
   margin-bottom: 35px;
 }
 
-.cat {
+.category .cat {
   display: flex !important;
   justify-content: center;
   flex-direction: column;
@@ -22,15 +22,12 @@
   cursor: pointer;
 }
 
-.cat:hover {
+.category .cat:hover {
   background-color: #562DDD;
   color: #fff;
 }
 
-.cat img {
-  max-width: 100px;
-  margin: 0 auto 15px;
-}
+
 
 
 
