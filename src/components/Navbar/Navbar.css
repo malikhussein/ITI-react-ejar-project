@@ -26,3 +26,8 @@
   background: #942153 !important; /* Even darker shade */
   border: #942153 !important;
 }
+
+.btn-secondary{
+  background: #562DDD !important;
+  border: #562DDD !important;
+}

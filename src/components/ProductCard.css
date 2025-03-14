@@ -1,0 +1,39 @@
+#imgProduct{
+    border: 100px;
+    border-color: blue;
+    padding: 0;
+    padding-top: 25px;
+}
+#iconsButtons{
+    align-items: flex-end;
+    justify-content: space-between;
+}
+#title{
+    font-size: 39px;
+    font-weight: bold;
+    color: #562DDD;
+}
+#data{
+    width: 400px;
+    justify-content: space-between;
+}
+#price{
+font-weight: bold;
+font-size: 40px;
+color: #A7265E;
+}
+.fa-star{
+    color: #FBAD39;
+}
+
+.fa-heart{
+
+    color: #ED3F3F;
+}
+#data h5{
+    font-size: 22px;
+}
+.line{
+    height: 4px;
+    background-color: #E9E9E9;
+}
