@@ -113,7 +113,7 @@ export default function Navbar() {
 
                 {/* List an item button */}
                 <li className="nav-item mx-auto mt-3 m-lg-0">
-                  <button className="btn btn-primary rounded-1 fw-bold">
+                  <button className="btn btn-primary btn-purple rounded-1 fw-bold">
                     List an item
                   </button>
                 </li>

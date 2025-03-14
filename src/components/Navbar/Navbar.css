@@ -13,16 +13,16 @@
 }
 
 /* Color the list an item button */
-.btn-primary {
+.btn-purple {
   background: #b72a67 !important;
   border: #b72a67 !important;
 }
 
-.btn-primary:hover {
+.btn-purple:hover {
   background: #a7265e !important;
 }
 
-.btn-primary:active {
+.btn-purple:active {
   background: #942153 !important; /* Even darker shade */
   border: #942153 !important;
 }
