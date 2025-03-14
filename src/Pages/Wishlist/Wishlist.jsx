@@ -9,7 +9,9 @@ export default function Wishlist() {
   const { wishlist, removeFromWishlist, clearWishlist  } = useWishlistStore();
 
   return (<>
-    <div className="container mt-4 wishlist-page">
+    <div className="container mt-4 wishlist-page "
+        style={{ minHeight: '100vh' }}
+>
       <h1 className="mb-4 text-left" style={{ color: "#562DDD", fontWeight: "700" }}>
         Wishlist ({wishlist.length})
       </h1>
