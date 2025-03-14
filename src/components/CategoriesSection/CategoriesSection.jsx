@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "./CategoriesSection.css";
 
 function CategoriesSection() {
+  
   const data = [
     {
       icon: "fa-solid fa-mobile-screen-button",

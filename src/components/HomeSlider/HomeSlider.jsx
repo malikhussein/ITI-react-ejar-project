@@ -15,19 +15,25 @@ function PauseOnHover() {
     arrows: false
   };
   return (
-    <div className="slider-container">
-      <Slider {...settings}>
-        <div>
-          <img className="w-100" src={Bannar} alt="Home Bannar" />
-        </div>
-        <div>
-          <img className="w-100" src={Bannar} alt="Home Bannar" />
-        </div>
-        <div>
-          <img className="w-100" src={Bannar} alt="Home Bannar" />
-        </div>
-      </Slider>
+    <>
+    <div className="home-slider">
+      <div className="slider-container">
+        <Slider {...settings}>
+          <div>
+            <img className="w-100" src={Bannar} alt="Home Bannar" />
+          </div>
+          <div>
+            <img className="w-100" src={Bannar} alt="Home Bannar" />
+          </div>
+          <div>
+            <img className="w-100" src={Bannar} alt="Home Bannar" />
+          </div>
+        </Slider>
+      </div>
     </div>
+    
+    </>
+    
   );
 }
 
