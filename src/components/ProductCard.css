@@ -37,3 +37,29 @@ color: #A7265E;
     height: 4px;
     background-color: #E9E9E9;
 }
+
+
+
+  @media (max-width: 480px) {
+    .product-container {
+      padding: 10px;
+    }
+
+    #price{
+        font-weight: bold;
+        font-size: 40px;
+        }
+  
+    #imgProduct {
+      padding: 15px;
+    }
+  
+    .rent-button {
+      width: 100%;
+    }
+
+    #iconsButtons  {
+        margin: 0;
+     
+    }
+  }  

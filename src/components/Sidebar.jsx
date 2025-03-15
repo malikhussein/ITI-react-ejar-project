@@ -5,7 +5,7 @@ export default function Sidebar() {
   // const[clicked,setClicked]=useState(false)
   return (
     <>
-      <div className="col-md-3">
+      <div className="d-none d-md-block  col-md-3 ">
 
       <div className="flex-shrink-0 p-3" style={{"width":300}}>
     <a href="/" className="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
@@ -19,7 +19,7 @@ export default function Sidebar() {
         Woman’s Fashion
         </button>
         <div className="collapse show" id="home-collapse">
-          <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small p-3">
+          <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small p-3 ">
             <li><a href="#" className="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a></li>
             <li><a href="#" className="link-body-emphasis d-inline-flex text-decoration-none rounded">Updates</a></li>
             <li><a href="#" className="link-body-emphasis d-inline-flex text-decoration-none rounded">Reports</a></li>
