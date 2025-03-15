@@ -70,3 +70,12 @@
   background-color: #ffffff;
   border-radius: 50%;
 }
+
+
+.star.filled i {
+  color: #FFAD33;
+}
+
+.star.empty i {
+  color: #666;
+}
