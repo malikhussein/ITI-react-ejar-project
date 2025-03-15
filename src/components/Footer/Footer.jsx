@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -6,10 +7,10 @@ export default function Footer() {
       <div className="container">
         <footer className="py-5">
           <div className="row flex-column flex-lg-row justify-content-center align-items-center align-items-lg-start">
-            <div className="col-3 col-lg-2 mb-3">
+            <div className="col-6 col-lg-2 mb-3">
               <h5 className="mb-4 text-center text-lg-start">Support</h5>
               <ul className="nav flex-column align-items-center align-items-lg-start">
-                <li className="nav-item mb-2 col-10 text-body-secondary">
+                <li className="nav-item mb-2 col-6 col-lg-10 text-body-secondary">
                   Beni Suef, Beni Suef, Egypt
                 </li>
                 <li className="nav-item mb-2">
@@ -24,27 +25,36 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="col-3 col-lg-2 mb-3">
+            <div className="col-6 col-lg-2 mb-3">
               <h5 className="mb-4 text-center text-lg-start">Account</h5>
               <ul className="nav flex-column align-items-center align-items-lg-start">
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  <Link
+                    to="/profile/123"
+                    className="nav-link p-0 text-body-secondary"
+                  >
                     My Account
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  <Link
+                    to="/wishlist"
+                    className="nav-link p-0 text-body-secondary"
+                  >
                     Wishlist
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-body-secondary">
+                  <Link
+                    to="/product"
+                    className="nav-link p-0 text-body-secondary"
+                  >
                     Shop
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
-            <div className="col-3 col-lg-2 mb-3">
+            <div className="col-6 col-lg-2 mb-3">
               <h5 className="mb-4 text-center text-lg-start">Quick Links</h5>
               <ul className="nav flex-column align-items-center align-items-lg-start">
                 <li className="nav-item mb-2">
@@ -64,7 +74,7 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="col-3 col-lg-2 mb-3">
+            <div className="col-4 col-lg-2 mb-3">
               <ul className="nav flex-row flex-lg-column justify-content-between">
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0 text-body-secondary">

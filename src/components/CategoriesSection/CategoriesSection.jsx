@@ -1,49 +1,49 @@
-import React from "react";
-import Slider from "react-slick";
-import "./CategoriesSection.css";
+import React from 'react';
+import Slider from 'react-slick';
+import './CategoriesSection.css';
+import { Link } from 'react-router-dom';
 
 function CategoriesSection() {
-  
   const data = [
     {
-      icon: "fa-solid fa-mobile-screen-button",
-      title: "Phones",
+      icon: 'fa-solid fa-mobile-screen-button',
+      title: 'Phones',
     },
     {
-      icon: "fa-solid fa-desktop",
-      title: "Computers",
+      icon: 'fa-solid fa-desktop',
+      title: 'Computers',
     },
     {
-      icon: "fa-solid fa-camera",
-      title: "Cameras",
+      icon: 'fa-solid fa-camera',
+      title: 'Cameras',
     },
     {
-      icon: "fa-solid fa-headphones-simple",
-      title: "Headphones",
+      icon: 'fa-solid fa-headphones-simple',
+      title: 'Headphones',
     },
     {
-      icon: "fa-solid fa-chair",
-      title: "Furniture",
+      icon: 'fa-solid fa-chair',
+      title: 'Furniture',
     },
     {
-      icon: "fa-solid fa-building",
-      title: "Properties",
+      icon: 'fa-solid fa-building',
+      title: 'Properties',
     },
     {
-      icon: "fa-solid fa-shirt",
-      title: "Clothes",
+      icon: 'fa-solid fa-shirt',
+      title: 'Clothes',
     },
     {
-      icon: "fa-solid fa-screwdriver-wrench",
-      title: "Tools",
+      icon: 'fa-solid fa-screwdriver-wrench',
+      title: 'Tools',
     },
     {
-      icon: "fa-solid fa-car",
-      title: "Cars",
+      icon: 'fa-solid fa-car',
+      title: 'Cars',
     },
     {
-      icon: "fa-solid fa-bicycle",
-      title: "Bikes",
+      icon: 'fa-solid fa-bicycle',
+      title: 'Bikes',
     },
   ];
 
@@ -53,7 +53,7 @@ function CategoriesSection() {
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 2,
-    rows: 1, 
+    rows: 1,
     slidesPerRow: 1,
     initialSlide: 0,
     responsive: [
@@ -91,10 +91,12 @@ function CategoriesSection() {
       <h2 className="ms-2">Browse By Category</h2>
       <Slider {...settings}>
         {data.map((item, index) => (
-          <div key={index} className="cat mb-4">
-            <i className={`${item.icon} fs-1`}></i>
-            <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.title}</h3>
-          </div>
+          <Link className="nav-link" to="/product">
+            <div key={index} className="cat mb-4">
+              <i className={`${item.icon} fs-1`}></i>
+              <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.title}</h3>
+            </div>
+          </Link>
         ))}
       </Slider>
     </div>

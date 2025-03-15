@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // Import  subcomponents
 import PasswordInput from '../RegisterComponents/PasswordInput';
 import TextInput from '../RegisterComponents/TextInput';
@@ -13,7 +13,7 @@ export default function Register() {
   const [apiError, setApiError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const initialValues = {
     userName: '',
     email: '',
@@ -249,17 +249,19 @@ export default function Register() {
 
           <p className="mt-3" style={{ fontSize: '16px' }}>
             Already have an account?{' '}
-            <span
-              onClick={() => navigate('/login')}
-              style={{
-                color: '#5A3FFF',
-                textDecoration: 'underline',
-                cursor: 'pointer',
-                fontWeight: '600',
-              }}
-            >
-              Log in
-            </span>
+            <Link to="/login">
+              <span
+                onClick={() => navigate('/login')}
+                style={{
+                  color: '#5A3FFF',
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                }}
+              >
+                Log in
+              </span>
+            </Link>
           </p>
         </div>
       </form>

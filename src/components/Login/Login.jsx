@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TextInput from '../RegisterComponents/TextInput';
 import PasswordInput from '../RegisterComponents/PasswordInput';
 import useAuthStore from '../../Store/Auth';
@@ -10,7 +10,7 @@ import useAuthStore from '../../Store/Auth';
 export default function Login() {
   const [apiError, setApiError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { setToken } = useAuthStore();
 
   const formik = useFormik({
@@ -179,28 +179,32 @@ export default function Login() {
           </button>
           {/* FORGOT PASSWORD & REGISTER LINKS */}
           <p className="text-center mt-2">
-            <span
-              className="text-danger"
-              style={{ cursor: 'pointer', textDecoration: 'underline' }}
-              onClick={() => navigate('/forgot-password')}
-            >
-              Forgot Password?
-            </span>
+            <Link to="/reset-pass">
+              <span
+                className="text-danger"
+                style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                onClick={() => navigate('/forgot-password')}
+              >
+                Forgot Password?
+              </span>
+            </Link>
           </p>
 
           <p className="mt-3" style={{ fontSize: '16px' }}>
             Don't have account ?{' '}
-            <span
-              onClick={() => navigate('/register')}
-              style={{
-                color: '#5A3FFF',
-                textDecoration: 'underline',
-                cursor: 'pointer',
-                fontWeight: '600',
-              }}
-            >
-              register
-            </span>
+            <Link to="/register">
+              <span
+                onClick={() => navigate('/register')}
+                style={{
+                  color: '#5A3FFF',
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                }}
+              >
+                register
+              </span>
+            </Link>
           </p>
         </div>
       </form>

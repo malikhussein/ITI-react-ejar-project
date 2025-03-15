@@ -1,6 +1,7 @@
 import React from 'react';
 import ejarLogo from '../../assets/logo.png';
 import './Navbar.css';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   return (
@@ -9,7 +10,9 @@ export default function Navbar() {
         <div className="container">
           {/* Logo */}
           <div className="col-1">
-            <img src={ejarLogo} className="img-fluid " width={50} />
+            <Link to="/">
+              <img src={ejarLogo} className="img-fluid " width={50} />
+            </Link>
           </div>
 
           {/* Search bar */}
@@ -47,28 +50,28 @@ export default function Navbar() {
               <ul className="navbar-nav w-100 mx-auto d-flex justify-content-around">
                 <div className="d-flex flex-lg-row flex-column gap-lg-2">
                   <li className="nav-item ms-lg-3 mx-auto">
-                    <a className="nav-link active" aria-current="page" href="#">
+                    <Link className="nav-link" aria-current="page" to="/">
                       Home
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item mx-auto">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/product">
                       Products
-                    </a>
+                    </Link>
                   </li>
                 </div>
 
                 <div className="d-flex flex-lg-row flex-column gap-lg-2">
                   {/* Wishlist icon in desktop text in mobile */}
                   <li className="nav-item d-none d-lg-block">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/wishlist">
                       <i class="fa-regular fa-heart"></i>
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item d-block d-lg-none mx-auto">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/wishlist">
                       Wishlist
-                    </a>
+                    </Link>
                   </li>
 
                   {/* Profile icon with a dropdown in desktop profile and logout text in mobile */}
@@ -88,9 +91,9 @@ export default function Navbar() {
                       aria-labelledby="navbarDropdown"
                     >
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <Link className="dropdown-item" to="/profile/123">
                           Profile
-                        </a>
+                        </Link>
                       </li>
                       <li>
                         <a className="dropdown-item" href="#">
@@ -100,9 +103,9 @@ export default function Navbar() {
                     </ul>
                   </li>
                   <li className="nav-item d-block d-lg-none mx-auto">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" to="/profile/123">
                       Profile
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item d-block d-lg-none mx-auto">
                     <a className="nav-link" href="#">
