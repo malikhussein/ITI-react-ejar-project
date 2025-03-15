@@ -14,6 +14,7 @@
   display: flex !important;
   flex-direction: column;
   height: 250px;
+  position: relative;
 }
 
 .items-section .item .image {
@@ -50,4 +51,22 @@
 
 .items-section .loadmore-btn:hover {
   background-color: #c83977;
+}
+
+.item .card-icons {
+  position: absolute;
+  gap: 8px;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.item .card-icons i {
+  padding: 8px;
+  color: #000000;
+  background-color: #ffffff;
+  border-radius: 50%;
 }

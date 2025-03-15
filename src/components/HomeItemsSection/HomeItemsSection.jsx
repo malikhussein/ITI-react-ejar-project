@@ -165,15 +165,21 @@ function HomeItemsSection() {
         {items.map((item, index) => (
           <Link className="nav-link" to="product/123">
             <div key={index} className="item mb-4">
+              <div className='card-icons'>
+                
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-regular fa-eye"></i>
+              </div>
+
               <div className="image">
                 <img src={item.image} alt="" />
               </div>
 
               <h3 className="mt-3 mb-0 fs-6 fw-normal">{item.title}</h3>
 
-              <div className="d-flex gap-5 mt-2">
+              <div className="d-flex gap-3 mt-2">
                 <p className="price fw-bold">${item.price}</p>
-                <div className="rating"></div>
+                <div className="rating">⭐⭐⭐⭐☆</div>
                 <p>{`(${item.reviews})`}</p>
               </div>
             </div>
