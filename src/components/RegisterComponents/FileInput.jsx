@@ -4,9 +4,10 @@ export default function FileInput({
   label, 
   fieldName, 
   formik, 
+  externalError = "", 
   buttonColor = "#B72A67", 
   showPreview = true, 
-  maxFileSizeMB = 2 
+  maxFileSizeMB = 5 
 }) {
   const file = formik.values[fieldName];
   const [preview, setPreview] = useState(null);
@@ -32,7 +33,7 @@ export default function FileInput({
     if (chosenFile) {
       // Check type
       if (!chosenFile.type.startsWith("image/")) {
-        setFileError("Please upload an image file (jpg, png, etc.)");
+        setFileError("Please upload an image file (jpg,png,jpeg.)");
         formik.setFieldValue(fieldName, null);
         return;
       }
@@ -122,6 +123,12 @@ export default function FileInput({
           {fileError}
         </div>
       )}
+       {/* External logic errors like duplicate file */}
+    {externalError && (
+      <div className="text-danger" style={{ marginTop: "4px" }}>
+        {externalError}
+      </div>
+    )}
 
       {/* Formik-required error */}
       <div style={{ minHeight: "1.25rem" }}>
