@@ -41,13 +41,14 @@ export default function Login() {
       });
     })
     .required("Email or phone number is required."),
-      password: Yup.string()
-        .min(8, "Password must be at least 8 characters long.")
-        .matches(
-          /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          "Password must include uppercase, lowercase, number, and a special character."
-        )
-        .required("Password is required."),
+      password:Yup.string()
+      .min(8, "Password should be at least 8 characters long")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain at least one uppercase, one lowercase letter, one number, and one special character"
+      )
+      .required("password is required"),
+    
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
