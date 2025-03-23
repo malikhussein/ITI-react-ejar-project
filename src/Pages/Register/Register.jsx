@@ -13,6 +13,8 @@ export default function Register() {
   const [apiError, setApiError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [duplicateFileError, setDuplicateFileError] = useState("");
+
   const navigate = useNavigate();
   const initialValues = {
     userName: "",
@@ -32,24 +34,32 @@ export default function Register() {
     userName: Yup.string()
       .min(3, "Name should be at least 3 characters long")
       .max(29, "Name should be at most 29 characters long")
+      .matches(/^[a-zA-Z0-9_ ]+$/, "Only letters, numbers, underscores, and spaces are allowed.")
       .required("Name is required"),
     email: Yup.string().email("Invalid email address").required("Email is required"),
     password: Yup.string()
-      .min(8, "Password should be at least 8 characters long")
+    .min(8, "Password should be at least 8 characters long")
+    .matches(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least one uppercase, one lowercase letter, one number, and one special character"
+    )
+    .required(" password is required"),
+  
+      confirmedPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
       .matches(
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "Password must contain at least one uppercase, one lowercase letter, one number, and one special character"
       )
-      .required("Password is required"),
-    confirmedPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm password is required"),
+    
     phone: Yup.string()
       .matches(/^01[0-9]{9}$/, "Phone number must be a valid Egyptian number (01xxxxxxxxx)")
       .required("Phone number is required"),
-    dob: Yup.string()
-      .matches(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)")
+      dob: Yup.date()
+      .max(new Date(new Date().setFullYear(new Date().getFullYear() - 15)), "You must be at least 15 years old")
       .required("Date of birth is required"),
+    
       address: Yup.string()
       .min(7, "Address must be at least 7 characters.")
       .max(50, "Address must not exceed 50 characters.")
@@ -71,15 +81,35 @@ export default function Register() {
       setApiError(null);
       setRegistrationSuccess(false);
       setIsLoading(true);
+       //  Check if front and back images are the same file (by name, size & type)
+       const front = values.idPictureFront;
+       const back = values.idPictureBack;
+       if (
+        front &&
+        back &&
+        front.name === back.name &&
+        front.size === back.size &&
+        front.type === back.type
+      ) {
+        setDuplicateFileError("Front and back ID pictures cannot be the same file.");
+        setIsLoading(false);
+        return;
+      } else {
+        setDuplicateFileError(""); // Clear it when valid
+      }
+      
       // console.log("Submitting values:", values); // debugging 
       // If uploading files, create form data
       const formData = new FormData();
       Object.keys(values).forEach((key) => {
-        formData.append(key, values[key]);
+        if (values[key] !== null) {
+          formData.append(key, values[key]);
+        }
       });
-      const response = await axios.post("http://localhost:3000/api/auth/signUp", values, {
-        headers: { "Content-Type": "application/json" }, 
+      const response = await axios.post("http://localhost:3000/api/auth/signUp", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
+  
 
       if (response.status === 200) {
         setRegistrationSuccess(true);
@@ -169,10 +199,10 @@ export default function Register() {
         {/* ID PICTURES (Front/Back) */}
         <div className="col-md-6 d-flex justify-content-between">
           <div style={{ width: "48%" }}>
-            <FileInput label="ID Picture (Front):" fieldName="idPictureFront" formik={formik} />
+          <FileInput label="ID Picture (Front):" fieldName="idPictureFront" formik={formik} externalError={duplicateFileError}/>
           </div>
           <div style={{ width: "48%" }}>
-            <FileInput label="ID Picture (Back):" fieldName="idPictureBack" formik={formik} />
+          <FileInput label="ID Picture (Back):" fieldName="idPictureBack" formik={formik} externalError={duplicateFileError}/>
           </div>
         </div>
         {/* SUBMIT BUTTON */}
