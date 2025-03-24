@@ -17,15 +17,21 @@ export default function ResetPassword() {
     initialValues: { newPassword: "", confirmPassword: "" },
     validationSchema: Yup.object({
       newPassword: Yup.string()
-            .min(8, "Password should be at least 8 characters long")
-            .matches(
-              /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              "Password must contain at least one uppercase, one lowercase letter, one number, and one special character(@$!%*?&)"
-            )
-            .required("Password is required"),
+      .min(8, "Password should be at least 8 characters long")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain at least one uppercase, one lowercase letter, one number, and one special character"
+      )
+      .required("New password is required"),
+    
       confirmPassword: Yup.string()
-        .oneOf([Yup.ref("newPassword"), null], "Passwords must match.")
-        .required("Confirm your password."),
+      .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
+      .matches(
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain at least one uppercase, one lowercase letter, one number, and one special character"
+      )
+      .required("Confirm password is required"),
+    
     }),
     onSubmit: async (values) => {
       try {
