@@ -12,7 +12,7 @@ export default function ListingCard({ product }) {
             <img src={product.image} alt="" />
           </Link>
           <h5 onClick={() => console.log('working')}>
-            <span class="position-absolute top-0 start-0 badge rounded-pill bg-primary">
+            <span className="position-absolute top-0 start-0 badge rounded-pill bg-primary">
               Primary
             </span>
           </h5>

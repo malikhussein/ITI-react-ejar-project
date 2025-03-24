@@ -129,12 +129,12 @@ function HomeItemsSection() {
         {Array(filledStars)
           .fill()
           .map((_, i) => (
-            <span key={`filled-${i}`} className="star filled"><i class="fa-solid fa-star"></i></span>
+            <span key={`filled-${i}`} className="star filled"><i className="fa-solid fa-star"></i></span>
           ))}
         {Array(emptyStars)
           .fill()
           .map((_, i) => (
-            <span key={`empty-${i}`} className="star empty"><i class="fa-regular fa-star"></i></span>
+            <span key={`empty-${i}`} className="star empty"><i className="fa-regular fa-star"></i></span>
           ))}
       </>
     );
@@ -187,8 +187,8 @@ function HomeItemsSection() {
           <Link className="nav-link" to="product/123">
             <div key={index} className="item mb-4">
               <div className="card-icons">
-                <i class="fa-regular fa-heart"></i>
-                <i class="fa-regular fa-eye"></i>
+                <i className="fa-regular fa-heart"></i>
+                <i className="fa-regular fa-eye"></i>
               </div>
 
               <div className="image">
