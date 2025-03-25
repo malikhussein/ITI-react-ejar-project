@@ -1,75 +1,63 @@
-import React from 'react';
 import './relatedItem.css';
-import { Link } from 'react-router-dom';
-const products = [
-  {
-    id: 1,
-    name: 'HAVIT HV-G92 Gamepad',
-    price: '$120',
-    oldPrice: '$160',
-    discount: '-40%',
-    rating: 4,
-    reviews: 88,
-    image: '../../../public/img/1.jpg',
-  },
-  {
-    id: 2,
-    name: 'AK-900 Wired Keyboard',
-    price: '$960',
-    oldPrice: '$1160',
-    discount: '-35%',
-    rating: 3.5,
-    reviews: 75,
-    image: './../../public/img/2.jpg',
-  },
-  {
-    id: 3,
-    name: 'IPS LCD Gaming Monitor',
-    price: '$370',
-    oldPrice: '$400',
-    discount: '-30%',
-    rating: 4.5,
-    reviews: 99,
-    image: './../../public/img/3.jpg',
-  },
-  {
-    id: 4,
-    name: 'RGB liquid CPU Cooler',
-    price: '$160',
-    oldPrice: '$170',
-    discount: '-10%',
-    rating: 4,
-    reviews: 65,
-    image: './../../public/img/8.jpg',
-  },
-];
+import { Link, useParams } from 'react-router-dom';
+import React, {  useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+
+import { useProductStore } from "../../Store/Deatils";
+
+
+
 
 const RelatedProducts = () => {
+
+
+  const { product, getAllProd ,productList ,fetchProduct} = useProductStore();
+
+  const handleFetchProduct = (id) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  
+    
+    fetchProduct(id);
+  };
+
+
+  
+
+  useEffect(() => {
+    if (product?.data?.category) {
+      console.log(product.data.category.name);
+      
+      getAllProd(product.data.category._id); 
+    }
+    
+  }, [product]);
+
+
+
   return (
     <div className="container my-5">
       <h5 className="text-danger fw-bold">Related Item</h5>
       <div className="row">
-        {products.map((product) => (
+        {productList.map((product) => (
           <div key={product.id} className="col-md-3 col-sm-12">
             <div className="product-card">
-              {/* عرض الصورة */}
               <div className="image-container">
                 <span className="badge bg-danger discount-badge">
                   {product.discount}
                 </span>
-                <Link to="/product/123">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="product-image"
-                  />
-                </Link>
+                <Link to={`/product/${product.id}`}>
+  <img src={product.images[0]} onClick={()=>   handleFetchProduct(product.id)  } alt={product.name} className="product-image" />
+</Link>
 
                 <div className="icons">
-                  <span className="icon heart">♥</span>
-                  <Link className="nav-link" to="/product/123">
-                    <span className="icon eye">👁</span>
-                  </Link>
+                <span 
+  // className={`icon heart ${true ? "filled" : "empty"}`}
+  className={`icon heart ${product.isFavorite ? "filled" : "empty"}`}
+>
+  ♥
+</span>
+  
                 </div>
 
                 <button className="add-to-cart w-100">Add To Cart</button>
@@ -80,10 +68,8 @@ const RelatedProducts = () => {
                   <h6 className="card-title">{product.name}</h6>
                 </Link>
                 <p className="text-danger fw-bold">
-                  {product.price}{' '}
-                  <span className="text-muted text-decoration-line-through">
-                    {product.oldPrice}
-                  </span>
+                  {product.daily} EGP/Day
+              
                 </p>
                 <div className="d-flex justify-content-center">
                   {Array.from({ length: 5 }, (_, index) => (
