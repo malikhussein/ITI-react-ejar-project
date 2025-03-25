@@ -7,6 +7,7 @@ import Login from './components/Login/Login';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import ProductDetailsPage from './components/ProductDetailsPage/ProductDetailsPage';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import Wishlist from './components/Wishlist/Wishlist';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="product" element={<ProductPage />} />
           <Route path="product/:id" element={<ProductDetailsPage />} />
           <Route path="profile/:id" element={<ProfilePage />} />
+          <Route path="wishlist" element={<Wishlist />} />
         </Route>
 
         <Route path="register" element={<Register />} />
