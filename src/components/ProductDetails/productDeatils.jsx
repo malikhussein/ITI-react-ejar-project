@@ -9,18 +9,17 @@ import { useParams } from "react-router-dom";
 
 const ProductDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const { product, fetchProduct, updateProduct } = useProductStore();
+  const { product, fetchProduct, updateProduct ,productList ,getAllProd} = useProductStore();
   const [mainImage, setMainImage] = useState(null);
   const [fields, setFields] = useState({
     name: "",
     brand :'', 
     category:'',
+    owner:"",
     description: "",
-    price: "",
-    type: "",
-    capacity: "",
-    steering: "",
-    gasoline: "",
+    daily: '', 
+    comfirmed :' true',
+    status:'',
     images: [],
   });
   const [newImage, setNewImage] = useState(null);
@@ -34,10 +33,14 @@ const ProductDetails = () => {
   }, []);
 
 
+  
+
   let decoded
   const token = localStorage.getItem("token"); 
   if (token) {
      decoded = jwtDecode(token);
+
+     
   }
 
 
@@ -45,24 +48,33 @@ const ProductDetails = () => {
   
   useEffect(() => {
     if (product?.data) {
-      setFields({
-        name: product.data.name || "",
-        description: product.data.description || "",
-        price: product.data.price || "",
-        category: product.data.category || "",
-        type: product.data.type || "",
-        capacity: product.data.capacity || "",
-        steering: product.data.steering || "",
-        gasoline: product.data.gasoline || "",
-        images: product.data.images || [],
-      });
-      
+        setFields({
+            name: product.data.name || "",
+            description: product.data.description || "",
+            daily: Number(product.data.daily) || 0, 
+            category: product.data.category.name || "",
+            confirmed: Boolean(product.data.confirmed) || false,
+            status: product.data.status || "",
+            owner: product.data.renterId.userName || "",
+            images: product.data.images || [],
+            
+        });
 
-      if (product.data.images?.length) {
-        setMainImage(product.data.images[0]);
-      }
+        
     }
-  }, [product]);
+}, [product]);
+
+useEffect(() => {
+  if (product?.data?.images?.length > 0) {
+    setMainImage(product.data.images[0]); // تحديد أول صورة كـ mainImage
+  }
+}, [product?.data?.images]);
+
+
+  useEffect(() => {
+    getAllProd(product?.data?.category.name)    
+    
+  }, [productList]);
 
   const toggleEdit = async () => {
     if (isEditing) {
@@ -136,178 +148,171 @@ const ProductDetails = () => {
     return <p>Loading...</p>;
   }
 
-  return (
-    
-    <div className="container my-5">
+  return  <>
+      <div className="container my-5">
 
 
-      <div className="card p-4 shadow-lg">
-        <div className="row">
-          <div className="col-md-6 text-center">
-            <ReactImageMagnify
-              {...{
-                smallImage: {
-                  alt: "Product Image",
-                  isFluidWidth: true,
-                  src: mainImage,
-                },
-                largeImage: {
-                  src: mainImage,
-                  width: 1200,
-                  height: 1200,
-                },
-                enlargedImageContainerDimensions: {
-                  width: "120%",
-                  height: "120%",
-                },
+<div className="card p-4 shadow-lg">
+  <div className="row">
+    <div className="col-md-6 text-center">
+      <ReactImageMagnify
+        {...{
+          smallImage: {
+            alt: "Product Image",
+            isFluidWidth: true,
+            src: mainImage,
+          },
+          largeImage: {
+            src: mainImage,
+            width: 1200,
+            height: 1200,
+          },
+          enlargedImageContainerDimensions: {
+            width: "120%",
+            height: "120%",
+          },
+        }}
+      />
+      <div className="d-flex justify-content-center mt-3 flex-wrap">
+        {fields.images.map((img, index) => (
+          <div key={index} className="position-relative m-2">
+            <img
+              src={img}
+              alt={`Thumbnail ${index + 1}`}
+              className="rounded border"
+              style={{
+                width: "80px",
+                height: "80px",
+                objectFit: "cover",
+                cursor: "pointer",
+                border: mainImage === img ? "2px solid blue" : "2px solid transparent",
               }}
+              onClick={() => handleImageClick(img)}
             />
-            <div className="d-flex justify-content-center mt-3 flex-wrap">
-              {fields.images.map((img, index) => (
-                <div key={index} className="position-relative m-2">
-                  <img
-                    src={img}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="rounded border"
-                    style={{
-                      width: "80px",
-                      height: "80px",
-                      objectFit: "cover",
-                      cursor: "pointer",
-                      border: mainImage === img ? "2px solid blue" : "2px solid transparent",
-                    }}
-                    onClick={() => handleImageClick(img)}
-                  />
-                  {isEditing && (
-                    <button
-                      className="position-absolute top-0 end-0 btn btn-sm btn-danger p-0 rounded-circle"
-                      style={{ width: "20px", height: "20px", fontSize: "12px" }}
-                      onClick={() => handleDeleteImage(index)}
-                    >
-                      ❌
-                    </button>
-                  )}
-                </div>
-              ))}
+            {isEditing && (
+              <button
+                className="position-absolute top-0 end-0 btn btn-sm btn-danger p-0 rounded-circle"
+                style={{ width: "20px", height: "20px", fontSize: "12px" }}
+                onClick={() => handleDeleteImage(index)}
+              >
+                ❌
+              </button>
+            )}
+          </div>
+        ))}
 
 {isEditing && fields.images.length < 4 && (
-  <label className="m-2 bg-secondary d-flex align-items-center justify-content-center rounded"
-    style={{ width: "80px", height: "80px", cursor: "pointer", opacity: 0.7 }}>
-    ➕
-    <input type="file" accept="image/*" style={{ display: "none" }} onChange={handleAddImage} />
-  </label>
+<label className="m-2 bg-secondary d-flex align-items-center justify-content-center rounded"
+style={{ width: "80px", height: "80px", cursor: "pointer", opacity: 0.7 }}>
+➕
+<input type="file" accept="image/*" style={{ display: "none" }} onChange={handleAddImage} />
+</label>
 )}
 
-            </div>
+      </div>
 
-            {isEditing && newImage && (
-              <div className="d-flex justify-content-center mt-3">
-                <button className="btn btn-success" onClick={handleUploadImage}>
-                  Upload Image
-                </button>
-              </div>
-            )}
-          </div>
+      {isEditing && newImage && (
+        <div className="d-flex justify-content-center mt-3">
+          <button className="btn btn-success" onClick={handleUploadImage}>
+            Upload Image
+          </button>
+        </div>
+      )}
+    </div>
 
-          <div className="col-md-6">
-            {isEditing ? (
-              <input
-                type="text"
-                value={fields.name}
-                onChange={(e) => handleChange(e, "name")}
-                className="form-control mb-2"
-              />
-            ) : (
-              <h3>{fields.name}</h3>
-            )}
+    <div className="col-md-6">
+      {isEditing ? (
+        <input
+          type="text"
+          value={fields.name}
+          onChange={(e) => handleChange(e, "name")}
+          className="form-control mb-2"
+        />
+      ) : (
+        <h3>{fields.name}</h3>
+      )}
 
-{isEditing ? (
-              <input
-                type="text"
-                value={fields.category}
-                onChange={(e) => handleChange(e, "name")}
-                className="form-control mb-2"
-              />
-            ) : (
-              <h3>{fields.category}</h3>
-            )}
 
-            
+{/* <div className="d-flex justify-content-between">
+<h3>Category : {fields.category} </h3>
+
+ 
+<h3>Owner: {fields.owner} </h3>
+</div> */}
+<h3>Category : {fields.category} </h3>
+
+ 
+<h3>Owner: {fields.owner} </h3>
+
+
+ {isEditing ? (
+        <input
+          type="text"
+          value={fields.status}
+          onChange={(e) => handleChange(e, "status")}
+          classstatus="form-control mb-2"
+        />
+      ) : (
+        <h3> Status: {fields.status}</h3>
+      )}
+
+
+
+      
 
 {product.data.reviews === 0 ? (
-  <p>NEW</p>
+<p>NEW</p>
 ) : (
-  <p className="text-muted">
- {Array.from({ length: 5 }, (_, i) => (
-    <i 
-      key={i} 
-      className={`fa-star ${i + 1 <= Number(product.data.rating) ? "fas" : "far"}`} 
-      style={{ color: i + 1 <= Number(product.data.rating) ? "gold" : "lightgray" }}
-    ></i>
-  ))}
-    ({product.data.reviews} )
-  </p>
-)}
+<p className="text-muted">
+{Array.from({ length: 5 }, (_, i) => (
+<i 
+key={i} 
+className={`fa-star ${i + 1 <= Number(product.data.rating) ? "fas" : "far"}`} 
+style={{ color: i + 1 <= Number(product.data.rating) ? "gold" : "lightgray" }}
+></i>
+))}
+({product.data.reviews} )
+</p>
+)} 
+       {isEditing ? (
+        <textarea
+          value={fields.description}
+          onChange={(e) => handleChange(e, "description")}
+          className="form-control mb-2"
+        />
+      ) : (
+        <p>{fields.description}</p>
+      )}
+      <div className="d-flex flex-wrap mb-3">
+     
+      </div>
+      {isEditing ? (
+        <input
+          type="text"
+          value={fields.daily}
+          onChange={(e) => handleChange(e, "daily")}
+          className="form-control mb-2"
+        />
+      ) : (
+        <h4 className="text-danger">{fields.daily} EGP/Day </h4>
+      )}
+      <div className="mt-3">
 
-
-
-
-            {isEditing ? (
-              <textarea
-                value={fields.description}
-                onChange={(e) => handleChange(e, "description")}
-                className="form-control mb-2"
-              />
-            ) : (
-              <p>{fields.description}</p>
-            )}
-            <div className="d-flex flex-wrap mb-3">
-              {Object.keys(fields)
-                .filter((key) => !["name","RemoveImages" ,"description", "price", "images"].includes(key))
-                .map((key) => (
-                  <div className="d-flex w-50 align-items-center" key={key}>
-                    <span className="text-muted me-2">
-                      {key.charAt(0).toUpperCase() + key.slice(1)}
-                    </span>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value={fields[key]}
-                        onChange={(e) => handleChange(e, key)}
-                        className="form-control w-50"
-                      />
-                    ) : (
-                      <span className="fw-bold mx-4">{fields[key]}</span>
-                    )}
-                  </div>
-                ))}
-            </div>
-            {isEditing ? (
-              <input
-                type="text"
-                value={fields.price}
-                onChange={(e) => handleChange(e, "price")}
-                className="form-control mb-2"
-              />
-            ) : (
-              <h4 className="text-danger">{fields.price} EGP/Day </h4>
-            )}
-            <div className="mt-3">
-
-            { decoded.id ==  product.data.renterId ?    <button className="btn btn-primary w-25 mx-1" onClick={toggleEdit}>
-                {isEditing ? "Save" : "Edit"}
-              </button> : ''} 
-
-         
-              <button className="btn btn-primary w-25">
-                <i className="fa-solid fa-comment"></i> Chat
-              </button>
-            </div>
-          </div>
-        </div>
+      { decoded.id ==  product.data.renterId._id ?    <button className="btn btn-primary w-25 mx-1" onClick={toggleEdit}>
+          {isEditing ? "Save" : "Edit"}
+        </button> : ''}
+        <button className="btn btn-primary w-25">
+          <i className="fa-solid fa-comment"></i> Chat
+        </button>
       </div>
     </div>
-  );
+  </div>
+</div>
+</div>
+  </>
+    
+
+  
 };
 
 export default ProductDetails;

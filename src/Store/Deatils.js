@@ -38,10 +38,14 @@ const useProductStore = create((set) => ({
       console.error("Error updating product:", error.response?.data || error.message);
     }
   },
-  getAllProd: async (category) => {
+  getAllProd: async (id) => {
     try {
-      const response = await axios.get(`http://localhost:4200/api/product/?category=${category}`);
-      set({ productList: response.data.data }); // ✅ تخزين المنتجات في متغير منفصل
+      console.log('got');
+      
+      const response = await axios.get(`http://localhost:4200/api/product/?category=${id}`);
+      console.log(response);
+      
+      set({ productList: response.data.data }); 
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
