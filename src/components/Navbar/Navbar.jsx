@@ -2,8 +2,16 @@ import React from 'react';
 import ejarLogo from '../../assets/logo.png';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
+import useAuthStore from '../../Store/Auth';
+import { jwtDecode } from 'jwt-decode';
 
 export default function Navbar() {
+  const { token, logout } = useAuthStore();
+  let decodedToken;
+  if (token) {
+    decodedToken = jwtDecode(token);
+  }
+  const userId = decodedToken?.id;
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-white p-3">
@@ -38,15 +46,15 @@ export default function Navbar() {
             data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight"
           >
-            <i className="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-bars"></i>
           </button>
           <div
-            className="offcanvas offcanvas-end"
-            tabIndex="-1"
+            class="offcanvas offcanvas-end"
+            tabindex="-1"
             id="offcanvasRight"
             aria-labelledby="offcanvasRightLabel"
           >
-            <div className="offcanvas-body">
+            <div class="offcanvas-body">
               <ul className="navbar-nav w-100 mx-auto d-flex justify-content-around">
                 <div className="d-flex flex-lg-row flex-column gap-lg-2">
                   <li className="nav-item ms-lg-3 mx-auto">
@@ -65,7 +73,7 @@ export default function Navbar() {
                   {/* Wishlist icon in desktop text in mobile */}
                   <li className="nav-item d-none d-lg-block">
                     <Link className="nav-link" to="/wishlist">
-                      <i className="fa-regular fa-heart"></i>
+                      <i class="fa-regular fa-heart"></i>
                     </Link>
                   </li>
                   <li className="nav-item d-block d-lg-none mx-auto">
@@ -84,19 +92,22 @@ export default function Navbar() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <i className="fa-regular fa-user"></i>
+                      <i class="fa-regular fa-user"></i>
                     </a>
                     <ul
                       className="dropdown-menu"
                       aria-labelledby="navbarDropdown"
                     >
                       <li>
-                        <Link className="dropdown-item" to="/profile/123">
+                        <Link
+                          className="dropdown-item"
+                          to={`/profile/${userId}`}
+                        >
                           Profile
                         </Link>
                       </li>
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a className="dropdown-item" href="#" onClick={logout}>
                           Logout
                         </a>
                       </li>
@@ -108,7 +119,7 @@ export default function Navbar() {
                     </Link>
                   </li>
                   <li className="nav-item d-block d-lg-none mx-auto">
-                    <a className="nav-link" href="#">
+                    <a className="nav-link" href="#" onClick={logout}>
                       Logout
                     </a>
                   </li>
@@ -116,9 +127,31 @@ export default function Navbar() {
 
                 {/* List an item button */}
                 <li className="nav-item mx-auto mt-3 m-lg-0">
-                  <button className="btn btn-primary rounded-1 fw-bold">
-                    List an item
-                  </button>
+                  {token ? (
+                    <button
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#productModal"
+                      className="btn btn-primary rounded-1 fw-bold"
+                    >
+                      List an item
+                    </button>
+                  ) : (
+                    <>
+                      <Link
+                        className="btn btn-primary rounded-1 me-3 fw-bold"
+                        to="/login"
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        className="btn btn-primary rounded-1 fw-bold"
+                        to="/register"
+                      >
+                        Register
+                      </Link>
+                    </>
+                  )}
                 </li>
               </ul>
             </div>
