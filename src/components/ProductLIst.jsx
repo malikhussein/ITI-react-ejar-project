@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
-import axios from "axios";
+import React, { useEffect } from 'react';
+import ProductCard from './ProductCard';
+
+import useProductStore from '../Store/productsStore';
 
 export default function ProductLIst() {
-  const [products, setProducts] = useState([]);
-
-  const getallProducts =async () => {
-    axios.get("http://localhost:3000/api/product").then((products) => {
-      console.log(products.data);
-      setProducts(products.data);
-    });
-  };
+  const { products, fetchProducts } = useProductStore();
 
   useEffect(() => {
-    getallProducts();
-  }, []);
+    fetchProducts();
+  }, [fetchProducts]);
 
   return (
     <>
       <div className="col-md-9">
-        {products.map((product) => {
-          return <ProductCard product={product} />;
-        })}
+        {products ? (
+          products.map((product) => {
+            return <ProductCard product={product} />;
+          })
+        ) : (
+          <h1>loading</h1>
+        )}
       </div>
     </>
   );
