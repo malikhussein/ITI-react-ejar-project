@@ -7,7 +7,7 @@ import Login from './components/Login/Login';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import ProductDetailsPage from './components/ProductDetailsPage/ProductDetailsPage';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
-import Wishlist from './components/Wishlist/Wishlist';
+import Wishlist from './Pages/Wishlist/Wishlist';
 
 function App() {
   return (

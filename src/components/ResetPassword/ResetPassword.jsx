@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import PasswordInput from "../../components/RegisterComponents/PasswordInput"; 
+import PasswordInput from "../RegisterComponents/PasswordInput"; 
 
 export default function ResetPassword() {
   const { token } = useParams(); // Get token from URL
