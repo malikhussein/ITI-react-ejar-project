@@ -1,13 +1,12 @@
-import React from "react";
-import  { useEffect } from "react";
-import Slider from "react-slick";
-import "./HomeItemsSection.css";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { useEffect } from 'react';
+import Slider from 'react-slick';
+import './HomeItemsSection.css';
+import { Link } from 'react-router-dom';
 
-import useProductStore from "../../Store/productsStore"
+import useProductStore from '../../Store/productsStore';
 
 function HomeItemsSection() {
-  
   // const items = [
   //   {
   //     title: "Breed Dry Dog Food",
@@ -139,12 +138,16 @@ function HomeItemsSection() {
         {Array(filledStars)
           .fill()
           .map((_, i) => (
-            <span key={`filled-${i}`} className="star filled"><i className="fa-solid fa-star"></i></span>
+            <span key={`filled-${i}`} className="star filled">
+              <i className="fa-solid fa-star"></i>
+            </span>
           ))}
         {Array(emptyStars)
           .fill()
           .map((_, i) => (
-            <span key={`empty-${i}`} className="star empty"><i className="fa-regular fa-star"></i></span>
+            <span key={`empty-${i}`} className="star empty">
+              <i className="fa-regular fa-star"></i>
+            </span>
           ))}
       </>
     );
@@ -197,7 +200,7 @@ function HomeItemsSection() {
       <h2 className="mb-5">Explore Our Products</h2>
       <Slider {...settings}>
         {products.map((item, index) => (
-          <Link className="nav-link" to="product/123">
+          <Link className="nav-link" to={`/product/${item._id}`}>
             <div key={item._id} className="item mb-4">
               <div className="card-icons">
                 <i className="fa-regular fa-heart"></i>
@@ -211,7 +214,7 @@ function HomeItemsSection() {
               <h3 className="mt-3 mb-0 fs-6 fw-normal">{item.name}</h3>
 
               <div className="d-flex gap-3 mt-2">
-                <p className="price fw-bold">${item.price.daily}</p>
+                <p className="price fw-bold">${item.daily}</p>
                 <div className="rating">{renderStars(item.rating)}</div>
                 <p>{`(${item.reviews})`}</p>
               </div>
