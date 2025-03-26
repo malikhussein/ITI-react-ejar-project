@@ -43,8 +43,9 @@ const useProductStore = create((set) => ({
     try {
       console.log('got');
 
+      console.log(id);
       const response = await axios.get(
-        `http://localhost:3000/api/product/?category=${id}`
+        `http://localhost:3000/api/product/?category=${id.toString()}`
       );
       console.log(response);
 

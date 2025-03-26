@@ -33,7 +33,7 @@ export default function ProductCard({ product }) {
           </h2>
           <h5>Description:</h5>
           <h5>{product.description}</h5>
-          <h2 id="price">{product.price.daily} E.G</h2>
+          <h2 id="price">{product.daily} E.G</h2>
         </div>
 
         <div

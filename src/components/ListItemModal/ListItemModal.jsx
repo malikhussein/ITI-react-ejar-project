@@ -19,7 +19,7 @@ export default function ListItemModal() {
     image2: '',
     image3: '',
     image4: '',
-    price: 0,
+    daily: 0,
   };
 
   const validationSchema = Yup.object({
@@ -61,7 +61,7 @@ export default function ListItemModal() {
           key !== 'image4'
         ) {
           if (key === 'price') {
-            formData.append('price[daily]', values[key]);
+            formData.set('daily', values[key]);
           } else if (key === 'title') {
             formData.append('name', values[key]);
           } else {
@@ -71,6 +71,9 @@ export default function ListItemModal() {
       });
       try {
         await postProduct(token, formData);
+
+        // Remove the classes from the body and remove the div with modal-backdrop show
+        document.querySelector('#profileModal').modal('hide');
       } catch (error) {
         console.error(error);
       }

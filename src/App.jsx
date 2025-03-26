@@ -8,6 +8,7 @@ import ProfilePage from './components/ProfilePage/ProfilePage';
 import ProductDetailsPage from './components/ProductDetailsPage/ProductDetailsPage';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Wishlist from './Pages/Wishlist/Wishlist';
+import ResetPassword from './components/ResetPassword/ResetPassword';
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
 
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path="reset-pass" element={<ForgotPassword />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </>
   );
