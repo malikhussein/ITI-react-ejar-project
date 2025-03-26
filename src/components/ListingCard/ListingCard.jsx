@@ -8,7 +8,7 @@ export default function ListingCard({ product }) {
     <div className="col-12 col-sm-6 col-md-4 col-lg-3">
       <div className="card border-0">
         <div className="square-image position-relative d-block">
-          <Link to="/product/123">
+          <Link to={`/product/${product.id}`}>
             <img src={product.images[0]} alt="" />
           </Link>
           <h5 onClick={() => console.log('working')}>
@@ -26,7 +26,7 @@ export default function ListingCard({ product }) {
           </Link>
           <div className="d-flex flex-column justify-content-between">
             <p className="card-title h5 mt-1">Listed on 10/2/2025</p>
-            <p className="card-title h5 mt-1">{product.price.daily}/day</p>
+            <p className="card-title h5 mt-1">{product.daily}/day</p>
           </div>
         </div>
       </div>
