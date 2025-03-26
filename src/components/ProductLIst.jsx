@@ -1,54 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import ProductCard from './ProductCard';
-
-import useProductStore from '../Store/productsStore';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-
-// const { products, fetchProducts } = useProductStore();
+import React, { useEffect, useState } from "react";
+import ProductCard from "./ProductCard";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-
-export default function ProductLIst() {
-
+export default function ProductList() {
   const [products, setProducts] = useState([]);
-
   const query = useQuery();
   const categoryName = query.get("category"); // Get category from query params
 
-  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/product`, {
-          params: { category: categoryName }, // Send category as query param
+          params: categoryName ? { category: categoryName } : {}, // If no category, fetch all products
         });
 
+        console.log("Fetched Products:", response.data.data); // Debugging log
         setProducts(response.data.data);
       } catch (err) {
-        console.log( (err.message));
+        console.log("Error fetching products:", err.message);
       }
     };
 
-    if (categoryName) {
-      fetchProducts();
-    }
-  }, [categoryName]);
-  
+    fetchProducts();
+  }, [categoryName]); // Runs when categoryName changes
+
   return (
-    <>
-      <div className="col-md-9">
-        {products ? (
-          products.map((product) => {
-            return <ProductCard product={product} />;
-          })
-        ) : (
-          <h1>loading</h1>
-        )}
-      </div>
-    </>
+    <div className="col-md-9">
+      {products.length > 0 ? (
+        products.map((product) => (
+          <ProductCard key={product._id} product={product} />
+        ))
+      ) : (
+        <h1>Loading...</h1>
+      )}
+    </div>
   );
 }

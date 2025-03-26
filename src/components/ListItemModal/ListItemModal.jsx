@@ -5,6 +5,7 @@ import TextInput from '../RegisterComponents/TextInput';
 import FileInput from '../RegisterComponents/FileInput';
 import useAuthStore from '../../Store/Auth';
 import useProductStore from '../../Store/product';
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
 export default function ListItemModal() {
   const { token } = useAuthStore();
@@ -72,8 +73,9 @@ export default function ListItemModal() {
       try {
         await postProduct(token, formData);
 
-        // Remove the classes from the body and remove the div with modal-backdrop show
-        document.querySelector('#profileModal').modal('hide');
+        const modalElement = document.querySelector('#productModal');
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
       } catch (error) {
         console.error(error);
       }

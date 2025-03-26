@@ -1,61 +1,13 @@
-import React from "react";
-import  { useEffect } from 'react';
 
+import React, { useEffect } from "react";
 import Slider from "react-slick";
-import "./CategoriesSection.css";
 import { Link } from "react-router-dom";
-
-import useCategoryStore from "../../Store/categoryStore"
+import useCategoryStore from "../../Store/categoryStore";
+import "./CategoriesSection.css";
 
 function CategoriesSection() {
-  // const data = [
-  //   {
-  //     icon: "fa-solid fa-mobile-screen-button",
-  //     title: "Phones",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-desktop",
-  //     title: "Computers",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-camera",
-  //     title: "Cameras",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-headphones-simple",
-  //     title: "Headphones",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-chair",
-  //     title: "Furniture",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-building",
-  //     title: "Properties",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-shirt",
-  //     title: "Clothes",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-screwdriver-wrench",
-  //     title: "Tools",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-car",
-  //     title: "Cars",
-  //   },
-  //   {
-  //     icon: "fa-solid fa-bicycle",
-  //     title: "Bikes",
-  //   },
-  // ];
-
-  // جلب البيانات من الـ Store
-  
   const { categories, loading, error, fetchCategories } = useCategoryStore();
 
-  
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -70,51 +22,22 @@ function CategoriesSection() {
     slidesPerRow: 1,
     initialSlide: 0,
     responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 2,
-          rows: 2,
-          infinite: true,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          rows: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          rows: 2,
-        },
-      },
+      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 2, rows: 2, infinite: true } },
+      { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 2, rows: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 2, slidesToScroll: 1, rows: 2 } },
     ],
   };
 
   if (loading) return <div>Loading categories...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  console.log(categories)
-
   return (
     <div className="category">
       <h2 className="ms-2">Browse By Category</h2>
       <Slider {...settings}>
         {categories.map((category) => (
-<<<<<<< HEAD
-          <Link className="nav-link" to={`/product/?${category.name}`}>
-=======
-          <Link className="nav-link" to={`/product?cateogry=${category._id}`}>
->>>>>>> f5b7ea7adc37f6f967321dd70664f3b18adbd42d
-            <div key={category._id} className="cat mb-4">
+          <Link key={category._id} className="nav-link" to={`/product?category=${category.name}`}>
+            <div className="cat mb-4">
               <i className={`fa-solid ${category.icon} fs-1`}></i>
               <h3 className="mt-3 mb-0 fs-5 fw-normal">{category.name}</h3>
             </div>
