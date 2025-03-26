@@ -18,7 +18,7 @@ const useProductStore = create((set, get) => ({
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
@@ -37,9 +37,10 @@ const useProductStore = create((set, get) => ({
       });
       const allProducts = response?.data?.data;
       const userProducts = allProducts.filter(
-        (product) => product.renterId === userId
+        (product) => product.renterId._id === userId
       );
       set({ userProducts, loading: false });
+
       console.log(allProducts);
       console.log(userProducts);
     } catch (error) {
