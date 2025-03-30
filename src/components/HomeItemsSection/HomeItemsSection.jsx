@@ -83,7 +83,7 @@ function HomeItemsSection() {
 
   return (
     <div className="items-section">
-      <h2 className="mb-5">Explore Our Products</h2>
+      <h2 className="mb-5">Explore Our New Items</h2>
       <Slider {...settings}>
         {products.map((item, index) => (
           <Link className="nav-link" to={`/product/${item._id}`}>
@@ -100,7 +100,7 @@ function HomeItemsSection() {
               <h3 className="mt-3 mb-0 fs-6 fw-normal">{item.name}</h3>
 
               <div className="d-flex gap-3 mt-2">
-                <p className="price fw-bold">${item.daily}</p>
+                <p className="price fw-bold">{item.daily} EGP/Day</p>
                 <div className="rating">{renderStars(item.rating)}</div>
                 <p>{`(${item.reviews})`}</p>
               </div>

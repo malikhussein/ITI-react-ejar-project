@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ToTopButton from '../ToTopButton/ToTopButton';
 
 export default function Footer() {
   return (
@@ -102,6 +103,7 @@ export default function Footer() {
           <div className="d-flex flex-column flex-sm-row justify-content-center py-4 my-4 border-top">
             <p>© Copyright Ejar 2025. All right reserved</p>
           </div>
+          <ToTopButton />
         </footer>
       </div>
     </>

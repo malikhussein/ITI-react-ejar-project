@@ -23,13 +23,9 @@
 }
 
 .category .cat:hover {
-  background-color: #562DDD;
+  background-color: #b72a67 ;
   color: #fff;
 }
-
-
-
-
 
 /* Slick slider customizations */
 .slick-slide {

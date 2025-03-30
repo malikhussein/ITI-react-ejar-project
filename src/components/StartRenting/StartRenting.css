@@ -5,12 +5,12 @@
 }
 
 .text .rent-head {
-  color: #CC29A2;
+  color: #b72a67 ;
   font-weight: 700;
 }
 
 .rent-btn {
-  background-color: #562DDD;
+  background-color: #b72a67 ;
   border: none;
   color: #ffffff;
   padding: 12px 16px;
@@ -19,7 +19,7 @@
 }
 
 .rent-btn:hover {
-  background-color: #6c43f2;
+  background-color: #A7265E;
 }
 
 @media (max-width: 768px) {
