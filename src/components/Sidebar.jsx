@@ -1,18 +1,14 @@
-import React, { useEffect } from "react";
-import useCategoryStore from "../Store/categoryStore";
-import { Link, useNavigate } from "react-router-dom";
-
+import React, { useEffect } from 'react';
+import useCategoryStore from '../Store/categoryStore';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Sidebar() {
   const { categories, fetchCategories } = useCategoryStore();
 
-
   const navigate = useNavigate(); // Initialize useNavigate
-  
+
   useEffect(() => {
     fetchCategories();
-
-
   }, []);
 
   //   try {
@@ -20,7 +16,7 @@ export default function Sidebar() {
   //       params: { category: categoryName } });
   //     console.log("Fetched Products:", response.data.data); // Debugging log
   //     setProducts(response.data.data);
-       
+
   //   } catch (err) {
   //     console.log("Error fetching products:", err.message);
   //   }
@@ -45,7 +41,7 @@ export default function Sidebar() {
               <li className="mb-1">
                 <button
                   onClick={() => {
-                    navigate(`/product?category=${category.name}`);
+                    navigate(`/product?category=${category._id}`);
                   }}
                   class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
                   data-bs-toggle="collapse"
