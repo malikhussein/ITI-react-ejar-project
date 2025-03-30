@@ -41,16 +41,17 @@
 }
 
 .items-section .loadmore-btn {
-  background-color: #942153;
+  background-color: #A7265E;
   border: none;
   color: #ffffff;
   padding: 8px 14px;
   border-radius: 4px;
   transition: .3s;
+  font-weight: bold;
 }
 
 .items-section .loadmore-btn:hover {
-  background-color: #A7265E;
+  background-color: #942153;
 }
 
 .item .card-icons {

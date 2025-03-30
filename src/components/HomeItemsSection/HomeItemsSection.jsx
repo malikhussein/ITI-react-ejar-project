@@ -97,7 +97,7 @@ function HomeItemsSection() {
                 <img src={item.images[0]} alt={item.name} />
               </div>
 
-              <h3 className="mt-3 mb-0 fs-6 fw-normal">{item.name}</h3>
+              <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.name}</h3>
 
               <div className="d-flex gap-3 mt-2">
                 <p className="price fw-bold">{item.daily} EGP/Day</p>
