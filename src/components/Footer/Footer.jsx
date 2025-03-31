@@ -79,22 +79,22 @@ export default function Footer() {
               <ul className="nav flex-row flex-lg-column justify-content-between">
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0 text-body-secondary">
-                    <i class="fa-brands fa-square-facebook h3"></i>
+                    <i className="fa-brands fa-square-facebook h3"></i>
                   </a>
                 </li>
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0 text-body-secondary">
-                    <i class="fa-brands fa-square-x-twitter h3"></i>
+                    <i className="fa-brands fa-square-x-twitter h3"></i>
                   </a>
                 </li>
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0 text-body-secondary">
-                    <i class="fa-brands fa-square-instagram h3"></i>
+                    <i className="fa-brands fa-square-instagram h3"></i>
                   </a>
                 </li>
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0 text-body-secondary">
-                    <i class="fa-brands fa-linkedin h3"></i>
+                    <i className="fa-brands fa-linkedin h3"></i>
                   </a>
                 </li>
               </ul>

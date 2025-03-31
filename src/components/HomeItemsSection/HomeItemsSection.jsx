@@ -86,8 +86,8 @@ function HomeItemsSection() {
       <h2 className="mb-5">Explore Our New Items</h2>
       <Slider {...settings}>
         {products.map((item, index) => (
-          <Link className="nav-link" to={`/product/${item._id}`}>
-            <div key={item._id} className="item mb-4">
+          <Link key={item._id} className="nav-link" to={`/product/${item._id}`}>
+            <div className="item mb-4">
               <div className="card-icons">
                 <i className="fa-regular fa-heart"></i>
                 <i className="fa-regular fa-eye"></i>
