@@ -29,6 +29,7 @@ const RelatedProducts = () => {
 
   useEffect(() => {
     if (product?.data?.category) {
+      console.log(product);
       
       
       getAllProd(product.data.category._id); 
@@ -78,16 +79,26 @@ const RelatedProducts = () => {
             {product.daily} EGP/Day
           </p>
           <div className="d-flex justify-content-center">
-            {Array.from({ length: 5 }, (_, index) => (
-              <span
-                key={index}
-                className={index < product.rating ? 'text-warning' : 'text-secondary'}
-              >
-                ★
-              </span>
-            ))}
-            <span className="text-muted ms-2">({product.reviews})</span>
-          </div>
+      
+{product?.review && product?.review?.length > 0 ? (
+  <p className="text-muted">
+    {Array.from({ length: 5 }, (_, i) => (
+      <i
+        key={i}
+        className={`fa-star ${
+          i + 1 <= Number(product?.averageRating) ? 'fas' : 'far'
+        }`}
+        style={{
+          color:
+            i + 1 <= Number(product?.averageRating) ? 'gold' : 'lightgray',
+        }}
+      ></i>
+    ))}
+    <span> ({product?.review?.length} Reviews)</span>
+  </p>
+) : (
+  <span className="badge bg-success">NEW</span>
+)}     </div>
         </div>
       </div>
     </div>
