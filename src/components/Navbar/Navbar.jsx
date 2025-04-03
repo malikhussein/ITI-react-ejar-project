@@ -46,15 +46,15 @@ export default function Navbar() {
             data-bs-target="#offcanvasRight"
             aria-controls="offcanvasRight"
           >
-            <i class="fa-solid fa-bars"></i>
+            <i className="fa-solid fa-bars"></i>
           </button>
           <div
-            class="offcanvas offcanvas-end"
-            tabindex="-1"
+            className="offcanvas offcanvas-end"
+            tabIndex="-1"
             id="offcanvasRight"
             aria-labelledby="offcanvasRightLabel"
           >
-            <div class="offcanvas-body">
+            <div className="offcanvas-body">
               <ul className="navbar-nav w-100 mx-auto d-flex justify-content-around">
                 <div className="d-flex flex-lg-row flex-column gap-lg-2">
                   <li className="nav-item ms-lg-3 mx-auto">
@@ -73,7 +73,7 @@ export default function Navbar() {
                   {/* Wishlist icon in desktop text in mobile */}
                   <li className="nav-item d-none d-lg-block">
                     <Link className="nav-link" to="/wishlist">
-                      <i class="fa-regular fa-heart"></i>
+                      <i className="fa-regular fa-heart"></i>
                     </Link>
                   </li>
                   <li className="nav-item d-block d-lg-none mx-auto">
@@ -92,7 +92,7 @@ export default function Navbar() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <i class="fa-regular fa-user"></i>
+                      <i className="fa-regular fa-user"></i>
                     </a>
                     <ul
                       className="dropdown-menu"
