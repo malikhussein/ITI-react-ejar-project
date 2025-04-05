@@ -9,6 +9,7 @@ import ProductDetailsPage from './components/ProductDetailsPage/ProductDetailsPa
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Wishlist from './Pages/Wishlist/Wishlist';
 import ResetPassword from './components/ResetPassword/ResetPassword';
+import ChatPage from './components/ChatPage/ChatPage';
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route path="product/:id" element={<ProductDetailsPage />} />
           <Route path="profile/:id" element={<ProfilePage />} />
           <Route path="wishlist" element={<Wishlist />} />
+          <Route path="chat" element={<ChatPage />} />
+          <Route path="chat/:chatId" element={<ChatPage />} />
         </Route>
 
         <Route path="register" element={<Register />} />
