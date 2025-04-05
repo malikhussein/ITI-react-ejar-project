@@ -11,9 +11,11 @@ const useProductStore = create((set) => ({
       );
 
       set({ product: response.data });
+      
     } catch (error) {
       console.error('Error fetching product:', error);
     }
+    
   },
 
   updateProduct: async (updatedData) => {
@@ -41,15 +43,24 @@ const useProductStore = create((set) => ({
   },
   getAllProd: async (id) => {
     try {
-      console.log('got');
 
-      console.log(id);
-      const response = await axios.get(
-        `http://localhost:3000/api/product/?category=${id.toString()}`
-      );
-      console.log(response);
 
-      set({ productList: response.data.data });
+      if (!id) {
+        console.warn("ID is undefined, waiting for data...");
+        return;
+      }
+
+      const categoryId = typeof id === "object" && id !== null ? id._id : id;
+
+        
+        const response = await axios.get(
+          `http://localhost:3000/api/product/?category=${categoryId.toString()}`
+        );
+  
+        set({ productList: response.data.data });
+      
+
+   
     } catch (error) {
       console.error('Error fetching products:', error.message);
     }

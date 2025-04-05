@@ -30,7 +30,14 @@
   max-width: 100%;
   padding: 20px;
   height: 180px;
+  transition: 0.3s;
 }
+
+.items-section .item img:hover {
+  transform: scale(1.08) rotate(5deg);
+}
+
+
 
 .items-section .item h3 {
   font-weight: 600 !important;
@@ -40,17 +47,16 @@
   color: #B72A67;
 }
 
-.items-section .loadmore-btn {
-  background-color: #B72A67;
-  border: none;
+.newItem {
+  background-color: #06c954;
   color: #ffffff;
-  padding: 8px 14px;
+  padding: 4px 8px;
   border-radius: 4px;
-  transition: .3s;
-}
-
-.items-section .loadmore-btn:hover {
-  background-color: #c83977;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 .item .card-icons {
@@ -71,6 +77,19 @@
   border-radius: 50%;
 }
 
+.items-section .loadmore-btn {
+  background-color: #A7265E;
+  border: none;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 4px;
+  transition: .3s;
+  font-weight: bold;
+}
+
+.items-section .loadmore-btn:hover {
+  background-color: #942153;
+}
 
 .star.filled i {
   color: #FFAD33;

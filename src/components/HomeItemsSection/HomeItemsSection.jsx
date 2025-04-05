@@ -3,130 +3,16 @@ import { useEffect } from 'react';
 import Slider from 'react-slick';
 import './HomeItemsSection.css';
 import { Link } from 'react-router-dom';
-
 import useProductStore from '../../Store/productsStore';
 
 function HomeItemsSection() {
-  // const items = [
-  //   {
-  //     title: "Breed Dry Dog Food",
-  //     image: "src/assets/cesarpets.jpg",
-  //     price: "100",
-  //     rating: "3",
-  //     reviews: "35",
-  //   },
-  //   {
-  //     title: "CANON EOS DSLR Camera",
-  //     image: "src/assets/canon.png",
-  //     price: "360",
-  //     rating: "4",
-  //     reviews: "95",
-  //   },
-  //   {
-  //     title: "ASUS FHD Gaming Laptop",
-  //     image: "src/assets/laptop.png",
-  //     price: "700",
-  //     rating: "5",
-  //     reviews: "325",
-  //   },
-  //   {
-  //     title: "Curology Product Set ",
-  //     image: "src/assets/coz.png",
-  //     price: "500",
-  //     rating: "4",
-  //     reviews: "145",
-  //   },
-  //   {
-  //     title: "Kids Electric Car",
-  //     image: "src/assets/babycar.png",
-  //     price: "960",
-  //     rating: "5",
-  //     reviews: "65",
-  //   },
-  //   {
-  //     title: "Jr. Zoom Soccer Cleats",
-  //     image: "src/assets/foot.png",
-  //     price: "1160",
-  //     rating: "4",
-  //     reviews: "35",
-  //   },
-  //   {
-  //     title: "GP11 Shooter USB Gamepad",
-  //     image: "src/assets/joy.png",
-  //     price: "660",
-  //     rating: "4",
-  //     reviews: "55",
-  //   },
-  //   {
-  //     title: "Quilted Satin Jacket",
-  //     image: "src/assets/jacket.png",
-  //     price: "400",
-  //     rating: "5",
-  //     reviews: "75",
-  //   },
-  //   {
-  //     title: "Breed Dry Dog Food",
-  //     image: "src/assets/cesarpets.jpg",
-  //     price: "100",
-  //     rating: "3",
-  //     reviews: "35",
-  //   },
-  //   {
-  //     title: "CANON EOS DSLR Camera",
-  //     image: "src/assets/canon.png",
-  //     price: "360",
-  //     rating: "4",
-  //     reviews: "95",
-  //   },
-  //   {
-  //     title: "ASUS FHD Gaming Laptop",
-  //     image: "src/assets/laptop.png",
-  //     price: "700",
-  //     rating: "5",
-  //     reviews: "325",
-  //   },
-  //   {
-  //     title: "Curology Product Set ",
-  //     image: "src/assets/coz.png",
-  //     price: "500",
-  //     rating: "4",
-  //     reviews: "145",
-  //   },
-  //   {
-  //     title: "Kids Electric Car",
-  //     image: "src/assets/babycar.png",
-  //     price: "960",
-  //     rating: "5",
-  //     reviews: "65",
-  //   },
-  //   {
-  //     title: "Jr. Zoom Soccer Cleats",
-  //     image: "src/assets/foot.png",
-  //     price: "1160",
-  //     rating: "4",
-  //     reviews: "35",
-  //   },
-  //   {
-  //     title: "GP11 Shooter USB Gamepad",
-  //     image: "src/assets/joy.png",
-  //     price: "660",
-  //     rating: "4",
-  //     reviews: "55",
-  //   },
-  //   {
-  //     title: "Quilted Satin Jacket",
-  //     image: "src/assets/jacket.png",
-  //     price: "400",
-  //     rating: "5",
-  //     reviews: "75",
-  //   },
-  // ];
-
   const { products, loading, error, fetchProducts } = useProductStore();
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  const confirmedProducts = products.filter(item => item.confirmed === true);
 
   const renderStars = (rating) => {
     const totalStars = 5;
@@ -197,11 +83,11 @@ function HomeItemsSection() {
 
   return (
     <div className="items-section">
-      <h2 className="mb-5">Explore Our Products</h2>
+      <h2 className="mb-5">Explore Our New Items</h2>
       <Slider {...settings}>
-        {products.map((item, index) => (
-          <Link className="nav-link" to={`/product/${item._id}`}>
-            <div key={item._id} className="item mb-4">
+        {confirmedProducts.map((item) => (
+          <Link key={item._id} className="nav-link" to={`/product/${item._id}`}>
+            <div className="item mb-4">
               <div className="card-icons">
                 <i className="fa-regular fa-heart"></i>
                 <i className="fa-regular fa-eye"></i>
@@ -211,12 +97,18 @@ function HomeItemsSection() {
                 <img src={item.images[0]} alt={item.name} />
               </div>
 
-              <h3 className="mt-3 mb-0 fs-6 fw-normal">{item.name}</h3>
+              <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.name}</h3>
 
               <div className="d-flex gap-3 mt-2">
-                <p className="price fw-bold">${item.daily}</p>
-                <div className="rating">{renderStars(item.rating)}</div>
-                <p>{`(${item.reviews})`}</p>
+                <p className="price fw-bold">EGP {item.daily}</p>
+                {item.averageRating === 0 ? (
+                  <div className="newItem">NEW!</div>
+                ) : (
+                  <div className="rating d-flex gap-3">
+                    <div>{renderStars(item.averageRating)}</div>
+                    <p>{`(${item.review.length})`}</p>
+                  </div>
+                )}
               </div>
             </div>
           </Link>

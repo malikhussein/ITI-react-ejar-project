@@ -18,18 +18,14 @@
   border-radius: 4px;
   border: 1px solid #ccc;
   transition: .3s;
-  color: #111010c0;
+  color: #363535c0;
   cursor: pointer;
 }
 
 .category .cat:hover {
-  background-color: #562DDD;
+  background-color: #b72a67 ;
   color: #fff;
 }
-
-
-
-
 
 /* Slick slider customizations */
 .slick-slide {
@@ -43,14 +39,12 @@
 .slick-arrow::before,
 .slick-arrow::after {
   padding: 5px;
-  color: #CC29A2 !important;
-  /* background-color: #eee; */
+  color: #A7265E !important;
 }
 
 .slick-prev,
 .slick-next {
   top: -45px !important;
-  /* z-index: 10; */
 }
 
 .slick-prev {
@@ -73,7 +67,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .slick-prev {
     left: 90% !important;
   }

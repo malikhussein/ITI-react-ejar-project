@@ -9,7 +9,7 @@ const useProductStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await fetch('http://localhost:3000/api/product/');
-      if (!response.ok) throw new Error('error');
+      if (!response.ok) throw new Error('No Items Found in database!');
       const result = await response.json();
       set({ products: result.data, loading: false });
     } catch (err) {
