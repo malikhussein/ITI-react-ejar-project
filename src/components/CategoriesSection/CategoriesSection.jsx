@@ -56,7 +56,7 @@ function CategoriesSection() {
           >
             <div className="cat mb-4">
               <i className={`fa-solid ${category.icon} fs-1`}></i>
-              <h3 className="mt-3 mb-0 fs-5 fw-normal">{category.name}</h3>
+              <h3 className="mt-3 mb-0 fs-5 fw-normal text-capitalize">{category.name}</h3>
             </div>
           </Link>
         ))}
