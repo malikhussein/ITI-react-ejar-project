@@ -14,6 +14,8 @@ function HomeItemsSection() {
     fetchProducts();
   }, [fetchProducts]);
 
+  const confirmedProducts = products.filter(item => item.confirmed === true);
+
   const renderStars = (rating) => {
     const totalStars = 5;
     const filledStars = parseInt(rating, 10);
@@ -85,7 +87,7 @@ function HomeItemsSection() {
     <div className="items-section">
       <h2 className="mb-5">Explore Our New Items</h2>
       <Slider {...settings}>
-        {products.map((item, index) => (
+        {confirmedProducts.map((item, index) => (
           <Link key={item._id} className="nav-link" to={`/product/${item._id}`}>
             <div className="item mb-4">
               <div className="card-icons">
