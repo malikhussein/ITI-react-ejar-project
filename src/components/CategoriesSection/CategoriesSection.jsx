@@ -36,7 +36,7 @@ function CategoriesSection() {
       <h2 className="ms-2">Browse By Category</h2>
       <Slider {...settings}>
         {categories.map((category) => (
-          <Link key={category._id} className="nav-link" to={`/product?category=${category.name}`}>
+          <Link key={category._id} className="nav-link" to={`/product?category=${category._id}`}>
             <div className="cat mb-4">
               <i className={`fa-solid ${category.icon} fs-1`}></i>
               <h3 className="mt-3 mb-0 fs-5 fw-normal">{category.name}</h3>

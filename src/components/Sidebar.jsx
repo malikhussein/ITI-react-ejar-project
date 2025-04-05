@@ -45,7 +45,7 @@ export default function Sidebar() {
               <li className="mb-1">
                 <button
                   onClick={() => {
-                    navigate(`/product?category=${category.name}`);
+                    navigate(`/product?category=${category._id}`);
                   }}
                   class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
                   data-bs-toggle="collapse"
