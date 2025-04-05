@@ -183,23 +183,38 @@ const ProductDetails = () => {
         <div className="card p-4 shadow-lg">
           <div className="container mt-4">
             {!product.data.confirmed && decoded.role === "admin" && (
-              <div className="alert alert-warning d-flex align-items-center justify-content-between p-2">
-                <div className="d-flex align-items-center">
-                  <i className="fas fa-exclamation-triangle me-2"></i>
-                  <span>Awaiting Admin Review</span>
-                </div>
+              <>
+                {product.data.confirmMessage ? (
+                  <div className="alert alert-info d-flex align-items-center justify-content-between p-2">
+                    <div className="d-flex align-items-center">
+                      <i className="fas fa-info-circle me-2"></i>
+                      <span>Waiting for user modifications</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="alert alert-warning d-flex align-items-center justify-content-between p-2">
+                    <div className="d-flex align-items-center">
+                      <i className="fas fa-exclamation-triangle me-2"></i>
+                      <span>Awaiting Admin Review</span>
+                    </div>
 
-                <div className="d-flex gap-2">
-                  <button onClick={confirmProduct}>
-                    <i class="fa-solid fa-check"></i>{" "}
-                  </button>
+                    <div className="d-flex gap-2">
+                      <button onClick={confirmProduct}>
+                        <i className="fa-solid fa-check"></i>
+                      </button>
 
-                  <button className="" onClick={() => setShowRejectInput(true)}>
-                    ❌
-                  </button>
-                </div>
-              </div>
+                      <button
+                        className=""
+                        onClick={() => setShowRejectInput(true)}
+                      >
+                        ❌
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
+
             {showRejectInput && (
               <div className="mt-2">
                 <input
