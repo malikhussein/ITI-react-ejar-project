@@ -57,8 +57,10 @@ export default function Register() {
       .matches(/^01[0-9]{9}$/, "Phone number must be a valid Egyptian number (01xxxxxxxxx)")
       .required("Phone number is required"),
       dob: Yup.date()
-      .max(new Date(new Date().setFullYear(new Date().getFullYear() - 15)), "You must be at least 15 years old")
-      .required("Date of birth is required"),
+  .min(new Date(new Date().setFullYear(new Date().getFullYear() - 70)), "You must not be older than 70 years old")
+  .max(new Date(new Date().setFullYear(new Date().getFullYear() - 15)), "You must be at least 15 years old")
+  .required("Date of birth is required"),
+
     
       address: Yup.string()
       .min(7, "Address must be at least 7 characters.")
