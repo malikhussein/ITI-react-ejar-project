@@ -1,7 +1,6 @@
 import React from 'react'
 import Sidebar from '../Sidebar'
 import ProductLIst from '../ProductLIst'
-import Paginatin from '../Paginatin'
 
 export default function ProductPage() {
  
@@ -16,7 +15,6 @@ export default function ProductPage() {
       </div>
     </div>
     
-    <Paginatin/>
     </>
   )
 }

@@ -49,6 +49,7 @@ function CategoriesSection() {
       <h2 className="ms-2">Browse By Category</h2>
       <Slider {...settings}>
         {categories.map((category) => (
+
           <Link
             key={category._id}
             className="nav-link"

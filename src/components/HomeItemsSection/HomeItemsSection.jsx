@@ -3,11 +3,9 @@ import { useEffect } from 'react';
 import Slider from 'react-slick';
 import './HomeItemsSection.css';
 import { Link } from 'react-router-dom';
-
 import useProductStore from '../../Store/productsStore';
 
 function HomeItemsSection() {
-
   const { products, loading, error, fetchProducts } = useProductStore();
 
   useEffect(() => {
@@ -87,7 +85,7 @@ function HomeItemsSection() {
     <div className="items-section">
       <h2 className="mb-5">Explore Our New Items</h2>
       <Slider {...settings}>
-        {confirmedProducts.map((item, index) => (
+        {confirmedProducts.map((item) => (
           <Link key={item._id} className="nav-link" to={`/product/${item._id}`}>
             <div className="item mb-4">
               <div className="card-icons">
@@ -102,9 +100,15 @@ function HomeItemsSection() {
               <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.name}</h3>
 
               <div className="d-flex gap-3 mt-2">
-                <p className="price fw-bold">{item.daily} EGP/Day</p>
-                <div className="rating">{renderStars(item.rating)}</div>
-                <p>{`(${item.reviews})`}</p>
+                <p className="price fw-bold">EGP {item.daily}</p>
+                {item.averageRating === 0 ? (
+                  <div className="newItem">NEW!</div>
+                ) : (
+                  <div className="rating d-flex gap-3">
+                    <div>{renderStars(item.averageRating)}</div>
+                    <p>{`(${item.review.length})`}</p>
+                  </div>
+                )}
               </div>
             </div>
           </Link>

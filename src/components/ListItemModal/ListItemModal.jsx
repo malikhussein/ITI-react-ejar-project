@@ -5,6 +5,7 @@ import TextInput from '../RegisterComponents/TextInput';
 import FileInput from '../RegisterComponents/FileInput';
 import useAuthStore from '../../Store/Auth';
 import useProductStore from '../../Store/product';
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
 export default function ListItemModal() {
   const { token } = useAuthStore();
@@ -72,27 +73,9 @@ export default function ListItemModal() {
       try {
         await postProduct(token, formData);
 
-        // Close the modal manually using DOM manipulation
-        const modalElement = document.getElementById('profileModal');
-        if (modalElement) {
-          // Remove modal-related classes from the modal element
-          modalElement.classList.remove('show');
-          modalElement.setAttribute('aria-hidden', 'true');
-          modalElement.style.display = 'none';
-
-          // Remove the modal backdrop
-          const backdrop = document.querySelector('.modal-backdrop');
-          if (backdrop) {
-            backdrop.remove();
-          }
-
-          // Remove modal-open class from body
-          document.body.classList.remove('modal-open');
-          document.body.style.overflow = '';
-          document.body.style.paddingRight = '';
-        }
-
-        formik.resetForm();
+        const modalElement = document.querySelector('#productModal');
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
       } catch (error) {
         console.error(error);
       }
@@ -163,7 +146,7 @@ export default function ListItemModal() {
                 Close
               </button>
               <button type="submit" className="btn btn-primary">
-                List
+                Rent
               </button>
             </div>
           </form>

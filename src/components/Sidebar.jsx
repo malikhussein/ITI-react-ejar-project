@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
-import useCategoryStore from '../Store/categoryStore';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import useCategoryStore from "../Store/categoryStore";
+import { Link, useNavigate } from "react-router-dom";
+
 
 export default function Sidebar() {
   const { categories, fetchCategories } = useCategoryStore();
 
-  const navigate = useNavigate(); // Initialize useNavigate
 
+  const navigate = useNavigate(); // Initialize useNavigate
+  
   useEffect(() => {
     fetchCategories();
+
+
   }, []);
 
   //   try {
@@ -16,7 +20,7 @@ export default function Sidebar() {
   //       params: { category: categoryName } });
   //     console.log("Fetched Products:", response.data.data); // Debugging log
   //     setProducts(response.data.data);
-
+       
   //   } catch (err) {
   //     console.log("Error fetching products:", err.message);
   //   }

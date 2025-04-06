@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import * as Yup from "yup";
 import TextInput from '../RegisterComponents/TextInput';
 import PasswordInput from '../RegisterComponents/PasswordInput';
 import useAuthStore from '../../Store/Auth';
@@ -8,40 +8,35 @@ import useProfileStore from '../../Store/profile';
 import { useParams } from 'react-router-dom';
 
 export default function EditProdileModal({ profile }) {
-  const { id: userId } = useParams();
+  const { id:userId } = useParams();
   const { token } = useAuthStore();
   const { updateProfile } = useProfileStore();
 
   const initialValues = {
     userName: profile.userName,
     email: profile.email,
-    newPassword: '',
-    confirmPassword: '',
+    newPassword: "",
+    confirmPassword: "",
   };
 
   const validationSchema = Yup.object({
     userName: Yup.string()
-      .min(3, 'Name should be at least 3 characters long')
-      .max(29, 'Name should be at most 29 characters long')
-      .matches(
-        /^[a-zA-Z0-9_ ]+$/,
-        'Only letters, numbers, underscores, and spaces are allowed.'
-      )
-      .required('Name is required'),
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required'),
+    .min(3, "Name should be at least 3 characters long")
+    .max(29, "Name should be at most 29 characters long")
+    .matches(/^[a-zA-Z0-9_ ]+$/, "Only letters, numbers, underscores, and spaces are allowed.")
+    .required("Name is required"),
+    email: Yup.string().email("Invalid email address").required("Email is required"),
     newPassword: Yup.string()
-      .min(8, 'Password should be at least 8 characters long')
-      .matches(
-        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        'Password must contain at least one uppercase, one lowercase letter, one number, and one special character'
-      ),
+    .min(8, "Password should be at least 8 characters long")
+    .matches(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least one uppercase, one lowercase letter, one number, and one special character"
+    ),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+      .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
       .matches(
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        'Password must contain at least one uppercase, one lowercase letter, one number, and one special character'
+        "Password must contain at least one uppercase, one lowercase letter, one number, and one special character"
       ),
   });
 
@@ -55,29 +50,13 @@ export default function EditProdileModal({ profile }) {
         password: values.newPassword ? values.newPassword : undefined,
       };
       try {
-        await updateProfile(userId, token, updatedData);
+        await updateProfile(userId,token, updatedData);
 
-        // Close the modal manually using DOM manipulation
-        const modalElement = document.getElementById('profileModal');
-        if (modalElement) {
-          // Remove modal-related classes from the modal element
-          modalElement.classList.remove('show');
-          modalElement.setAttribute('aria-hidden', 'true');
-          modalElement.style.display = 'none';
 
-          // Remove the modal backdrop
-          const backdrop = document.querySelector('.modal-backdrop');
-          if (backdrop) {
-            backdrop.remove();
-          }
+      // Remove the classes from the body and remove the div with modal-backdrop show
+      document.querySelector('#profileModal').modal('hide');
 
-          // Remove modal-open class from body
-          document.body.classList.remove('modal-open');
-          document.body.style.overflow = '';
-          document.body.style.paddingRight = '';
-        }
-
-        formik.resetForm();
+    formik.resetForm();
       } catch (error) {
         console.log(error);
       }
@@ -112,18 +91,10 @@ export default function EditProdileModal({ profile }) {
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="modal-body">
-              <TextInput label="Name" id="userName" formik={formik} />
-              <TextInput label="Email" id="email" formik={formik} />
-              <PasswordInput
-                label="New Password"
-                id="newPassword"
-                formik={formik}
-              />
-              <PasswordInput
-                label="Confirm Password"
-                id="confirmPassword"
-                formik={formik}
-              />
+              <TextInput label="Name" id="userName" formik={formik}/>
+              <TextInput label="Email" id="email" formik={formik}/>
+              <PasswordInput label="New Password" id="newPassword" formik={formik}/>
+              <PasswordInput label="Confirm Password" id="confirmPassword" formik={formik}/>
             </div>
             <div className="modal-footer">
               <button

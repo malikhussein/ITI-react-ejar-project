@@ -10,8 +10,6 @@ const useProfileStore = create((set, get) => ({
   fetchProfile: async (userId, token) => {
     try {
       set({ loading: true, error: null });
-      console.log(userId);
-      
       const response = await axios.get(`http://localhost:3000/api/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
