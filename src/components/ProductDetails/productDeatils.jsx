@@ -138,41 +138,6 @@ const ProductDetails = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const confirmProduct = async () => {
-    try {
-      const updatedData = {
-        ...product.data,
-        confirmed: true,
-        confirmMessage: "Product confirmed by admin",
-      };
-
-      await updateProduct(updatedData);
-    } catch (error) {
-      console.error("Error confirming product:", error);
-    }
-  };
-
-  const rejectProduct = async () => {
-    if (!rejectReason.trim()) {
-      return;
-    }
-
-    console.log(1);
-
-    try {
-      const updatedData = {
-        ...product.data,
-        confirmed: false,
-        confirmMessage: rejectReason,
-      };
-
-      await updateProduct(updatedData);
-      alert("Product rejected successfully!");
-    } catch (error) {
-      console.error("Error rejecting product:", error);
-    }
-  };
-
   if (!product) {
     return <p>Loading...</p>;
   }
@@ -182,53 +147,6 @@ const ProductDetails = () => {
       <div className="container my-5">
         <div className="card p-4 shadow-lg">
           <div className="container mt-4">
-            {!product.data.confirmed && decoded.role === "admin" && (
-              <>
-                {product.data.confirmMessage ? (
-                  <div className="alert alert-info d-flex align-items-center justify-content-between p-2">
-                    <div className="d-flex align-items-center">
-                      <i className="fas fa-info-circle me-2"></i>
-                      <span>Waiting for user modifications</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="alert alert-warning d-flex align-items-center justify-content-between p-2">
-                    <div className="d-flex align-items-center">
-                      <i className="fas fa-exclamation-triangle me-2"></i>
-                      <span>Awaiting Admin Review</span>
-                    </div>
-
-                    <div className="d-flex gap-2">
-                      <button onClick={confirmProduct}>
-                        <i className="fa-solid fa-check"></i>
-                      </button>
-
-                      <button
-                        className=""
-                        onClick={() => setShowRejectInput(true)}
-                      >
-                        ❌
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-
-            {showRejectInput && (
-              <div className="mt-2">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter rejection reason..."
-                  value={rejectReason}
-                  onChange={(e) => setRejectReason(e.target.value)}
-                />
-                <button className="btn btn-danger mt-2" onClick={rejectProduct}>
-                  Submit Rejection
-                </button>
-              </div>
-            )}
             {!product.data.confirmed &&
               decoded.id == product.data.renterId._id && (
                 <div className="alert alert-warning ">
