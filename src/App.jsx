@@ -10,6 +10,7 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Wishlist from './Pages/Wishlist/Wishlist';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import ChatPage from './components/ChatPage/ChatPage';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password/:token" element={<ResetPassword />} />
+
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
     </>
   );
