@@ -14,7 +14,7 @@ export default function NotFound() {
       </h1>
 
       <p className="fs-5 text-muted mb-2">
-        Check the URL for typos, or choose a helpful action below.
+      You've reached a page that doesn't exist, might've been moved, or is temporarily unavailable.
       </p>
       <p className="fs-6 text-muted mb-2">
         Check the URL for typos, or choose a helpful action below.
