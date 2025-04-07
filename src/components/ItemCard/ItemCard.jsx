@@ -1,14 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import useWishlistStore from "../../Store/Wishlist";
 import "./ItemCard.css";
 
 function ItemCard({ item, renderStars }) {
+  
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
+  const isWishlisted = wishlist.some((p) => p.id === item._id);
+
   return (
     <Link className="nav-link" to={`/product/${item._id}`}>
       <div className="item mb-4">
         <div className="card-icons">
-          <i className="fa-regular fa-heart"></i>
+          <div>
+            <div
+              onClick={(e) => {
+                e.preventDefault();
+                isWishlisted
+                  ? removeFromWishlist(item._id)
+                  : addToWishlist(item);
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              <i
+                className={`fa-heart ${
+                  isWishlisted ? "fas text-danger" : "far"
+                }`}
+              ></i>
+            </div>
+          </div>
         </div>
 
         <div className="image">
@@ -26,8 +46,6 @@ function ItemCard({ item, renderStars }) {
               <div>{renderStars(item.averageRating)}</div>
               <p>{`(${item.review.length})`}</p>
             </div>
-
-            
           )}
         </div>
       </div>
