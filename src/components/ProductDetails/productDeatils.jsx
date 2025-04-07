@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from "react";
-import ReactImageMagnify from "react-image-magnify";
-import { useProductStore } from "../../Store/Deatils";
-import { jwtDecode } from "jwt-decode";
-import { Link, useParams } from "react-router-dom";
-import useAuthStore from "../../Store/Auth";
-import "./productDeatils.css";
+import React, { useState, useEffect } from 'react';
+import ReactImageMagnify from 'react-image-magnify';
+import { useProductStore } from '../../Store/Deatils';
+import { jwtDecode } from 'jwt-decode';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import useAuthStore from '../../Store/Auth';
+import './productDeatils.css';
+import useChatStore from '../../Store/chatStore';
 
 const ProductDetails = () => {
-  const [showRejectInput, setShowRejectInput] = useState(false);
-  const [rejectReason, setRejectReason] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const { product, fetchProduct, updateProduct, getAllProd } =
     useProductStore();
   const { token } = useAuthStore();
   const [mainImage, setMainImage] = useState(null);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
+  const { createChat } = useChatStore();
+  const navigate = useNavigate();
 
   const [fields, setFields] = useState({
-    name: "",
-    brand: "",
-    category: "",
-    owner: "",
-    description: "",
-    daily: "",
-    comfirmed: "",
-    confirmMessage: "",
-    status: "",
+    name: '',
+    brand: '',
+    category: '',
+    owner: '',
+    description: '',
+    daily: '',
+    comfirmed: '',
+    confirmMessage: '',
+    status: '',
     images: [],
   });
   const [newImage, setNewImage] = useState(null);
@@ -44,15 +45,15 @@ const ProductDetails = () => {
   useEffect(() => {
     if (product?.data) {
       setFields({
-        name: product.data.name || "",
-        description: product.data.description || "",
+        name: product.data.name || '',
+        description: product.data.description || '',
         daily: Number(product.data.daily) || 0,
-        category: product.data.category.name || "",
+        category: product.data.category?.name || '',
         confirmed: Boolean(product.data.confirmed),
-        confirmMessage: product.data.confirmMessage || "",
-        status: product.data.status || "",
-        owner: product.data.renterId.userName || "",
-        ownerId: product.data.renterId._id || "",
+        confirmMessage: product.data.confirmMessage || '',
+        status: product.data.status || '',
+        owner: product.data.renterId.userName || '',
+        ownerId: product.data.renterId._id || '',
         images: product.data.images || [],
       });
     }
@@ -65,7 +66,7 @@ const ProductDetails = () => {
   }, [product?.data?.images]);
 
   useEffect(() => {
-    getAllProd(product?.data?.category._id);
+    getAllProd(product?.data?.category?._id);
   }, [getAllProd, product]);
 
   const toggleEdit = async () => {
@@ -109,11 +110,11 @@ const ProductDetails = () => {
     if (!newImage) return;
 
     const formData = new FormData();
-    formData.append("images", newImage);
+    formData.append('images', newImage);
 
     try {
       const response = await fetch(`http://localhost:3000/api/product/${id}`, {
-        method: "POST",
+        method: 'POST',
         body: formData,
       });
       const data = await response.json();
@@ -125,7 +126,7 @@ const ProductDetails = () => {
 
       setNewImage(null);
     } catch (error) {
-      console.error("Image upload failed:", error);
+      console.error('Image upload failed:', error);
     }
   };
 
@@ -134,13 +135,24 @@ const ProductDetails = () => {
       setIsSmallScreen(window.innerWidth < 768);
     };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   if (!product) {
     return <p>Loading...</p>;
   }
+
+  const chatWithOwner = async () => {
+    console.log(token);
+    const chat = await createChat(product.data.renterId._id, token);
+    console.log(chat);
+    if (chat && chat._id) {
+      navigate(`/chat/${chat._id}`);
+    } else {
+      console.error('Failed to create chat or chat ID is missing');
+    }
+  };
 
   return (
     <>
@@ -161,7 +173,7 @@ const ProductDetails = () => {
               )}
             {!product.data.confirmed &&
               decoded.id !== product.data.renterId._id &&
-              decoded.role !== "admin" && (
+              decoded.role !== 'admin' && (
                 <div className="alert alert-warning d-flex align-items-center">
                   <i className="fas fa-exclamation-triangle me-2"></i>
                   <span>
@@ -178,16 +190,16 @@ const ProductDetails = () => {
                   src={mainImage}
                   alt="Product Image"
                   style={{
-                    width: "400px",
-                    height: "400px",
-                    objectFit: "cover",
+                    width: '400px',
+                    height: '400px',
+                    objectFit: 'cover',
                   }}
                 />
               ) : (
                 <ReactImageMagnify
                   {...{
                     smallImage: {
-                      alt: "Product Image",
+                      alt: 'Product Image',
                       isFluidWidth: false,
                       src: mainImage,
                       width: 400,
@@ -199,8 +211,8 @@ const ProductDetails = () => {
                       height: 1200,
                     },
                     enlargedImageContainerDimensions: {
-                      width: "120%",
-                      height: "120%",
+                      width: '120%',
+                      height: '120%',
                     },
                   }}
                 />
@@ -214,14 +226,14 @@ const ProductDetails = () => {
                       alt={`Thumbnail ${index + 1}`}
                       className="rounded border"
                       style={{
-                        width: "80px",
-                        height: "80px",
-                        objectFit: "cover",
-                        cursor: "pointer",
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'cover',
+                        cursor: 'pointer',
                         border:
                           mainImage === img
-                            ? "2px solid blue"
-                            : "2px solid transparent",
+                            ? '2px solid blue'
+                            : '2px solid transparent',
                       }}
                       onClick={() => handleImageClick(img)}
                     />
@@ -229,9 +241,9 @@ const ProductDetails = () => {
                       <button
                         className="position-absolute top-0 end-0 btn btn-sm btn-danger p-0 rounded-circle"
                         style={{
-                          width: "20px",
-                          height: "20px",
-                          fontSize: "12px",
+                          width: '20px',
+                          height: '20px',
+                          fontSize: '12px',
                         }}
                         onClick={() => handleDeleteImage(index)}
                       >
@@ -245,9 +257,9 @@ const ProductDetails = () => {
                   <label
                     className="m-2 bg-secondary d-flex align-items-center justify-content-center rounded"
                     style={{
-                      width: "80px",
-                      height: "80px",
-                      cursor: "pointer",
+                      width: '80px',
+                      height: '80px',
+                      cursor: 'pointer',
                       opacity: 0.7,
                     }}
                   >
@@ -255,7 +267,7 @@ const ProductDetails = () => {
                     <input
                       type="file"
                       accept="image/*"
-                      style={{ display: "none" }}
+                      style={{ display: 'none' }}
                       onChange={handleAddImage}
                     />
                   </label>
@@ -279,7 +291,7 @@ const ProductDetails = () => {
                 <input
                   type="text"
                   value={fields.name}
-                  onChange={(e) => handleChange(e, "name")}
+                  onChange={(e) => handleChange(e, 'name')}
                   className="form-control mb-3"
                 />
               ) : (
@@ -290,7 +302,7 @@ const ProductDetails = () => {
                 <i className="fa-solid fa-tags me-2 text-secondary"></i>
                 <span className="fw-semibold">Category:</span>
                 <span className="ms-1 text-muted">
-                  {fields.category || "N/A"}
+                  {fields.category || 'N/A'}
                 </span>
               </div>
 
@@ -312,9 +324,9 @@ const ProductDetails = () => {
                   <input
                     type="text"
                     value={fields.status}
-                    onChange={(e) => handleChange(e, "status")}
+                    onChange={(e) => handleChange(e, 'status')}
                     className="form-control ms-2"
-                    style={{ maxWidth: "150px" }}
+                    style={{ maxWidth: '150px' }}
                   />
                 ) : (
                   <span className="ms-1 text-muted">{fields.status}</span>
@@ -330,14 +342,14 @@ const ProductDetails = () => {
                       key={i}
                       className={`fa-star ${
                         i + 1 <= Number(product.data.averageRating)
-                          ? "fas"
-                          : "far"
+                          ? 'fas'
+                          : 'far'
                       }`}
                       style={{
                         color:
                           i + 1 <= Number(product.data.averageRating)
-                            ? "gold"
-                            : "lightgray",
+                            ? 'gold'
+                            : 'lightgray',
                       }}
                     ></i>
                   ))}
@@ -347,7 +359,7 @@ const ProductDetails = () => {
               {isEditing ? (
                 <textarea
                   value={fields.description}
-                  onChange={(e) => handleChange(e, "description")}
+                  onChange={(e) => handleChange(e, 'description')}
                   className="form-control mb-2"
                 />
               ) : (
@@ -358,7 +370,7 @@ const ProductDetails = () => {
                 <input
                   type="text"
                   value={fields.daily}
-                  onChange={(e) => handleChange(e, "daily")}
+                  onChange={(e) => handleChange(e, 'daily')}
                   className="form-control mb-2"
                 />
               ) : (
@@ -370,19 +382,33 @@ const ProductDetails = () => {
                     className="btn main-back w-25 mx-1"
                     onClick={toggleEdit}
                   >
-                    {isEditing ? "Save" : "Edit"}
+                    {isEditing ? 'Save' : 'Edit'}
                   </button>
                 ) : (
-                  ""
+                  ''
                 )}
                 {console.log(decoded.role)}
                 {product.data.confirmed &&
                 decoded.id !== product.data.renterId._id ? (
-                  <button className="btn btn-primary w-25">
-                    <i className="fa-solid fa-comment"></i> Chat
-                  </button>
+                  <>
+                    <button
+                      className="btn btn-primary w-25 me-2"
+                      onClick={chatWithOwner}
+                    >
+                      <i className="fa-solid fa-comment"></i> Chat
+                    </button>
+
+                    <button
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#rentModal"
+                      className="btn btn-primary w-25"
+                    >
+                      <i class="fa-solid fa-cart-shopping"></i> Rent
+                    </button>
+                  </>
                 ) : (
-                  ""
+                  ''
                 )}
               </div>
             </div>
