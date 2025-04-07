@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ejarLogo from '../../assets/logo.png';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { jwtDecode } from 'jwt-decode';
 
 export default function Navbar() {
   const { token, logout } = useAuthStore();
+  const [searchQuery, setSearchQuery] = useState("");
+
   let decodedToken;
   if (token) {
     decodedToken = jwtDecode(token);
@@ -31,10 +33,13 @@ export default function Navbar() {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                }}
               />
-              <button className="input-group-text rounded-end-1 border-0 pe-4">
+              <Link to={`/search?query=${encodeURIComponent(searchQuery.trim())}`} className="input-group-text rounded-end-1 border-0 pe-4">
                 <i className="fas fa-search"></i>
-              </button>
+              </Link>
             </div>
           </form>
 
