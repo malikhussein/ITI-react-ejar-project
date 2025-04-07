@@ -14,9 +14,11 @@ export default function ProductList() {
   const categoryName = query.get("category"); // Get category from query params
   const [page, setPage] = useState(1); // Track the current page
   const productsPerPage = 4; // Number of products per page
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchProducts = async () => {
     try {
+      setIsLoading(true); // Set loading state to true
       const response = await axios.get(`http://localhost:3000/api/product`, {
         params: categoryName ? { category: categoryName } : {}, // If no category, fetch all products
       });
@@ -25,6 +27,8 @@ export default function ProductList() {
       setProducts(response.data.data);
     } catch (err) {
       console.log("Error fetching products:", err.message);
+    } finally {
+      setIsLoading(false); // Set loading state to false
     }
   };
 
@@ -47,12 +51,16 @@ export default function ProductList() {
   return (
     <>
       <div className="col-md-9">
-        {confirmedProducts.length > 0 ? (
-          confirmedProducts.map((product) => (
+        {isLoading ? (
+          <h1>"Loading..."</h1>
+        ) : currentProducts.length > 0 ? (
+          currentProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (
-          <h1>Loading...</h1>
+          <div className="text-center">
+            <h2 className="">No products found in this category</h2>
+          </div>
         )}
       </div>
 
@@ -62,7 +70,7 @@ export default function ProductList() {
       >
         <Pagination
           onChange={handlePageChange}
-          count={5}
+          count={Math.ceil(products.length / productsPerPage)}
           variant="outlined"
           shape="rounded"
         />
