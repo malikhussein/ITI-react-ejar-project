@@ -53,8 +53,8 @@ export default function ProductList() {
       <div className="col-md-9">
         {isLoading ? (
           <h1>"Loading..."</h1>
-        ) : currentProducts.length > 0 ? (
-          currentProducts.map((product) => (
+        ) : confirmedProducts.length > 0 ? (
+          confirmedProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (
