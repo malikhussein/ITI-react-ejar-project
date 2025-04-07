@@ -1,10 +1,37 @@
-// import product from "../assets/1.jpg"
-
-import { Link } from 'react-router-dom';
-import './ProductCard.css';
+import { Link } from "react-router-dom";
+import "./ProductCard.css";
+import useWishlistStore from "../../Store/Wishlist";
 
 export default function ProductCard({ product }) {
-  console.log(product);
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
+
+
+  const isWishlisted = wishlist.some((p) => p.id === product.id);
+
+  const renderStars = (rating) => {
+    const totalStars = 5;
+    const filledStars = parseInt(rating, 10);
+    const emptyStars = totalStars - filledStars;
+
+    return (
+      <>
+        {Array(filledStars)
+          .fill()
+          .map((_, i) => (
+            <span key={`filled-${i}`} className="star filled">
+              <i className="fa-solid fa-star"></i>
+            </span>
+          ))}
+        {Array(emptyStars)
+          .fill()
+          .map((_, i) => (
+            <span key={`empty-${i}`} className="star empty">
+              <i className="fa-regular fa-star"></i>
+            </span>
+          ))}
+      </>
+    );
+  };
 
   return (
     <>
@@ -17,7 +44,7 @@ export default function ProductCard({ product }) {
           id="imgProduct"
           className="col-12 col-md-auto d-flex justify-content-center"
         >
-          <Link to={`/product/${product._id}`}>
+          <Link >
             <img
               src={product.images[0]}
               className="bd-placeholder-img img-fluid"
@@ -29,7 +56,7 @@ export default function ProductCard({ product }) {
 
         <div
           id="data"
-          className="col-12 col-md-5 p-4 d-flex flex-column position-static text-center text-md-start"
+          className="col-12 col-md-5 p-4 d-flex flex-column position-static text-center text-md-start "
         >
           <Link to={`/product/${product._id}`}>
             <h2 id="title" className="d-inline-block mb-2">
@@ -37,30 +64,39 @@ export default function ProductCard({ product }) {
             </h2>
           </Link>
           <h5>Description:</h5>
-          <h5>{product.description}</h5>
+          <h5>{product.description.split(" ").splice(0,14).join(" ")}</h5>
           <h2 id="price">{product.daily} E.G</h2>
         </div>
 
         <div
           id="iconsButtons"
-          className="col-12 col-md p-4 d-flex flex-column align-items-center align-items-md-start position-static"
+          className="col-12 col-md p-4 d-flex flex-column align-items-center align-items-md-end position-static"
         >
-          <h5>
-            <i className="fa-solid fa-heart d-none d-md-block"></i>
-          </h5>
-          <h5 className="d-none d-md-block">
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-          </h5>
-          <button
-            style={{ width: 200 }}
-            className="btn btn-secondary rent-button"
+          <h5
+            onClick={() =>
+              isWishlisted
+                ? removeFromWishlist(product.id)
+                : addToWishlist(product)
+            }
+            style={{ cursor: "pointer" }}
           >
-            Rent Now
-          </button>
+            <i
+              className={`fa-heart ${isWishlisted ? "fas text-danger" : "far"}`}
+            ></i>
+          </h5>{" "}
+
+          <h5 className="d-none d-md-block">
+          {
+            renderStars( product.rating)
+          }  
+            
+          </h5>
+          <Link to={`/product/${product._id}`}
+            style={{ width: 180 }}
+            className="btn btn-secondary rent-button py-2"
+          >
+          Get Details         
+          </Link>
         </div>
       </div>
     </>

@@ -50,7 +50,7 @@ function HomeItemsSection() {
     initialSlide: 0,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
@@ -58,6 +58,12 @@ function HomeItemsSection() {
           infinite: true,
           dots: false,
         },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2,
+        }
       },
       {
         breakpoint: 600,

@@ -1,29 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useChatStore from '../../Store/chatStore';
 
 export default function ChatSidebar({ chatId, token, userId }) {
-  const [chats, setChats] = useState([]);
+  const { userChats, getUserChats } = useChatStore();
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/api/chat', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setChats(res.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching chats:', error);
-      });
-  }, [token]);
+    getUserChats(token);
+  }, [getUserChats, token]);
 
   return (
     // Make it responsive
     <div className="w-25 h-100 border-end" style={{ overflowY: 'scroll' }}>
-      {chats.map((chat) => (
+      {userChats.map((chat) => (
         <Link to={`/chat/${chat._id}`} key={chat._id} className="nav-link">
           <div
             key={chat._id}
