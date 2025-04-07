@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import ListingCard from '../ListingCard/ListingCard';
-import products from '../../assets/products.json';
-import useProductStore from '../../Store/product';
-import useAuthStore from '../../Store/Auth';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from "react";
+import ListingCard from "../ListingCard/ListingCard";
+import products from "../../assets/products.json";
+import useProductStore from "../../Store/product";
+import useAuthStore from "../../Store/Auth";
+import { useParams } from "react-router-dom";
 
 export default function Listings() {
   const { id: userId } = useParams();
@@ -14,6 +14,10 @@ export default function Listings() {
     getUserProducts(token, userId);
   }, [getUserProducts, token, userId]);
 
+  const confirmedProducts = userProducts.filter(
+    (item) => item.confirmed === true
+  );
+
   return (
     <div className="container">
       <h2 className="my-5 border-bottom pb-3 text-center text-lg-start">
@@ -23,7 +27,7 @@ export default function Listings() {
         {userProducts.length === 0 ? (
           <h3 className="text-center mb-5 h1">No Listings Found</h3>
         ) : (
-          userProducts.map((product) => (
+          confirmedProducts.map((product) => (
             <ListingCard key={product.id} product={product} />
           ))
         )}

@@ -1,12 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
+import useChatStore from '../../Store/chatStore';
 
 const socket = io('http://localhost:3000');
 
 export default function Messages({ chatId, token, userId }) {
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
+  const { chatMessages, getChatMessages, setChatMessages, postMessage } =
+    useChatStore();
 
   useEffect(() => {
     const scrollToBottom = () => {
@@ -17,32 +18,21 @@ export default function Messages({ chatId, token, userId }) {
     };
 
     scrollToBottom();
-  }, [messages]);
+  }, [chatMessages]);
 
   useEffect(() => {
     socket.emit('joinChat', chatId);
 
-    axios
-      .get(`http://localhost:3000/api/message/${chatId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setMessages(res.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching messages:', error);
-      });
+    getChatMessages(chatId, token);
 
     socket.on('recieveMessage', (newMessage) => {
       if (!newMessage.createdAt) {
         newMessage.createdAt = new Date().toLocaleString();
       }
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setChatMessages(newMessage);
     });
     return () => socket.off('recieveMessage');
-  }, [chatId, token]);
+  }, [setChatMessages, getChatMessages, chatId, token]);
 
   const sendMessage = () => {
     if (message.trim()) {
@@ -54,11 +44,7 @@ export default function Messages({ chatId, token, userId }) {
 
       socket.emit('sendMessage', newMessage);
 
-      axios.post('http://localhost:3000/api/message', newMessage, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      postMessage(newMessage, token);
 
       setMessage('');
     }
@@ -70,7 +56,7 @@ export default function Messages({ chatId, token, userId }) {
         className="d-flex flex-column chat-container"
         style={{ overflowY: 'scroll' }}
       >
-        {messages.map((msg, index) =>
+        {chatMessages.map((msg, index) =>
           msg.senderId === userId ? (
             <div key={index} className="mx-3 align-self-end">
               <h5 className="p-2 bg-primary text-white w-auto rounded-4 text-center">
