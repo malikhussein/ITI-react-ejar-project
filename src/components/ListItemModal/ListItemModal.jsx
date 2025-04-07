@@ -5,7 +5,6 @@ import TextInput from '../RegisterComponents/TextInput';
 import FileInput from '../RegisterComponents/FileInput';
 import useAuthStore from '../../Store/Auth';
 import useProductStore from '../../Store/product';
-import bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
 export default function ListItemModal() {
   const { token } = useAuthStore();
@@ -73,9 +72,26 @@ export default function ListItemModal() {
       try {
         await postProduct(token, formData);
 
-        const modalElement = document.querySelector('#productModal');
-        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-        modalInstance.hide();
+        // Close the modal using DOM manipulation
+        const modalElement = document.getElementById('productModal');
+        if (modalElement) {
+          // Remove modal-specific classes and styles
+          modalElement.classList.remove('show');
+          modalElement.style.display = 'none';
+
+          // Remove the backdrop
+          const backdrop = document.querySelector('.modal-backdrop');
+          if (backdrop) {
+            backdrop.parentNode.removeChild(backdrop);
+          }
+
+          // Enable scrolling on body
+          document.body.classList.remove('modal-open');
+          document.body.style.overflow = '';
+          document.body.style.paddingRight = '';
+        }
+
+        formik.resetForm();
       } catch (error) {
         console.error(error);
       }
