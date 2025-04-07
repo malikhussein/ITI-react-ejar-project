@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -6,12 +6,22 @@ import { useNavigate } from "react-router-dom";
 import TextInput from "../../components/RegisterComponents/TextInput";
 import PasswordInput from "../../components/RegisterComponents/PasswordInput";
 import useAuthStore from "../../Store/Auth";
+import {jwtDecode} from "jwt-decode"; 
+
 
 export default function Login() {
   const [apiError, setApiError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { setToken } = useAuthStore(); 
+  // SECURITY: Block token-in-URL issue from affecting React login
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if (query.has("token")) {
+      console.warn("Token in URL detected — clearing it from React app");
+      window.history.replaceState({}, "", window.location.pathname);
+    }
+  }, []);
   
 
   const formik = useFormik({
@@ -68,13 +78,26 @@ export default function Login() {
 
         if (response.status === 200) {
           console.log("Login Successful:", response.data);
+          const token = response.data.token;
 
-          // Store token in Zustand
+
+          // Store token in Zustand(and local/session storage depending on rememberMe)
           setToken(response.data.token, values.rememberMe);
+            // Decode token
+            const decoded = jwtDecode(token);
+            console.log("Decoded token:", decoded);
 
+        // Redirect based on role
+        
+        if (decoded.role === "admin") {
           setTimeout(() => {
-            navigate("/");
-          }, 2000);
+            window.location.href = `http://localhost:4200/?token=${token}&remember=${values.rememberMe}`
+          }, 1000);          
+          } else {
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+        }
         }
       } catch (error) {
         console.error("API Error:", error.response?.data);
@@ -88,7 +111,8 @@ export default function Login() {
   });
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "600px", margin: "0 auto", transform: "scale(0.9)", transformOrigin: "top center"  ,minHeight: '100vh' }}>
+    // <div className="container mt-5" style={{ maxWidth: "600px", margin: "0 auto", transform: "scale(0.9)", transformOrigin: "top center"  ,minHeight: '100vh' }}>
+    <div className="container mt-5" style={{ maxWidth: "600px", margin: "0 auto", minHeight: '100vh' }}>
       <h2 className="text-left" style={{ color: "#562DDD", fontSize: "34px", fontWeight: 700, marginBottom: "20px" }}>
         Log in to Ejar
       </h2>
