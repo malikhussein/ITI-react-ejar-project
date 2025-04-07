@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import ejarLogo from '../../assets/logo.png';
 import './Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../../Store/Auth';
 import { jwtDecode } from 'jwt-decode';
 
 export default function Navbar() {
   const { token, logout } = useAuthStore();
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   let decodedToken;
   if (token) {
     decodedToken = jwtDecode(token);
   }
   const userId = decodedToken?.id;
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery(""); 
+    }
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-white p-3">
@@ -26,7 +36,7 @@ export default function Navbar() {
           </div>
 
           {/* Search bar */}
-          <form className="d-flex col-9 col-lg-6">
+          <form onSubmit={handleSearch} className="d-flex col-9 col-lg-6">
             <div className="input-group">
               <input
                 className="form-control bg-light rounded-start-1 border-0 ps-4"
@@ -37,9 +47,9 @@ export default function Navbar() {
                 setSearchQuery(e.target.value);
                 }}
               />
-              <Link to={`/search?query=${encodeURIComponent(searchQuery.trim())}`} className="input-group-text rounded-end-1 border-0 pe-4">
+              <button type='submit' className="input-group-text rounded-end-1 border-0 pe-4">
                 <i className="fas fa-search"></i>
-              </Link>
+              </button>
             </div>
           </form>
 

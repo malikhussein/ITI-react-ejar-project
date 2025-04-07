@@ -5,9 +5,33 @@ import useWishlistStore from "../../Store/Wishlist";
 export default function ProductCard({ product }) {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
 
+
   const isWishlisted = wishlist.some((p) => p.id === product.id);
 
-  console.log(product);
+  const renderStars = (rating) => {
+    const totalStars = 5;
+    const filledStars = parseInt(rating, 10);
+    const emptyStars = totalStars - filledStars;
+
+    return (
+      <>
+        {Array(filledStars)
+          .fill()
+          .map((_, i) => (
+            <span key={`filled-${i}`} className="star filled">
+              <i className="fa-solid fa-star"></i>
+            </span>
+          ))}
+        {Array(emptyStars)
+          .fill()
+          .map((_, i) => (
+            <span key={`empty-${i}`} className="star empty">
+              <i className="fa-regular fa-star"></i>
+            </span>
+          ))}
+      </>
+    );
+  };
 
   return (
     <>
@@ -32,7 +56,7 @@ export default function ProductCard({ product }) {
 
         <div
           id="data"
-          className="col-12 col-md-5 p-4 d-flex flex-column position-static text-center text-md-start"
+          className="col-12 col-md-5 p-4 d-flex flex-column position-static text-center text-md-start "
         >
           <Link to={`/product/${product._id}`}>
             <h2 id="title" className="d-inline-block mb-2">
@@ -40,7 +64,7 @@ export default function ProductCard({ product }) {
             </h2>
           </Link>
           <h5>Description:</h5>
-          <h5>{product.description}</h5>
+          <h5>{product.description.split(" ").splice(0,14).join(" ")}</h5>
           <h2 id="price">{product.daily} E.G</h2>
         </div>
 
@@ -62,11 +86,10 @@ export default function ProductCard({ product }) {
           </h5>{" "}
 
           <h5 className="d-none d-md-block">
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
-            <i className="fa-solid fa-star"></i>
+          {
+            renderStars( product.rating)
+          }  
+            
           </h5>
           <Link to={`/product/${product._id}`}
             style={{ width: 180 }}
