@@ -23,14 +23,21 @@
   background-color: #A7265E;
 }
 
+.bt {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (max-width: 768px) {
   .text .rent-head {
     font-size: 22px;
   }
   .text .rent-p {
     font-size: 16px !important;
+    padding-left: 5px;
   }
   .text p:last-child {
     font-size: 17px !important;
+    padding-left: 5px;
   }
 }
