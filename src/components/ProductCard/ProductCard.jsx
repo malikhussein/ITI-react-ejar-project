@@ -1,9 +1,12 @@
-// import product from "../assets/1.jpg"
-
-import { Link } from 'react-router-dom';
-import './ProductCard.css';
+import { Link } from "react-router-dom";
+import "./ProductCard.css";
+import useWishlistStore from "../../Store/Wishlist";
 
 export default function ProductCard({ product }) {
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
+
+  const isWishlisted = wishlist.some((p) => p.id === product.id);
+
   console.log(product);
 
   return (
@@ -17,7 +20,7 @@ export default function ProductCard({ product }) {
           id="imgProduct"
           className="col-12 col-md-auto d-flex justify-content-center"
         >
-          <Link to={`/product/${product._id}`}>
+          <Link >
             <img
               src={product.images[0]}
               className="bd-placeholder-img img-fluid"
@@ -43,11 +46,21 @@ export default function ProductCard({ product }) {
 
         <div
           id="iconsButtons"
-          className="col-12 col-md p-4 d-flex flex-column align-items-center align-items-md-start position-static"
+          className="col-12 col-md p-4 d-flex flex-column align-items-center align-items-md-end position-static"
         >
-          <h5>
-            <i className="fa-solid fa-heart d-none d-md-block"></i>
-          </h5>
+          <h5
+            onClick={() =>
+              isWishlisted
+                ? removeFromWishlist(product.id)
+                : addToWishlist(product)
+            }
+            style={{ cursor: "pointer" }}
+          >
+            <i
+              className={`fa-heart ${isWishlisted ? "fas text-danger" : "far"}`}
+            ></i>
+          </h5>{" "}
+
           <h5 className="d-none d-md-block">
             <i className="fa-solid fa-star"></i>
             <i className="fa-solid fa-star"></i>
@@ -55,12 +68,12 @@ export default function ProductCard({ product }) {
             <i className="fa-solid fa-star"></i>
             <i className="fa-solid fa-star"></i>
           </h5>
-          <button
-            style={{ width: 200 }}
-            className="btn btn-secondary rent-button"
+          <Link to={`/product/${product._id}`}
+            style={{ width: 180 }}
+            className="btn btn-secondary rent-button py-2"
           >
-            Rent Now
-          </button>
+          Get Details         
+          </Link>
         </div>
       </div>
     </>

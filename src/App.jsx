@@ -10,6 +10,7 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Wishlist from './Pages/Wishlist/Wishlist';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import ChatPage from './components/ChatPage/ChatPage';
+import Search from './Pages/SearchPage/Search';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="chat" element={<ChatPage />} />
           <Route path="chat/:chatId" element={<ChatPage />} />
+          <Route path="search" element={<Search />} />
         </Route>
 
         <Route path="register" element={<Register />} />
