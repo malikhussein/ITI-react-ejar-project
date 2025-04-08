@@ -7,6 +7,9 @@ import TextInput from "../../components/RegisterComponents/TextInput";
 import PasswordInput from "../../components/RegisterComponents/PasswordInput";
 import useAuthStore from "../../Store/Auth";
 import {jwtDecode} from "jwt-decode"; 
+import { Link } from "react-router-dom";
+import ejarLogo from '../../assets/logo.png';
+
 
 
 export default function Login() {
@@ -101,11 +104,25 @@ export default function Login() {
   });
 
   return (
-    // <div className="container mt-5" style={{ maxWidth: "600px", margin: "0 auto", transform: "scale(0.9)", transformOrigin: "top center"  ,minHeight: '100vh' }}>
-    <div className="container mt-5" style={{ maxWidth: "600px", margin: "0 auto", minHeight: '100vh' }}>
-      <h2 className="text-left" style={{ color: "#562DDD", fontSize: "34px", fontWeight: 700, marginBottom: "20px" }}>
-        Log in to Ejar
-      </h2>
+    <div
+  style={{
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <div className="container" style={{ maxWidth: "900px", width: "100%" }}>
+  <div className="text-center mb-3">
+  <Link to="/">
+    <img src={ejarLogo} alt="Ejar Logo" style={{ height: "80px", cursor: "pointer", marginBottom:"50px" }} />
+  </Link>
+</div>
+
+<h2 className="text-left" style={{ color: "#562DDD", fontSize: "34px", fontWeight: 700, marginBottom: "20px" }}>
+  Log in to Ejar
+</h2>
+
 
       {apiError && <div className="alert alert-danger text-center">{apiError}</div>}
 
@@ -171,6 +188,7 @@ export default function Login() {
           </p>
         </div>
       </form>
+    </div>
     </div>
   );
 }

@@ -59,9 +59,16 @@ export default function ForgotPassword() {
 
   return (
     <div
-      className="container mt-5"
-      style={{ maxWidth: '600px', margin: '0 auto', minHeight: '100vh' }}
-    >
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#f8f9fa", // optional light background
+      padding: "20px",
+    }}
+  >
+    <div className="container" style={{maxWidth: "900px", width: "100%" }}>
       <h2
         className="text-left"
         style={{ color: '#562DDD', fontSize: '30px', fontWeight: 700 }}
@@ -123,6 +130,7 @@ export default function ForgotPassword() {
           </p>
         </div>
       </form>
+    </div>
     </div>
   );
 }
