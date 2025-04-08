@@ -5,6 +5,8 @@ import useWishlistStore from "../../Store/Wishlist";
 export default function ProductCard({ product }) {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
 
+  console.log("ProductCard", product);
+  
 
   const isWishlisted = wishlist.some((p) => p.id === product.id);
 
@@ -56,7 +58,7 @@ export default function ProductCard({ product }) {
 
         <div
           id="data"
-          className="col-12 col-md-5 p-4 d-flex flex-column position-static text-center text-md-start "
+          className="col-12 col-md-6 p-4 d-flex flex-column position-static text-center text-md-start "
         >
           <Link to={`/product/${product._id}`}>
             <h2 id="title" className="d-inline-block mb-2">
@@ -64,7 +66,7 @@ export default function ProductCard({ product }) {
             </h2>
           </Link>
           <h5>Description:</h5>
-          <h5>{product.description.split(" ").splice(0,14).join(" ")}</h5>
+          <h5>{product.description.split(" ").splice(0,13).join(" ")}</h5>
           <h2 id="price">{product.daily} E.G</h2>
         </div>
 
@@ -86,8 +88,9 @@ export default function ProductCard({ product }) {
           </h5>{" "}
 
           <h5 className="d-none d-md-block">
-          {
-            renderStars( product.rating)
+          {product.review.length === 0 ? (
+            <span className="text-muted">No reviews yet</span>):            
+            renderStars( product.review[0].rating)
           }  
             
           </h5>

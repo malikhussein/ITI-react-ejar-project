@@ -47,6 +47,29 @@ const useProductStore = create((set, get) => ({
       set({ error: error.response?.data?.message || error.message });
     }
   },
+
+  getUserFinishedProducts: async (token, userId) => {
+    try {
+      set({ loading: true, error: null });
+      const response = await axios.get(`http://localhost:3000/api/product/finished`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const allFinishedProducts = response?.data?.data;
+      const userProducts = allFinishedProducts.filter(
+        (product) => product.renterId._id === userId
+      );
+      set({ userProducts, loading: false });
+
+      console.log(allFinishedProducts);
+      console.log(userProducts);
+    } catch (error) {
+      set({ error: error.response?.data?.message || error.message });
+    }
+  },
+
+
 }));
 
 export default useProductStore;
