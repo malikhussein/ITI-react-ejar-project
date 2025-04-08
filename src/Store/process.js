@@ -8,11 +8,14 @@ const useProcessStore = create((set, get) => ({
   getProcesses: async (token) => {
     try {
       set({ loading: true, error: null });
-      const response = await axios.get(`http://localhost:3000/api/process`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:3000/api/process/user`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const processes = response?.data;
       set({ userProcesses: processes, loading: false });
     } catch (error) {
@@ -40,7 +43,7 @@ const useProcessStore = create((set, get) => ({
       set({ loading: true, error: null });
       const response = await axios.put(
         `http://localhost:3000/api/process/${processId}`,
-        { status: 'in_progress' },
+        { status: 'in progress' },
         {
           headers: {
             Authorization: `Bearer ${token}`,

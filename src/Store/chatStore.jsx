@@ -25,6 +25,23 @@ const useChatStore = create((set, get) => ({
       set({ error: error.response?.data?.message || error.message });
     }
   },
+  getChatById: async (chatId, token) => {
+    try {
+      set({ loading: true, error: null });
+      const response = await axios.get(
+        `http://localhost:3000/api/chat/${chatId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const chat = response?.data;
+      return chat;
+    } catch (error) {
+      set({ error: error.response?.data?.message || error.message });
+    }
+  },
   getUserChats: async (token) => {
     try {
       set({ loading: true, error: null });

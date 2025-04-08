@@ -21,11 +21,13 @@ export default function RequestCard({ process, token }) {
   return (
     <div>
       <div className="card" style={{ width: '18rem' }}>
-        <img
-          src={process?.productId?.images?.[0]}
-          className="card-img-top"
-          alt="..."
-        />
+        <div className="square-image">
+          <img
+            src={process?.productId?.images?.[0]}
+            className="card-img-top"
+            alt="..."
+          />
+        </div>
         <div className="card-body">
           <h5 className="card-title">{process?.productId?.name}</h5>
         </div>

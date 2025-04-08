@@ -79,26 +79,16 @@ export default function Login() {
         if (response.status === 200) {
           console.log("Login Successful:", response.data);
           const token = response.data.token;
-
-
           // Store token in Zustand(and local/session storage depending on rememberMe)
           setToken(response.data.token, values.rememberMe);
             // Decode token
             const decoded = jwtDecode(token);
             console.log("Decoded token:", decoded);
-
-        // Redirect based on role
-        
-        if (decoded.role === "admin") {
-          setTimeout(() => {
-            window.location.href = `http://localhost:4200/?token=${token}&remember=${values.rememberMe}`
-          }, 1000);          
-          } else {
         setTimeout(() => {
           navigate("/");
         }, 2000);
         }
-        }
+        
       } catch (error) {
         console.error("API Error:", error.response?.data);
         setApiError(error.response?.data?.message || "Invalid credentials.");

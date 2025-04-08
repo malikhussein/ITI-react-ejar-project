@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ToTopButton from '../ToTopButton/ToTopButton';
+import useAuthStore from '../../Store/Auth';
+import { jwtDecode } from 'jwt-decode';
 
 export default function Footer() {
+  const { token } = useAuthStore();
+  const userId = token ? jwtDecode(token).id : null;
   return (
     <>
       <div className="container">
-        <footer className="py-5">
+        <footer className="pt-5">
           <div className="row flex-column flex-lg-row justify-content-center align-items-center align-items-lg-start">
             <div className="col-6 col-lg-2 mb-3">
               <h5 className="mb-4 text-center text-lg-start">Support</h5>
@@ -31,7 +35,7 @@ export default function Footer() {
               <ul className="nav flex-column align-items-center align-items-lg-start">
                 <li className="nav-item mb-2">
                   <Link
-                    to="/profile/123"
+                    to={`/profile/${userId}`}
                     className="nav-link p-0 text-body-secondary"
                   >
                     My Account
@@ -100,7 +104,7 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-          <div className="d-flex flex-column flex-sm-row justify-content-center py-4 my-4 border-top">
+          <div className="d-flex flex-column flex-sm-row justify-content-center pt-4 mt-4 border-top">
             <p>© Copyright Ejar 2025. All right reserved</p>
           </div>
           <ToTopButton />

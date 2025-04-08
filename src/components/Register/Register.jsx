@@ -8,6 +8,7 @@ import PasswordInput from "../../components/RegisterComponents/PasswordInput";
 import TextInput from "../../components/RegisterComponents/TextInput";
 import FileInput from "../../components/RegisterComponents/FileInput";
 import GenderInput from "../../components/RegisterComponents/GenderInput";
+import ProfilePicture from "../ProfilePicture/ProfilePicture";
 
 export default function Register() {
   const [apiError, setApiError] = useState(null);
@@ -84,20 +85,7 @@ export default function Register() {
        //  Check if front and back images are the same file (by name, size & type)
        const front = values.idPictureFront;
        const back = values.idPictureBack;
-       if (
-        front &&
-        back &&
-        front.name === back.name &&
-        front.size === back.size &&
-        front.type === back.type
-      ) {
-        setDuplicateFileError("Front and back ID pictures cannot be the same file.");
-        setIsLoading(false);
-        return;
-      } else {
-        setDuplicateFileError(""); // Clear it when valid
-      }
-      
+   
       // console.log("Submitting values:", values); // debugging 
       // If uploading files, create form data
       const formData = new FormData();
@@ -199,10 +187,12 @@ export default function Register() {
         {/* ID PICTURES (Front/Back) */}
         <div className="col-md-6 d-flex justify-content-between">
           <div style={{ width: "48%" }}>
-          <FileInput label="ID Picture (Front):" fieldName="idPictureFront" formik={formik} externalError={duplicateFileError}/>
+          <FileInput label="ID Picture (Front):" fieldName="idPictureFront" formik={formik} externalError={duplicateFileError}   otherFileField="idPictureBack"
+          />
           </div>
           <div style={{ width: "48%" }}>
-          <FileInput label="ID Picture (Back):" fieldName="idPictureBack" formik={formik} externalError={duplicateFileError}/>
+          <FileInput label="ID Picture (Back):" fieldName="idPictureBack" formik={formik} externalError={duplicateFileError}   otherFileField="idPictureFront"
+          />
           </div>
         </div>
         {/* SUBMIT BUTTON */}
