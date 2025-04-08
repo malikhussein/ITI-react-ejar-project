@@ -6,16 +6,24 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useAuthStore from "../../Store/Auth";
 import "./productDeatils.css";
 import useChatStore from "../../Store/chatStore";
+import useWishlistStore from "../../Store/Wishlist";
 
 const ProductDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { product, fetchProduct, updateProduct, getAllProd } =
     useProductStore();
   const { token } = useAuthStore();
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
+
   const [mainImage, setMainImage] = useState(null);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const { createChat } = useChatStore();
   const navigate = useNavigate();
+  const isWishlisted = wishlist.forEach((p) => p?.id === product?.data?._id);
+
+  console.log(product);
+  console.log(wishlist);
+  console.log(isWishlisted);
 
   const [fields, setFields] = useState({
     name: "",
@@ -289,16 +297,34 @@ const ProductDetails = () => {
             </div>
 
             <div className="col-md-6">
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={fields.name}
-                  onChange={(e) => handleChange(e, "name")}
-                  className="form-control mb-3"
-                />
-              ) : (
-                <h3 className="mb-3 main-text fw-bold">{fields.name}</h3>
-              )}
+              <div className="d-flex justify-content-between">
+                {isEditing ? (
+                  <input
+                    type="text"
+                    value={fields.name}
+                    onChange={(e) => handleChange(e, "name")}
+                    className="form-control mb-3"
+                  />
+                ) : (
+                  <h3 className="mb-3 main-text fw-bold">{fields.name}</h3>
+                )}
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    isWishlisted
+                      ? removeFromWishlist(product._id)
+                      : addToWishlist(product);
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  <i
+                    className={`fa-heart ${
+                      isWishlisted ? "fas text-danger" : "far"
+                    }`}
+                  ></i>
+                </div>
+              </div>
+
               {product.data.review.length === 0 ? (
                 <span className="badge bg-success">NEW</span>
               ) : (
