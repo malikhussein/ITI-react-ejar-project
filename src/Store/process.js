@@ -25,7 +25,7 @@ const useProcessStore = create((set, get) => ({
   postProcess: async (productId, processData, token) => {
     try {
       set({ loading: true, error: null });
-      const response = await axios.post(
+      await axios.post(
         `http://localhost:3000/api/process/${productId}`,
         processData,
         {
@@ -34,6 +34,7 @@ const useProcessStore = create((set, get) => ({
           },
         }
       );
+      set({ loading: false });
     } catch (error) {
       set({ error: error.response?.data?.message || error.message });
     }
@@ -41,7 +42,7 @@ const useProcessStore = create((set, get) => ({
   acceptProcess: async (processId, token) => {
     try {
       set({ loading: true, error: null });
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:3000/api/process/${processId}`,
         { status: 'in progress' },
         {
@@ -50,7 +51,7 @@ const useProcessStore = create((set, get) => ({
           },
         }
       );
-      const updatedProcess = response?.data;
+      set({ loading: false });
     } catch (error) {
       set({ error: error.response?.data?.message || error.message });
     }
@@ -58,7 +59,7 @@ const useProcessStore = create((set, get) => ({
   declineProcess: async (processId, token) => {
     try {
       set({ loading: true, error: null });
-      const response = await axios.put(
+      await axios.put(
         `http://localhost:3000/api/process/${processId}`,
         { status: 'canceled' },
         {
@@ -67,7 +68,7 @@ const useProcessStore = create((set, get) => ({
           },
         }
       );
-      const updatedProcess = response?.data;
+      set({ loading: false });
     } catch (error) {
       set({ error: error.response?.data?.message || error.message });
     }

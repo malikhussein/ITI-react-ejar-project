@@ -13,6 +13,7 @@ import ChatPage from './components/ChatPage/ChatPage';
 import NotFound from './components/NotFound/NotFound';
 import Search from './Pages/SearchPage/Search';
 import RequestsPage from './components/RequestsPage/RequestsPage';
+import ReviewPage from './Pages/Review/ReviewPage';
 
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
           <Route path="chat" element={<ChatPage />} />
           <Route path="chat/:chatId" element={<ChatPage />} />
           <Route path="search" element={<Search />} />
-          <Route path="requests" element={<RequestsPage />} />
+          <Route path="requests" element={<RequestsPage />}/>
+          <Route path="ReviewPage" element={<ReviewPage />}/>
         </Route>
 
         <Route path="register" element={<Register />} />

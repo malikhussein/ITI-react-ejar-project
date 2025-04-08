@@ -50,7 +50,7 @@ export default function ProductList() {
 
   return (
     <>
-      <div className="col-md-9">
+      <div className="col-md-9 ">
         {isLoading ? (
           <h1>"Loading..."</h1>
         ) : confirmedProducts.length > 0 ? (
@@ -70,7 +70,7 @@ export default function ProductList() {
       >
         <Pagination
           onChange={handlePageChange}
-          count={Math.ceil(products.length / productsPerPage)}
+          count={Math.ceil(confirmedProducts.length / productsPerPage)}
           variant="outlined"
           shape="rounded"
         />

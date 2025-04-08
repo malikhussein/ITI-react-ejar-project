@@ -3,6 +3,7 @@ import './ProfileDetails.css';
 import useProfileStore from '../../Store/profile';
 import useChatStore from '../../Store/chatStore';
 import { useNavigate } from 'react-router-dom';
+import ProfilePicture from '../ProfilePicture/ProfilePicture';
 
 const ProfileDetails = ({ profile, token }) => {
   const { isEditable } = useProfileStore();
@@ -24,14 +25,7 @@ const ProfileDetails = ({ profile, token }) => {
     <div className="container">
       <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
         <div className="d-flex flex-column flex-lg-row">
-          <img
-            src={
-              profile.personal_pic ||
-              'https://static.vecteezy.com/system/resources/previews/026/619/142/non_2x/default-avatar-profile-icon-of-social-media-user-photo-image-vector.jpg'
-            }
-            alt="User Picture"
-            width={200}
-          />
+          <ProfilePicture />
           <div className="d-flex flex-column justify-content-center align-items-center align-items-lg-start mb-4 mb-lg-0">
             <h2 className="fw-bold">{profile.userName}</h2>
             <h5>{profile.email}</h5>
