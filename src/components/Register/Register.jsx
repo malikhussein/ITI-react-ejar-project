@@ -122,12 +122,27 @@ export default function Register() {
   });
 
   return (
-    <div className="container mt-5"
-    style={{ margin: "0 auto", transform: "scale(0.9)", transformOrigin: "top center",  minHeight: '100vh' }}
+    <div
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#f8f9fa", // optional: light gray bg
+      padding: "20px",
+    }}
+  >
+    <div
+      className="container"
+      style={{ width: "100%" }}
     >
       <h2
         className="text-left"
-        style={{ color: "rgba(86, 45, 221, 1)", fontSize: "42px", fontWeight: "bold" }}
+        style={{
+          color: "#562DDD",
+          fontSize: "42px",
+          fontWeight: "bold",
+        }}
       >
         Create an account
       </h2>
@@ -219,6 +234,7 @@ export default function Register() {
           </p>
         </div>
       </form>
+    </div>
     </div>
   );
 }

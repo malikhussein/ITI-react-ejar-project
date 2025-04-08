@@ -56,7 +56,18 @@ export default function ResetPassword() {
   });
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "600px", margin: "0 auto",  minHeight: '100vh' }}>
+    <div
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#f8f9fa", // optional light background
+      padding: "20px",
+    }}
+  >
+    <div className="container" style={{ maxWidth: "900px", width: "100%" }}>
+     
       <h2 className="text-center" style={{ color: "#562DDD", fontWeight: "700" }}>Reset Your Password</h2>
       <p className="text-center">Enter your new password below.</p>
 
@@ -99,6 +110,7 @@ export default function ResetPassword() {
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 }
