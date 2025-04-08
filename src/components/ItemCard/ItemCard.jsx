@@ -44,7 +44,7 @@ function ItemCard({ item, renderStars }) {
         </div>
 
         <div className="image">
-          <img className="w-100" src={item.images[0]} alt={item.name} />
+          <img src={item.images[0]} alt={item.name} />
         </div>
 
         <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.name}</h3>
