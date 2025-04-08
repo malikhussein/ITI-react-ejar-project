@@ -117,64 +117,68 @@ export default function ProfilePicture({ userId }) {
 
   return (
     <div className="text-center my-3">
-      <div style={{ position: "relative", display: "inline-block" }}>
-        {/* Spinner placeholder */}
-        {isImageLoading && (
-          <div
-            className="d-flex align-items-center justify-content-center rounded-circle bg-light border"
-            style={{
-              width: 130,
-              height: 130,
-              zIndex: 1,
-            }}
-          >
-            <div className="spinner-border text-secondary" role="status" />
-          </div>
-        )}
+      {/* Profile Picture */} 
+      <div
+  onClick={() => setShowModal(true)}
+  className="rounded-circle border overflow-hidden d-flex align-items-center justify-content-center"
+  style={{
+    width: 130,
+    height: 130,
+    backgroundColor: "#f0f0f0",
+    position: "relative",
+    cursor: "pointer",
+  }}
+>
+  {/* Profile Picture */}
+  <img
+    src={localPreview || profilePicture}
+    onLoad={() => setIsImageLoading(false)}
+    onError={(e) => {
+      e.target.onerror = null;
+      e.target.src = defaultPic;
+      setIsImageLoading(false);
+    }}
+    alt="Profile"
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      opacity: isImageLoading ? 0 : 1,
+      transition: "opacity 0.4s ease-in-out",
+    }}
+  />
 
-        <img
-          src={localPreview || profilePicture}
-          onLoad={() => setIsImageLoading(false)}
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = defaultPic;
-            setIsImageLoading(false);
-          }}
-          alt="Profile"
-          className="rounded-circle border"
-          style={{
-            width: 130,
-            height: 130,
-            objectFit: "cover",
-            cursor: "pointer",
-            opacity: isImageLoading ? 0 : 1,
-            transition: "opacity 0.3s ease-in-out",
-          }}
-          onClick={() => setShowModal(true)}
-        />
+  {/* Spinner (inside container, not floating) */}
+  {isImageLoading && (
+    <div className="spinner-border text-secondary" role="status" />
+  )}
 
-        {/* Uploading overlay */}
-        {isUploading && (
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: 130,
-              height: 130,
-              background: "rgba(0,0,0,0.5)",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "50%",
-              zIndex: 2,
-            }}
-          >
-            Uploading...
-          </div>
-        )}
-      </div>
+  {/* Uploading Overlay */}
+  {isUploading && (
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        background: "rgba(0,0,0,0.5)",
+        color: "#fff",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: "50%",
+        zIndex: 2,
+      }}
+    >
+      Uploading...
+    </div>
+  )}
+</div>
+
 
       {/* Error message */}
       {errorMessage && (
