@@ -11,8 +11,6 @@ const RelatedProducts = () => {
 
   useEffect(() => {
     if (product?.data?.category) {
-      console.log(product);
-
       getAllProd(product.data.category._id);
     }
   }, [product]);

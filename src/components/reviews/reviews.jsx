@@ -7,7 +7,6 @@ import useProfileStore from "../../Store/profile";
 const Reviews = () => {
   const { product } = useProductStore();
   const { fetchProfile } = useProfileStore();
-  console.log(product);
 
   let rev = product?.data?.review || [];
 
@@ -50,7 +49,6 @@ const Reviews = () => {
           <div className="w-100">
             <div className="d-flex justify-content-between">
               <div>
-                {console.log(review)}
                 <Link className="nav-link" to={`/profile/${review.createdBy}`}>
                   <h6 className="mb-0">{review.name}</h6>
                 </Link>

@@ -1,10 +1,20 @@
-.main-text{
+.main-text {
+  color: #562ddd !important;
+}
 
-    color: #562DDD !important;
-  }
-  
-  .main-back{
+.main-back {
+  background-color: #562ddd !important;
+  color: white !important;
+}
 
-    background-color: #562DDD !important;
-    color: white !important;
-  }
+.text-danger {
+  color: #dc3545;
+}
+
+.star.filled i {
+  color: #ffad33;
+}
+
+.star.empty i {
+  color: #666;
+}

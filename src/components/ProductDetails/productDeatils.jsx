@@ -19,12 +19,7 @@ const ProductDetails = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const { createChat } = useChatStore();
   const navigate = useNavigate();
-  const isWishlisted = wishlist.forEach((p) => p?.id === product?.data?._id);
-
-  console.log(product);
-  console.log(wishlist);
-  console.log(isWishlisted);
-
+  const isWishlisted = wishlist.some((p) => p?.id === product?.data?._id);
   const [fields, setFields] = useState({
     name: "",
     brand: "",
@@ -312,8 +307,8 @@ const ProductDetails = () => {
                   onClick={(e) => {
                     e.preventDefault();
                     isWishlisted
-                      ? removeFromWishlist(product._id)
-                      : addToWishlist(product);
+                      ? removeFromWishlist(product?.data?._id)
+                      : addToWishlist(product?.data);
                   }}
                   style={{ cursor: "pointer" }}
                 >
