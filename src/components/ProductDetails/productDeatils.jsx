@@ -140,7 +140,7 @@ const ProductDetails = () => {
   }, []);
 
   if (!product) {
-    return <p>Loading...</p>;
+    return <h2 className="text-center">Loading...</h2>;
   }
 
   const chatWithOwner = async () => {
@@ -299,6 +299,29 @@ const ProductDetails = () => {
               ) : (
                 <h3 className="mb-3 main-text fw-bold">{fields.name}</h3>
               )}
+              {product.data.review.length === 0 ? (
+                <span className="badge bg-success">NEW</span>
+              ) : (
+                <p className="text-muted">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <i
+                      key={i}
+                      className={`fa-star ${
+                        i + 1 <= Number(product.data.averageRating)
+                          ? "fas"
+                          : "far"
+                      }`}
+                      style={{
+                        color:
+                          i + 1 <= Number(product.data.averageRating)
+                            ? "#FFAD33"
+                            : "lightgray",
+                      }}
+                    ></i>
+                  ))}
+                  ({product.data.review.length})
+                </p>
+              )}
 
               <div className="d-flex align-items-center mb-2">
                 <i className="fa-solid fa-tags me-2 text-secondary"></i>
@@ -323,41 +346,21 @@ const ProductDetails = () => {
                 <i className="fa-solid fa-circle-check me-2 text-success"></i>
                 <span className="fw-semibold">Status:</span>
                 {isEditing ? (
-                  <input
-                    type="text"
+                  <select
                     value={fields.status}
                     onChange={(e) => handleChange(e, "status")}
-                    className="form-control ms-2"
+                    className="form-select ms-2"
                     style={{ maxWidth: "150px" }}
-                  />
+                  >
+                    <option value="available">Available</option>
+                    <option value="rented">Rented</option>
+                    <option value="unavailable">Unavailable</option>
+                  </select>
                 ) : (
                   <span className="ms-1 text-muted">{fields.status}</span>
                 )}
               </div>
 
-              {product.data.review.length === 0 ? (
-                <span className="badge bg-success">NEW</span>
-              ) : (
-                <p className="text-muted">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <i
-                      key={i}
-                      className={`fa-star ${
-                        i + 1 <= Number(product.data.averageRating)
-                          ? "fas"
-                          : "far"
-                      }`}
-                      style={{
-                        color:
-                          i + 1 <= Number(product.data.averageRating)
-                            ? "gold"
-                            : "lightgray",
-                      }}
-                    ></i>
-                  ))}
-                  ({product.data.review.length})
-                </p>
-              )}
               {isEditing ? (
                 <textarea
                   value={fields.description}
@@ -380,12 +383,14 @@ const ProductDetails = () => {
               )}
               <div className="mt-3">
                 {decoded.id == product?.data?.renterId?._id ? (
-                  <button
-                    className="btn main-back w-25 mx-1"
-                    onClick={toggleEdit}
-                  >
-                    {isEditing ? "Save" : "Edit"}
-                  </button>
+                  <div className="d-flex align-items-end">
+                    <button
+                      className="btn main-back w-25 mx-1"
+                      onClick={toggleEdit}
+                    >
+                      {isEditing ? "Save" : "Edit"}
+                    </button>
+                  </div>
                 ) : (
                   ""
                 )}

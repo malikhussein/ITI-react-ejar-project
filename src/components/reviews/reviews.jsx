@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { useProductStore } from "../../Store/Deatils";
+import useProfileStore from "../../Store/profile";
 
 const Reviews = () => {
   const { product } = useProductStore();
+  const { fetchProfile } = useProfileStore();
+  console.log(product);
+
   let rev = product?.data?.review || [];
 
   const [showAll, setShowAll] = useState(false);
