@@ -14,7 +14,7 @@ export default function RequestsPage() {
 
   return (
     <div className="container">
-      <h2 className="m-5">Pending Requests</h2>
+      <h2 className="m-5 text-center text-lg-start">Pending Requests</h2>
       <div className="d-flex flex-row flex-wrap justify-content-center gap-4">
         {userProcesses.map((process) => (
           <RequestCard key={process._id} process={process} token={token} />
