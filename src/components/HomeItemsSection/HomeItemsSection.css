@@ -12,7 +12,8 @@
 .items-section .item {
   display: flex !important;
   flex-direction: column;
-  height: 250px;
+  /* height: 250px; */
+  /* width: 250px; */
   position: relative;
 }
 
@@ -33,7 +34,7 @@
 }
 
 .items-section .item img:hover {
-  transform: scale(1.08) rotate(5deg);
+  transform: scale(1.08);
 }
 
 
