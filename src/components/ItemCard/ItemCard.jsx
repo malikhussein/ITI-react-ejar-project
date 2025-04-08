@@ -2,14 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import useWishlistStore from "../../Store/Wishlist";
 import "./ItemCard.css";
+import { useProductStore } from "../../Store/Deatils";
 
 function ItemCard({ item, renderStars }) {
-  
+  const handleFetchProduct = (id) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    fetchProduct(id);
+  };
+
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
+  const { fetchProduct } = useProductStore();
+
   const isWishlisted = wishlist.some((p) => p.id === item._id);
 
   return (
-    <Link className="nav-link" to={`/product/${item._id}`}>
+    <Link
+      onClick={() => handleFetchProduct(item._id)}
+      className="nav-link"
+      to={`/product/${item._id}`}
+    >
       <div className="item mb-4">
         <div className="card-icons">
           <div>
