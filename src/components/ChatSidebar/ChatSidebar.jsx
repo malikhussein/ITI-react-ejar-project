@@ -11,12 +11,15 @@ export default function ChatSidebar({ chatId, token, userId }) {
 
   return (
     // Make it responsive
-    <div className="w-25 h-100 border-end" style={{ overflowY: 'scroll' }}>
+    <div
+      className="h-100 border-end"
+      style={{ overflowY: 'scroll', width: '375px' }}
+    >
       {userChats.map((chat) => (
         <Link to={`/chat/${chat._id}`} key={chat._id} className="nav-link">
           <div
             key={chat._id}
-            className={`d-flex flex-row align-items-center m-2 rounded ${
+            className={`d-flex flex-row border-bottom align-items-center m-2 rounded ${
               chat._id === chatId ? 'bg-light' : ''
             }`}
           >
