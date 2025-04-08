@@ -7,7 +7,9 @@ export default function FileInput({
   externalError = "",
   buttonColor = "#B72A67",
   showPreview = true,
-  maxFileSizeMB = 5
+  maxFileSizeMB = 5,
+  otherFileField = "" // Used to check if the same file is uploaded for both front and back ID pictures
+
 }) {
   const file = formik.values[fieldName];
   const [preview, setPreview] = useState(null);
@@ -30,6 +32,8 @@ export default function FileInput({
   const handleFileChange = (e) => {
     setFileError("");
     const chosenFile = e.target.files[0];
+    const otherFile = formik.values[otherFileField];
+
 
     if (chosenFile) {
       if (!chosenFile.type.startsWith("image/")) {
@@ -45,6 +49,18 @@ export default function FileInput({
         return;
       }
     }
+    // Check if same as the other file
+    if (
+      otherFile &&
+      chosenFile.name === otherFile.name &&
+      chosenFile.size === otherFile.size &&
+      chosenFile.type === otherFile.type
+    ) {
+      setFileError("Front and back ID pictures cannot be the same file.");
+      formik.setFieldValue(fieldName, null);
+      return;
+    }
+  
 
     formik.setFieldValue(fieldName, chosenFile || null);
   };
@@ -70,7 +86,19 @@ export default function FileInput({
             onChange={handleFileChange}
           />
         </label>
-        <span>{file ? file.name : "No file chosen"}</span>
+        <span
+        className="text-truncate"
+        style={{
+          maxWidth: "150px",
+          display: "inline-block",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+        title={file?.name}
+      >
+        {file ? file.name : "No file chosen"}
+      </span>
       </div>
 
       <div
