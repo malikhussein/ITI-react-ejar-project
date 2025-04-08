@@ -22,7 +22,15 @@ export default function RentProductModal() {
       .min(new Date(), 'Start date must be in the future'),
     endDate: Yup.date()
       .required('End date is required')
-      .min(Yup.ref('startDate'), 'End date must be after start date'),
+      .min(Yup.ref('startDate'), 'End date must be after start date')
+      .test(
+        'is-greater',
+        'End date must be greater than start date',
+        function (value) {
+          const { startDate } = this.parent;
+          return !startDate || !value || new Date(value) > new Date(startDate);
+        }
+      ),
     price: Yup.number()
       .required('Price is required')
       .positive('Price must be a positive number'),
