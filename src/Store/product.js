@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { create } from 'zustand';
-import { jwtDecode } from 'jwt-decode';
 
 const useProductStore = create((set, get) => ({
   userProducts: [],
@@ -9,9 +8,6 @@ const useProductStore = create((set, get) => ({
   postProduct: async (token, productData) => {
     try {
       set({ loading: true, error: null });
-      const decoded = jwtDecode(token);
-      const userId = decoded.id;
-      productData.append('renterId', userId);
       const response = await axios.post(
         `http://localhost:3000/api/product`,
         productData,
@@ -51,11 +47,14 @@ const useProductStore = create((set, get) => ({
   getUserFinishedProducts: async (token, userId) => {
     try {
       set({ loading: true, error: null });
-      const response = await axios.get(`http://localhost:3000/api/product/finished`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:3000/api/product/finished`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const allFinishedProducts = response?.data?.data;
       const userProducts = allFinishedProducts.filter(
         (product) => product.renterId._id === userId
@@ -68,8 +67,6 @@ const useProductStore = create((set, get) => ({
       set({ error: error.response?.data?.message || error.message });
     }
   },
-
-
 }));
 
 export default useProductStore;
