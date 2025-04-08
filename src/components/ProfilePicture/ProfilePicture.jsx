@@ -1,66 +1,85 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
-export default function ProfilePicture() {
+export default function ProfilePicture({ userId }) {
   const [profilePicture, setProfilePicture] = useState(null);
   const [localPreview, setLocalPreview] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isImageLoading, setIsImageLoading] = useState(true);
 
   const fileInputRef = useRef();
 
-  const getUrl = "http://localhost:3000/api/user/profile-picture";
-  const uploadUrl = "http://localhost:3000/api/user/upload-profile-picture";
   const token =
     localStorage.getItem("UserToken") || sessionStorage.getItem("UserToken");
-
   const defaultPic =
     "https://static.vecteezy.com/system/resources/previews/026/619/142/non_2x/default-avatar-profile-icon-of-social-media-user-photo-image-vector.jpg";
 
-  // Fetch current profile picture
+  let loggedInUserId = null;
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      loggedInUserId = decoded?.id || decoded?._id;
+    } catch (err) {
+      console.error("Invalid token:", err);
+    }
+  }
+
+  const isOwnProfile = !userId || userId === loggedInUserId;
+
+  const getUrl = userId
+    ? `http://localhost:3000/api/user/${userId}` // other user
+    : "http://localhost:3000/api/user/profile-picture"; // self
+
   useEffect(() => {
     if (!token) return;
+
     (async () => {
       try {
         const { data } = await axios.get(getUrl, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setProfilePicture(data.profilePicture || defaultPic);
+
+        const profilePic = userId
+          ? data?.user?.profilePicture || defaultPic
+          : data?.profilePicture || defaultPic;
+
+        setProfilePicture(profilePic);
       } catch (error) {
         console.error("❌ Error fetching profile picture:", error);
         setProfilePicture(defaultPic);
       }
     })();
-  }, [token]);
+  }, [token, getUrl, userId]);
 
-  // Clean up object URLs
+  useEffect(() => {
+    setIsImageLoading(true);
+  }, [profilePicture, localPreview]);
+
   useEffect(() => {
     return () => {
-      if (localPreview) {
-        URL.revokeObjectURL(localPreview);
-      }
+      if (localPreview) URL.revokeObjectURL(localPreview);
     };
   }, [localPreview]);
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    setErrorMessage("");
-
     if (!file) return;
 
     const validTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-    const maxSize = 5 * 1024 * 1024; // 5 MB
+    const maxSize = 5 * 1024 * 1024;
 
     if (!validTypes.includes(file.type)) {
-      setShowModal(false); // Close modal before showing error
-      setErrorMessage("Only image files are allowed (JPG, PNG, WEBP, GIF).");
+      setShowModal(false);
+      setErrorMessage("Only JPG, PNG, WEBP, or GIF files allowed.");
       return;
     }
 
     if (file.size > maxSize) {
-      setShowModal(false); // Close modal before showing error
-      setErrorMessage("Image is too large. Maximum allowed size is 5MB.");
+      setShowModal(false);
+      setErrorMessage("File too large. Max 5MB.");
       return;
     }
 
@@ -71,20 +90,24 @@ export default function ProfilePicture() {
 
     try {
       setIsUploading(true);
-      const { data } = await axios.put(uploadUrl, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setProfilePicture(data.profilePicturePath); // Cloudinary full URL
+      const { data } = await axios.put(
+        "http://localhost:3000/api/user/upload-profile-picture",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setProfilePicture(data.profilePicturePath); // assume it returns full Cloudinary URL
       setLocalPreview(null);
-      setShowModal(false); // Close after successful upload
-    } catch (error) {
-      console.error("❌ Upload failed:", error);
       setShowModal(false);
-      setErrorMessage("Upload failed. Please try again.");
+      setErrorMessage("");
+    } catch (err) {
+      console.error("❌ Upload failed:", err);
+      setShowModal(false);
+      setErrorMessage("Upload failed.");
     } finally {
       setIsUploading(false);
     }
@@ -95,34 +118,42 @@ export default function ProfilePicture() {
   return (
     <div className="text-center my-3">
       <div style={{ position: "relative", display: "inline-block" }}>
-        {(localPreview || profilePicture) ? (
-          <img
-            src={localPreview || profilePicture}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = defaultPic;
-            }}
-            alt="Profile"
-            className="rounded-circle border"
-            style={{ width: 130, height: 130, objectFit: "cover", cursor: "pointer" }}
-            onClick={() => setShowModal(true)}
-          />
-        ) : (
+        {/* Spinner placeholder */}
+        {isImageLoading && (
           <div
+            className="d-flex align-items-center justify-content-center rounded-circle bg-light border"
             style={{
               width: 130,
               height: 130,
-              borderRadius: "50%",
-              backgroundColor: "#eee",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              zIndex: 1,
             }}
           >
-            <span className="spinner-border spinner-border-sm"></span>
+            <div className="spinner-border text-secondary" role="status" />
           </div>
         )}
 
+        <img
+          src={localPreview || profilePicture}
+          onLoad={() => setIsImageLoading(false)}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = defaultPic;
+            setIsImageLoading(false);
+          }}
+          alt="Profile"
+          className="rounded-circle border"
+          style={{
+            width: 130,
+            height: 130,
+            objectFit: "cover",
+            cursor: "pointer",
+            opacity: isImageLoading ? 0 : 1,
+            transition: "opacity 0.3s ease-in-out",
+          }}
+          onClick={() => setShowModal(true)}
+        />
+
+        {/* Uploading overlay */}
         {isUploading && (
           <div
             style={{
@@ -137,7 +168,7 @@ export default function ProfilePicture() {
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "50%",
-              fontWeight: "bold",
+              zIndex: 2,
             }}
           >
             Uploading...
@@ -145,6 +176,21 @@ export default function ProfilePicture() {
         )}
       </div>
 
+      {/* Error message */}
+      {errorMessage && (
+        <div style={{ color: "red", fontSize: "0.9rem", marginTop: 8 }}>
+          {errorMessage}
+        </div>
+      )}
+
+      {/* Instructions */}
+      {isOwnProfile && (
+        <p style={{ color: "#555", fontSize: 14, marginTop: 10 }}>
+          Click photo to enlarge or change
+        </p>
+      )}
+
+      {/* Hidden input for file upload */}
       <input
         type="file"
         accept="image/*"
@@ -153,16 +199,7 @@ export default function ProfilePicture() {
         style={{ display: "none" }}
       />
 
-      {errorMessage && (
-        <div style={{ color: "#cc0000", fontSize: "0.9rem", marginTop: 8 }}>
-          {errorMessage}
-        </div>
-      )}
-
-      <p style={{ color: "#555", fontSize: 14, marginTop: 10 }}>
-        Click photo to enlarge or change
-      </p>
-
+      {/* Bootstrap Modal */}
       {showModal && (
         <div
           className="modal show d-block"
@@ -179,24 +216,25 @@ export default function ProfilePicture() {
               <div className="modal-body text-center">
                 <img
                   src={localPreview || profilePicture}
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = defaultPic;
-                  }}
                   alt="Profile Preview"
                   style={{ width: "100%", borderRadius: 5 }}
                 />
               </div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setShowModal(false)}
+                >
                   Close
                 </button>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => fileInputRef.current.click()}
-                >
-                  Change Picture
-                </button>
+                {isOwnProfile && (
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => fileInputRef.current.click()}
+                  >
+                    Change Picture
+                  </button>
+                )}
               </div>
             </div>
           </div>
