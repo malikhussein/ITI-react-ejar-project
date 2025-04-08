@@ -23,7 +23,6 @@ export default function ProductList() {
         params: categoryName ? { category: categoryName } : {}, // If no category, fetch all products
       });
 
-      console.log("Fetched Products:", response.data.data); // Debugging log
       setProducts(response.data.data);
     } catch (err) {
       console.log("Error fetching products:", err.message);

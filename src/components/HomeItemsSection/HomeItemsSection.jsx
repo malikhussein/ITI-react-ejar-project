@@ -19,9 +19,6 @@ function HomeItemsSection() {
     const totalStars = 5;
     const filledStars = parseInt(rating, 10);
     const emptyStars = totalStars - filledStars;
-    console.log("filledStars", filledStars);
-    console.log("emptyStars", emptyStars);
-    
 
     return (
       <>

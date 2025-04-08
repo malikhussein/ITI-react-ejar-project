@@ -10,9 +10,11 @@ import useWishlistStore from "../../Store/Wishlist";
 
 const ProductDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const { product, fetchProduct, updateProduct, getAllProd } =
+  const { product, fetchProduct, updateProduct, getAllProd, loading, err } =
     useProductStore();
   const { token } = useAuthStore();
+  const [errormessage, setErrormessage] = useState(null);
+
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
 
   const [mainImage, setMainImage] = useState(null);
@@ -33,8 +35,11 @@ const ProductDetails = () => {
     images: [],
   });
   const [newImage, setNewImage] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const { id } = useParams();
+
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchProduct(id);
@@ -74,11 +79,37 @@ const ProductDetails = () => {
 
   const toggleEdit = async () => {
     if (isEditing) {
+      const newErrors = {};
+
+      if (!fields.name || fields.name.length < 3) {
+        newErrors.name = "Name must be at least 3 characters.";
+      }
+
+      if (!["available", "rented", "unavailable"].includes(fields.status)) {
+        newErrors.status = "Please choose a valid status.";
+      }
+
+      if (!fields.description || fields.description.length < 10) {
+        newErrors.description = "Description must be at least 10 characters.";
+      }
+
+      if (!fields.daily || isNaN(fields.daily) || Number(fields.daily) <= 0) {
+        newErrors.daily = "Daily price must be a positive number.";
+      }
+
+      // لو فيه أخطاء، وقف الحفظ واظهر الرسائل
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
+
+      // لو مفيش أخطاء، كمل التحديث
       const updatedProduct = { ...product.data, ...fields };
       await updateProduct(updatedProduct);
-
       setFields(updatedProduct);
+      setErrors({});
     }
+
     setIsEditing((prev) => !prev);
   };
 
@@ -142,8 +173,16 @@ const ProductDetails = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (!product) {
+  if (loading) {
     return <h2 className="text-center">Loading...</h2>;
+  }
+
+  if (err) {
+    return <h2 className="text-center text-danger">{err}</h2>;
+  }
+
+  if (!product) {
+    return <h2 className="text-center">No product data available.</h2>;
   }
 
   const chatWithOwner = async () => {
@@ -161,7 +200,7 @@ const ProductDetails = () => {
         <div className="card p-4 shadow-lg">
           <div className="container mt-4">
             {!product.data.confirmed &&
-              decoded.id == product.data.renterId._id && (
+              decoded.id == product?.data?.renterId?._id && (
                 <div className="alert alert-warning ">
                   <div className="d-flex align-items-center">
                     <i className="fas fa-exclamation-triangle me-2"></i>
@@ -293,16 +332,25 @@ const ProductDetails = () => {
 
             <div className="col-md-6">
               <div className="d-flex justify-content-between">
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={fields.name}
-                    onChange={(e) => handleChange(e, "name")}
-                    className="form-control mb-3"
-                  />
-                ) : (
-                  <h3 className="mb-3 main-text fw-bold">{fields.name}</h3>
-                )}
+                <div>
+                  {isEditing ? (
+                    <>
+                      <input
+                        type="text"
+                        value={fields.name}
+                        placeholder="Product Name"
+                        onChange={(e) => handleChange(e, "name")}
+                        className="form-control mb-3 w-100"
+                      />
+                      {errors.name && (
+                        <div className="text-danger d-block">{errors.name}</div>
+                      )}
+                    </>
+                  ) : (
+                    <h3 className="mb-3 main-text fw-bold">{fields.name}</h3>
+                  )}
+                </div>
+
                 <div
                   onClick={(e) => {
                     e.preventDefault();
@@ -383,22 +431,34 @@ const ProductDetails = () => {
               </div>
 
               {isEditing ? (
-                <textarea
-                  value={fields.description}
-                  onChange={(e) => handleChange(e, "description")}
-                  className="form-control mb-2"
-                />
+                <>
+                  <textarea
+                    value={fields.description}
+                    onChange={(e) => handleChange(e, "description")}
+                    className="form-control mb-2"
+                    placeholder="Description"
+                  />
+                  {errors.description && (
+                    <div className="text-danger">{errors.description}</div>
+                  )}
+                </>
               ) : (
                 <p>{fields.description}</p>
               )}
               <div className="d-flex flex-wrap mb-3"></div>
               {isEditing ? (
-                <input
-                  type="text"
-                  value={fields.daily}
-                  onChange={(e) => handleChange(e, "daily")}
-                  className="form-control mb-2"
-                />
+                <>
+                  <input
+                    type="number"
+                    value={fields.daily}
+                    placeholder="Daily Price"
+                    onChange={(e) => handleChange(e, "daily")}
+                    className="form-control mb-2"
+                  />
+                  {errors.daily && (
+                    <div className="text-danger">{errors.daily}</div>
+                  )}
+                </>
               ) : (
                 <h4 className="text-danger">{fields.daily} EGP/Day </h4>
               )}
