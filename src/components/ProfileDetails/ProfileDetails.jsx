@@ -4,12 +4,16 @@ import useProfileStore from '../../Store/profile';
 import useChatStore from '../../Store/chatStore';
 import { useNavigate } from 'react-router-dom';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
+import { useParams } from "react-router-dom";
 
 const ProfileDetails = ({ profile, token }) => {
   const { isEditable } = useProfileStore();
   const { createChat } = useChatStore();
   const navigate = useNavigate();
-
+  const { id } = useParams(); // id comes from the URL /profile/:id
+  
+   
+  
   const chatWithUser = async () => {
     console.log(token);
     const chat = await createChat(profile._id, token);
@@ -25,8 +29,10 @@ const ProfileDetails = ({ profile, token }) => {
     <div className="container">
       <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
         <div className="d-flex flex-column flex-lg-row">
-          <ProfilePicture />
-          <div className="d-flex flex-column justify-content-center align-items-center align-items-lg-start mb-4 mb-lg-0">
+        <div className="me-lg-4 mb-3 mb-lg-0" style={{ minWidth: 130 }}>
+        <ProfilePicture userId={id} /> 
+        </div>     
+             <div className="d-flex flex-column justify-content-center align-items-center align-items-lg-start mb-4 mb-lg-0">
             <h2 className="fw-bold">{profile.userName}</h2>
             <h5>{profile.email}</h5>
           </div>
