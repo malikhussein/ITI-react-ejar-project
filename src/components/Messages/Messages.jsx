@@ -8,6 +8,7 @@ export default function Messages({ chatId, token, userId }) {
   const [otherMember, setOtherMember] = useState(null);
   const [message, setMessage] = useState('');
   const {
+    messagesError,
     chatMessages,
     getChatMessages,
     setChatMessages,
@@ -72,17 +73,36 @@ export default function Messages({ chatId, token, userId }) {
     }
   };
 
+  if (messagesError === 404) {
+    return (
+      <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+        <h2 className="text-center">Chat not found</h2>
+        <p className="text-center">Please select a chat from the sidebar.</p>
+      </div>
+    );
+  }
+  if (messagesError === 500) {
+    return (
+      <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+        <h2 className="text-center">Server error</h2>
+        <p className="text-center">Please try again later.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="w-100 h-100 me-3 d-flex flex-column">
       {otherMember ? (
         <div className="border-bottom d-flex d-lg-none flex-row justify-content-center align-items-center">
           <img
             className="rounded-circle p-2"
-            src={
-              'https://static.vecteezy.com/system/resources/previews/026/619/142/non_2x/default-avatar-profile-icon-of-social-media-user-photo-image-vector.jpg'
-            }
+            src={otherMember.profilePicture}
             alt="User Picture"
             width={80}
+            height={80}
+            style={{
+              objectFit: 'cover',
+            }}
           />
           <h4 className="mt-2">{otherMember.userName}</h4>
         </div>
@@ -91,27 +111,37 @@ export default function Messages({ chatId, token, userId }) {
       )}
       <div
         className="d-flex flex-column chat-container"
-        style={{ overflowY: 'scroll' }}
+        style={{ overflowY: 'scroll', flex: 1 }}
       >
-        {chatMessages.map((msg, index) =>
-          msg.senderId === userId ? (
-            <div key={index} className="mx-3 align-self-end">
-              <h5 className="p-2 bg-primary text-white w-auto rounded-4 text-center">
-                {msg.content}
-              </h5>
-              <p className="small text-muted text-end">
-                {msg.createdAt ? new Date(msg.createdAt).toLocaleString() : ''}
-              </p>
-            </div>
-          ) : (
-            <div key={index} className="mx-3 align-self-start">
-              <h5 className="p-2 bg-light w-auto rounded-4 text-center">
-                {msg.content}
-              </h5>{' '}
-              <p className="small text-muted">
-                {msg.createdAt ? new Date(msg.createdAt).toLocaleString() : ''}
-              </p>
-            </div>
+        {chatMessages.length === 0 ? (
+          <div className="d-flex flex-column justify-content-center align-items-center h-100">
+            <h2>No messages yet</h2>
+          </div>
+        ) : (
+          chatMessages.map((msg, index) =>
+            msg.senderId === userId ? (
+              <div key={index} className="mx-3 align-self-end">
+                <h5 className="p-2 bg-primary text-white w-auto rounded-4 text-center">
+                  {msg.content}
+                </h5>
+                <p className="small text-muted text-end">
+                  {msg.createdAt
+                    ? new Date(msg.createdAt).toLocaleString()
+                    : ''}
+                </p>
+              </div>
+            ) : (
+              <div key={index} className="mx-3 align-self-start">
+                <h5 className="p-2 bg-light w-auto rounded-4 text-center">
+                  {msg.content}
+                </h5>{' '}
+                <p className="small text-muted">
+                  {msg.createdAt
+                    ? new Date(msg.createdAt).toLocaleString()
+                    : ''}
+                </p>
+              </div>
+            )
           )
         )}
       </div>
