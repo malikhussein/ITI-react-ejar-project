@@ -17,11 +17,7 @@ function ItemCard({ item, renderStars }) {
   const isWishlisted = wishlist.some((p) => p.id === item._id);
 
   return (
-    <Link
-      onClick={() => handleFetchProduct(item._id)}
-      className="nav-link"
-      to={`/product/${item._id}`}
-    >
+    <>
       <div className="item mb-4">
         <div className="card-icons">
           <div>
@@ -42,12 +38,17 @@ function ItemCard({ item, renderStars }) {
             </div>
           </div>
         </div>
+        <Link
+          onClick={() => handleFetchProduct(item._id)}
+          className="nav-link"
+          to={`/product/${item._id}`}
+        >
+          <div className="image">
+            <img src={item.images[0]} alt={item.name} />
+          </div>
 
-        <div className="image">
-          <img src={item.images[0]} alt={item.name} />
-        </div>
-
-        <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.name}</h3>
+          <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.name}</h3>
+        </Link>
 
         <div className="d-flex gap-3 mt-2">
           <p className="price fw-bold m-0">EGP {item.daily}</p>
@@ -61,7 +62,7 @@ function ItemCard({ item, renderStars }) {
           )}
         </div>
       </div>
-    </Link>
+    </>
   );
 }
 
