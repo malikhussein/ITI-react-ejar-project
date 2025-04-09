@@ -9,13 +9,13 @@ import { MoonLoader } from "react-spinners";
 import HomeCard from "../HomeCard/HomeCard";
 
 function HomeItemsSection() {
-  const { products, loading, error, fetchProducts } = useProductStore();
+  const { products, loading, error, fetchSortedProducts } = useProductStore();
 
   const maxProductsToShow = 8;
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    fetchSortedProducts();
+  }, [fetchSortedProducts]);
 
   const confirmedProducts = products.filter((item) => item.confirmed === true);
 
@@ -89,6 +89,8 @@ function HomeItemsSection() {
     ],
   };
 
+
+  // loader
   if (loading) {
     return (
       <div
