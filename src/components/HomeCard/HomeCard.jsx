@@ -17,8 +17,8 @@ function HomeCard({ item, renderStars }) {
   const isWishlisted = wishlist.some((p) => p.id === item._id);
 
   return (
-    <div className="col-sm-6 col-md-4 col-lg-3">
-      <div className="home-card mb-4 block" data-aos="zoom-in"> 
+    <div className="col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in">
+      <div className="home-card mb-4"> 
 
         <div className="card-icons">
           <div>
