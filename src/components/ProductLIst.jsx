@@ -43,6 +43,8 @@ export default function ProductList() {
   const handlePageChange = (event, value) => {
     setPage(value);
   };
+  console.log(currentProducts);
+  
   const confirmedProducts = currentProducts.filter(
     (item) => item.confirmed === true
   );
