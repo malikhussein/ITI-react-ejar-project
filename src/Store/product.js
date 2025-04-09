@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { create } from 'zustand';
 
 const useProductStore = create((set, get) => ({
@@ -18,8 +19,12 @@ const useProductStore = create((set, get) => ({
           },
         }
       );
-      console.log(response);
+      toast.success(
+        `Product posted successfully\n Wait for the admin to approve it`
+      );
+      console.log(response.data.product.name);
     } catch (error) {
+      toast.error('Failed to post product');
       set({ error: error.response?.data?.message || error.message });
     }
   },

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { create } from 'zustand';
 
 const useProcessStore = create((set, get) => ({
@@ -24,7 +25,6 @@ const useProcessStore = create((set, get) => ({
     }
   },
 
-  
   getFinishedProcesses: async (token) => {
     try {
       set({ loading: true, error: null });
@@ -56,7 +56,11 @@ const useProcessStore = create((set, get) => ({
         }
       );
       set({ loading: false });
+      toast.success(
+        `Request posted successfully\n Wait for the owner to accept it`
+      );
     } catch (error) {
+      toast.error('Failed to post request');
       set({ error: error.response?.data?.message || error.message });
     }
   },
@@ -73,7 +77,9 @@ const useProcessStore = create((set, get) => ({
         }
       );
       set({ loading: false });
+      toast.success('Request accepted successfully');
     } catch (error) {
+      toast.error('Failed to accept request');
       set({ error: error.response?.data?.message || error.message });
     }
   },
@@ -90,8 +96,10 @@ const useProcessStore = create((set, get) => ({
         }
       );
       set({ loading: false });
+      toast.success('Request declined successfully');
     } catch (error) {
       set({ error: error.response?.data?.message || error.message });
+      toast.error('Failed to decline request');
     }
   },
 }));
