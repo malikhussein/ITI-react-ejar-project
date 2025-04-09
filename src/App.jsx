@@ -14,6 +14,7 @@ import NotFound from './components/NotFound/NotFound';
 import Search from './Pages/SearchPage/Search';
 import RequestsPage from './components/RequestsPage/RequestsPage';
 import ReviewPage from './Pages/Review/ReviewPage';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
