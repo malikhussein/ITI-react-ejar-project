@@ -73,7 +73,7 @@ function CategoriesSection() {
   }
 
   return (
-    <div className="category">
+    <div className="category" data-aos="fade-right">
       <h2 className="ms-2">Browse By Category</h2>
       <Slider {...settings}>
         {categories.map((category) => (

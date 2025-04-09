@@ -140,7 +140,7 @@ function HomeItemsSection() {
         ))}
       </Slider> */}
 
-      <div>
+      <div >
         <div className="row">
           {confirmedProducts.map((item) => (
             <HomeCard key={item._id} item={item} renderStars={renderStars} />

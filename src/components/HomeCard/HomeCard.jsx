@@ -18,7 +18,7 @@ function HomeCard({ item, renderStars }) {
 
   return (
     <div className="col-sm-6 col-md-4 col-lg-3">
-      <div className="home-card mb-4">
+      <div className="home-card mb-4 block" data-aos="zoom-in"> 
 
         <div className="card-icons">
           <div>
