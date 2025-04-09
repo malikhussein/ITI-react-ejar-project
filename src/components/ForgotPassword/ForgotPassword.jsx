@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -12,6 +12,33 @@ export default function ForgotPassword() {
   const [countdown, setCountdown] = useState(0); // Holds countdown value
 
   const navigate = useNavigate();
+  useEffect(() => {
+    const savedTime = localStorage.getItem('resetCooldown');
+    if (savedTime) {
+      const remaining = Math.floor((parseInt(savedTime) - Date.now()) / 1000);
+      if (remaining > 0) {
+        setIsDisabled(true);
+        setCountdown(remaining);
+        startCountdown(remaining);
+      } else {
+        localStorage.removeItem('resetCooldown');
+      }
+    }
+  }, []);
+  
+  const startCountdown = (duration) => {
+    let seconds = duration;
+    const timer = setInterval(() => {
+      seconds -= 1;
+      setCountdown(seconds);
+      if (seconds <= 0) {
+        clearInterval(timer);
+        setIsDisabled(false);
+        localStorage.removeItem('resetCooldown');
+      }
+    }, 1000);
+  };
+  
 
   const formik = useFormik({
     initialValues: { email: '' },
@@ -24,37 +51,31 @@ export default function ForgotPassword() {
       try {
         setApiMessage(null);
         setIsLoading(true);
-        setIsDisabled(true);
-        setCountdown(60); //  Start countdown at 60 seconds
-
+    
         const response = await axios.post(
           'http://localhost:3000/api/auth/forgot-password',
           {
             email: values.email,
           }
         );
-
+    
         if (response.status === 200) {
           setApiMessage('✅ Password reset link sent! Check your email.');
+          
+          // Only start countdown on success
+          setIsDisabled(true);
+          setCountdown(60);
+          localStorage.setItem('resetCooldown', Date.now() + 60000);
+          startCountdown(60);
         }
       } catch (error) {
         setApiMessage(error.response?.data?.message || 'Something went wrong.');
       } finally {
         setIsLoading(false);
         setSubmitting(false);
-
-        //  Start a countdown timer for 60 seconds
-        let seconds = 60;
-        const timer = setInterval(() => {
-          seconds -= 1;
-          setCountdown(seconds);
-          if (seconds <= 0) {
-            clearInterval(timer);
-            setIsDisabled(false); // Enable button after countdown finishes
-          }
-        }, 1000);
       }
-    },
+    }
+    
   });
 
   return (
