@@ -3,6 +3,7 @@ import ProductCard from "./ProductCard/ProductCard";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Pagination, Stack } from "@mui/material";
+import { MoonLoader } from "react-spinners"; 
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -48,20 +49,35 @@ export default function ProductList() {
   const confirmedProducts = currentProducts.filter(
     (item) => item.confirmed === true
   );
-
+  
   return (
     <>
-      <div className="col-md-9 ">
-        {isLoading ? (
-          <h1>"Loading..."</h1>
+      <div className="col-md-9" style={{ marginLeft: "-10rem" }}>
+      {isLoading ? (
+  <div
+  style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "70vh", width: "100%", }}
+>
+    <MoonLoader color="#b72a67 " size={100} />
+    <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
+      Loading products, please wait...
+    </p>
+  </div>
         ) : confirmedProducts.length > 0 ? (
           confirmedProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (
-          <div className="text-center">
-            <h2 className="">No products found in this category</h2>
-          </div>
+          <div
+          style={{ textAlign: "center", padding: "50px 20px", color: "#777",  display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "60vh"   }}
+        >
+        <i
+          className="bi bi-box-seam"
+          style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
+        ></i>
+          <h2>No products found in this category</h2>
+          <p>Try exploring a different category or check back later!</p>
+        </div>
+        
         )}
       </div>
 

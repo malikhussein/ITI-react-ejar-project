@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import useCategoryStore from '../../Store/categoryStore';
 import './CategoriesSection.css';
+import { MoonLoader } from "react-spinners";
 
 function CategoriesSection() {
   const { categories, loading, error, fetchCategories } = useCategoryStore();
@@ -41,8 +42,35 @@ function CategoriesSection() {
     ],
   };
 
-  if (loading) return <div>Loading categories...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) {
+    return (
+      <div
+        style={{ display: "flex",flexDirection: "column", justifyContent: "center", alignItems: "center", height: "50vh", width: "100%",}}
+      >
+        <MoonLoader color="#b72a67" size={80} />
+        <p style={{ marginTop: 20, fontSize: "16px", color: "#555" }}>
+          Loading categories, please wait...
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div
+        style={{  textAlign: "center",  padding: "50px 20px", color: "#777",  display: "flex", flexDirection: "column", 
+           justifyContent: "center",  alignItems: "center",  height: "50vh",  }}
+      >
+      
+        <i
+          className="bi bi-grid-1x2-fill"
+          style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
+        ></i>
+        <h2>Oops! Couldn't load categories</h2>
+        <p>Please check your connection or try again later.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="category">

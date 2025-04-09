@@ -28,8 +28,8 @@ const ProfileDetails = ({ profile, token }) => {
   return (
     <div className="container">
       <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
-        <div className="d-flex flex-column flex-lg-row">
-        <div className="me-lg-4 mb-3 mb-lg-0" style={{ minWidth: 130 }}>
+      <div className="d-flex flex-row align-items-center flex-wrap">
+      <div className="me-lg-4 mb-3 mb-lg-0" style={{ width: "150px"}}>
         <ProfilePicture userId={id} /> 
         </div>     
              <div className="d-flex flex-column justify-content-center align-items-center align-items-lg-start mb-4 mb-lg-0">

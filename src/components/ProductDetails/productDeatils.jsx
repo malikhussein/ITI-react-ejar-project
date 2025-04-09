@@ -7,6 +7,7 @@ import useAuthStore from "../../Store/Auth";
 import "./productDeatils.css";
 import useChatStore from "../../Store/chatStore";
 import useWishlistStore from "../../Store/Wishlist";
+import { MoonLoader } from "react-spinners";
 
 const ProductDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -174,17 +175,74 @@ const ProductDetails = () => {
   }, []);
 
   if (loading) {
-    return <h2 className="text-center">Loading...</h2>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+          width: "100%",
+        }}
+      >
+        <MoonLoader color="#b72a67" size={80} />
+      
+        <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
+          Loading product details, please wait...
+        </p>
+      </div>
+    );
   }
-
   if (err) {
-    return <h2 className="text-center text-danger">{err}</h2>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+          width: "100%",
+          color: "#b72a67",
+          textAlign: "center",
+        }}
+      >
+        <i
+          className="bi bi-exclamation-triangle"
+          style={{ fontSize: "60px", marginBottom: "20px" }}
+        ></i>
+        
+        <h2>Oops! Something went wrong</h2>
+        <p>{err}</p>
+      </div>
+    );
   }
 
   if (!product) {
-    return <h2 className="text-center">No product data available.</h2>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+          width: "100%",
+          color: "#777",
+          textAlign: "center",
+        }}
+      >
+        <i
+          className="bi bi-box-seam"
+          style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
+        ></i>
+        <h2>No product found</h2>
+        <p>This product may have been removed or is unavailable right now.</p>
+      </div>
+    );
   }
-
+  
   const chatWithOwner = async () => {
     const chat = await createChat(product.data.renterId._id, token);
     if (chat && chat._id) {

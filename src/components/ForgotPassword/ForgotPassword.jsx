@@ -9,7 +9,7 @@ export default function ForgotPassword() {
   const [apiMessage, setApiMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [countdown, setCountdown] = useState(0); // ⏳ Holds countdown value
+  const [countdown, setCountdown] = useState(0); // Holds countdown value
 
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export default function ForgotPassword() {
         setApiMessage(null);
         setIsLoading(true);
         setIsDisabled(true);
-        setCountdown(60); // ⏳ Start countdown at 60 seconds
+        setCountdown(60); //  Start countdown at 60 seconds
 
         const response = await axios.post(
           'http://localhost:3000/api/auth/forgot-password',
@@ -64,7 +64,7 @@ export default function ForgotPassword() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#f8f9fa", // optional light background
+      backgroundColor: "#f8f9fa", 
       padding: "20px",
     }}
   >
@@ -92,7 +92,7 @@ export default function ForgotPassword() {
             className="btn"
             disabled={isLoading || isDisabled} //  Button disabled properly
             style={{
-              backgroundColor: isDisabled ? '#ccc' : '#562DDD', // Grayed-out when disabled
+              backgroundColor: isDisabled ? '#ccc' : '#562DDD', 
               color: 'white',
               width: '50%',
               fontSize: '18px',

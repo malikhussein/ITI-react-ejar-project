@@ -5,6 +5,7 @@ import "./HomeItemsSection.css";
 import { Link } from "react-router-dom";
 import useProductStore from "../../Store/productsStore";
 import ItemCard from "../ItemCard/ItemCard";
+import { MoonLoader } from "react-spinners";
 
 function HomeItemsSection() {
   const { products, loading, error, fetchProducts } = useProductStore();
@@ -85,8 +86,34 @@ function HomeItemsSection() {
     ],
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>error: {error}</div>;
+  if (loading) {
+    return (
+      <div
+        style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "70vh", width: "100%", }}
+      >
+        <MoonLoader color="#b72a67" size={80} />
+        <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
+          Loading latest items, please wait...
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div
+        style={{ textAlign: "center", padding: "50px 20px", color: "#777", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "60vh",}}
+      >
+        <i
+          className="bi bi-cart-xbi bi-bag-x"
+          style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
+        ></i>
+        <h2>Oops! Couldn't load items</h2>
+        <p>Please check your internet connection or try again later.</p>
+      </div>
+    );
+  }
+
 
   return (
     <div className="items-section">

@@ -188,11 +188,13 @@ export default function ProfilePicture({ userId }) {
       )}
 
       {/* Instructions */}
-      {isOwnProfile && (
-        <p style={{ color: "#555", fontSize: 14, marginTop: 10 }}>
-          Click photo to enlarge or change
-        </p>
-      )}
+      <div style={{ minHeight: 24}}>
+        {isOwnProfile && (
+          <p style={{ color: "#555", fontSize: 14, marginTop: 7 , marginBottom: 0, marginLeft:"-2rem" }}>
+            Click photo to enlarge or change
+          </p>
+        )}
+      </div>
 
       {/* Hidden input for file upload */}
       <input
