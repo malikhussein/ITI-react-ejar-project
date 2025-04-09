@@ -22,6 +22,8 @@ export default function Navbar() {
       navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     }
+    e.target.reset(); // Reset the form after submission
+
   };
 
   return (
