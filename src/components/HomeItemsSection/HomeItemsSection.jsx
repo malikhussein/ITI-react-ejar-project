@@ -11,6 +11,8 @@ import HomeCard from "../HomeCard/HomeCard";
 function HomeItemsSection() {
   const { products, loading, error, fetchProducts } = useProductStore();
 
+  const maxProductsToShow = 8;
+
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
@@ -142,7 +144,7 @@ function HomeItemsSection() {
 
       <div >
         <div className="row">
-          {confirmedProducts.map((item) => (
+          {confirmedProducts.slice(0, maxProductsToShow).map((item) => (
             <HomeCard key={item._id} item={item} renderStars={renderStars} />
           ))}
         </div>
