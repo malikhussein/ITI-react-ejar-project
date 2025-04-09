@@ -26,6 +26,11 @@ export default function Navbar() {
 
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-white p-3">
@@ -131,7 +136,8 @@ export default function Navbar() {
                     </li>
                     <li className="nav-item d-block d-lg-none mx-auto">
                       <Link className="nav-link" to="/ReviewPage">
-                        <i className="fa-solid fa-clock-rotate-left me-2"></i> History
+                        <i className="fa-solid fa-clock-rotate-left me-2"></i>{' '}
+                        History
                       </Link>
                     </li>
 
@@ -164,7 +170,7 @@ export default function Navbar() {
                           <a
                             className="dropdown-item"
                             href="#"
-                            onClick={logout}
+                            onClick={handleLogout}
                           >
                             Logout
                           </a>
@@ -178,7 +184,7 @@ export default function Navbar() {
                       </Link>
                     </li>
                     <li className="nav-item d-block d-lg-none mx-auto">
-                      <a className="nav-link" href="#" onClick={logout}>
+                      <a className="nav-link" href="#" onClick={handleLogout}>
                         Logout
                       </a>
                     </li>

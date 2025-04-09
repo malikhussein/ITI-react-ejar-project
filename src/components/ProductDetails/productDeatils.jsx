@@ -196,9 +196,9 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="container my-5">
-        <div className="card p-4 shadow-lg">
-          <div className="container mt-4">
+      <div className="container  my-5">
+        <div className="   p-4 shadow-lg">
+          <div className=" mt-4">
             {!product.data.confirmed &&
               decoded.id == product?.data?.renterId?._id && (
                 <div className="alert alert-warning ">

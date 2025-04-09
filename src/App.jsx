@@ -14,7 +14,9 @@ import NotFound from './components/NotFound/NotFound';
 import Search from './Pages/SearchPage/Search';
 import RequestsPage from './components/RequestsPage/RequestsPage';
 import ReviewPage from './Pages/Review/ReviewPage';
-
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -29,8 +31,8 @@ function App() {
           <Route path="chat" element={<ChatPage />} />
           <Route path="chat/:chatId" element={<ChatPage />} />
           <Route path="search" element={<Search />} />
-          <Route path="requests" element={<RequestsPage />}/>
-          <Route path="ReviewPage" element={<ReviewPage />}/>
+          <Route path="requests" element={<RequestsPage />} />
+          <Route path="ReviewPage" element={<ReviewPage />} />
         </Route>
 
         <Route path="register" element={<Register />} />
@@ -39,8 +41,8 @@ function App() {
         <Route path="reset-password/:token" element={<ResetPassword />} />
 
         <Route path="*" element={<NotFound />} />
-
       </Routes>
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </>
   );
 }

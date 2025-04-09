@@ -39,7 +39,8 @@ export default function Sidebar() {
                 className="sidebar-button"
               >
                 <i className={`fa-solid ${category.icon} sidebar-icon`}></i>
-                {category.name}
+                {category.name.charAt(0).toUpperCase() +
+                  category.name.slice(1).toLowerCase()}
               </button>
             </li>
           ))}
