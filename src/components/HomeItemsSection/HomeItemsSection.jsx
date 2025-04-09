@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import useProductStore from "../../Store/productsStore";
 import ItemCard from "../ItemCard/ItemCard";
 import { MoonLoader } from "react-spinners";
+import HomeCard from "../HomeCard/HomeCard";
 
 function HomeItemsSection() {
   const { products, loading, error, fetchProducts } = useProductStore();
@@ -89,7 +90,14 @@ function HomeItemsSection() {
   if (loading) {
     return (
       <div
-        style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "70vh", width: "100%", }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "70vh",
+          width: "100%",
+        }}
       >
         <MoonLoader color="#b72a67" size={80} />
         <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
@@ -102,7 +110,16 @@ function HomeItemsSection() {
   if (error) {
     return (
       <div
-        style={{ textAlign: "center", padding: "50px 20px", color: "#777", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "60vh",}}
+        style={{
+          textAlign: "center",
+          padding: "50px 20px",
+          color: "#777",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "60vh",
+        }}
       >
         <i
           className="bi bi-cart-xbi bi-bag-x"
@@ -114,15 +131,22 @@ function HomeItemsSection() {
     );
   }
 
-
   return (
     <div className="items-section">
       <h2 className="mb-5">Explore Our New Items</h2>
-      <Slider {...settings}>
+      {/* <Slider {...settings}>
         {confirmedProducts.map((item) => (
           <ItemCard key={item._id} item={item} renderStars={renderStars} />
         ))}
-      </Slider>
+      </Slider> */}
+
+      <div>
+        <div className="row">
+          {confirmedProducts.map((item) => (
+            <HomeCard key={item._id} item={item} renderStars={renderStars} />
+          ))}
+        </div>
+      </div>
 
       <div className="loadmore mt-4 d-flex justify-content-center">
         <Link to="/product">

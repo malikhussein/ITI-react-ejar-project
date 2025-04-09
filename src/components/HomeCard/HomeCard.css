@@ -1,0 +1,82 @@
+.home-card {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  position: relative;
+  transition: 0.3s;
+  padding: 10px;
+}
+
+.home-card:hover {
+  transform: translateY(-10px);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.home-card .image img {
+  height: 200px;
+  width: 100%;
+  border-radius: 5px;
+  /* border: 1px solid #eee; */
+}
+
+.home-card .item-name {
+  height: 40px;
+  margin: 0;
+}
+
+.home-card .price {
+  color: #b72a67;
+}
+
+.home-card .rating {
+  font-size: 14px;
+}
+
+.home-card .newItem {
+  background-color: #06c954;
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.home-card .card-icons .icon {
+  background-color: #eee;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.home-card::after,
+.home-card::before {
+  position: absolute;
+  content: "";
+  height: 1px;
+  background-color: #b72a67;
+  width: 0;
+  transition: 0.5s;
+}
+
+.home-card::after {
+  right: 0;
+  top: 0;
+}
+
+.home-card::before {
+  left: 0;
+  bottom: 0;
+}
+
+.home-card:hover::after {
+  width: 100%;
+}
+.home-card:hover::before {
+  width: 100%;
+}
