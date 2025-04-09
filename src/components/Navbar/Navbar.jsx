@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ejarLogo from '../../assets/logo.png';
 import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthStore from '../../Store/Auth';
+import useNotificationStore from '../../Store/notificationStore';
 import { jwtDecode } from 'jwt-decode';
+import { io } from 'socket.io-client';
+import { toast } from 'react-toastify'; // You might need to install this package
+
+const socket = io('http://localhost:3000');
 
 export default function Navbar() {
   const { token, logout } = useAuthStore();
+  const {
+    notifications,
+    hasUnread,
+    fetchNotifications,
+    markAsRead,
+    addNotification,
+  } = useNotificationStore();
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
@@ -23,6 +35,46 @@ export default function Navbar() {
       setSearchQuery('');
     }
   };
+
+  useEffect(() => {
+    // Only join and set up listeners if we have a token and userId
+    if (token && userId) {
+      // Fetch unread notifications when the component mounts or user logs in
+      fetchNotifications(token);
+
+      // Join the user's notification channel
+      socket.emit('joinUserNotifications', userId);
+
+      // Set up the listener for verification changes
+      const handleVerificationChange = (data) => {
+        console.log('Verification status notification:', data);
+
+        // Show toast notification
+        toast.info(data.message);
+
+        // Add the notification to our store (will be saved to state)
+        if (data.userId === userId) {
+          addNotification({
+            _id: `temp-${Date.now()}`, // Mark with temp- prefix
+            message: data.message,
+            type: 'verification',
+            data: data,
+            createdAt: new Date().toISOString(),
+            read: false,
+            isTemp: true, // Flag to identify socket notifications
+          });
+        }
+      };
+
+      // Register the listener
+      socket.on('userVerificationChanged', handleVerificationChange);
+
+      // Clean up function to remove the listener when component unmounts
+      return () => {
+        socket.off('userVerificationChanged', handleVerificationChange);
+      };
+    }
+  }, [token, userId, fetchNotifications, addNotification]);
 
   return (
     <>
@@ -99,12 +151,82 @@ export default function Navbar() {
                     {/* Message icon in desktop text in mobile */}
                     <li className="nav-item d-none d-lg-block">
                       <Link className="nav-link" to="/chat">
-                        <i class="fa-regular fa-message"></i>
+                        <i className="fa-regular fa-message"></i>
                       </Link>
                     </li>
                     <li className="nav-item d-block d-lg-none mx-auto">
                       <Link className="nav-link" to="/chat">
                         Messages
+                      </Link>
+                    </li>
+
+                    {/* Notification bell icon with badge */}
+                    <li className="nav-item dropdown d-none d-lg-block">
+                      <a
+                        className="nav-link dropdown-toggle position-relative"
+                        href="#"
+                        id="notificationDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i className="fa-regular fa-bell"></i>
+                        {hasUnread && (
+                          <span className="position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger">
+                            {notifications.length}
+                            <span className="visually-hidden">
+                              unread notifications
+                            </span>
+                          </span>
+                        )}
+                      </a>
+                      <ul
+                        className="dropdown-menu notification-dropdown"
+                        aria-labelledby="notificationDropdown"
+                      >
+                        {notifications.length > 0 ? (
+                          notifications.map((notification) => (
+                            <li
+                              key={notification._id}
+                              className="notification-item"
+                            >
+                              <button
+                                className="dropdown-item"
+                                onClick={() =>
+                                  markAsRead(notification._id, token)
+                                }
+                              >
+                                {notification.message}
+                                <small className="text-muted d-block">
+                                  {new Date(
+                                    notification.createdAt
+                                  ).toLocaleString()}
+                                </small>
+                              </button>
+                            </li>
+                          ))
+                        ) : (
+                          <li>
+                            <span className="dropdown-item">
+                              No new notifications
+                            </span>
+                          </li>
+                        )}
+                      </ul>
+                    </li>
+
+                    {/* Mobile notification link */}
+                    <li className="nav-item d-block d-lg-none mx-auto">
+                      <Link
+                        className="nav-link position-relative"
+                        to="/notifications"
+                      >
+                        Notifications
+                        {hasUnread && (
+                          <span className="badge rounded-pill bg-danger ms-2">
+                            {notifications.length}
+                          </span>
+                        )}
                       </Link>
                     </li>
 

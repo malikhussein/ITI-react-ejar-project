@@ -27,7 +27,32 @@
   border: #942153 !important;
 }
 
-.btn-secondary{
-  background: #562DDD !important;
-  border: #562DDD !important;
+.btn-secondary {
+  background: #562ddd !important;
+  border: #562ddd !important;
+}
+
+/* Add this to your existing CSS */
+.notification-dropdown {
+  min-width: 375px;
+  padding: 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  border-bottom: 1px solid #eee;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item .dropdown-item {
+  padding: 10px 15px;
+  white-space: normal;
+}
+
+.notification-item .dropdown-item:hover {
+  background-color: #f8f9fa;
 }
