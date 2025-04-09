@@ -3,6 +3,7 @@ import { create } from 'zustand';
 
 const useProcessStore = create((set, get) => ({
   userProcesses: [],
+  finishedProcesses: [],
   error: null,
   loading: false,
   getProcesses: async (token) => {
@@ -22,6 +23,26 @@ const useProcessStore = create((set, get) => ({
       set({ error: error.response?.data?.message || error.message });
     }
   },
+
+  
+  getFinishedProcesses: async (token) => {
+    try {
+      set({ loading: true, error: null });
+      const response = await axios.get(
+        `http://localhost:3000/api/process/finished`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const finished = response?.data;
+      set({ finishedProcesses: finished, loading: false });
+    } catch (error) {
+      set({ error: error.response?.data?.message || error.message });
+    }
+  },
+
   postProcess: async (productId, processData, token) => {
     try {
       set({ loading: true, error: null });

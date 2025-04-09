@@ -90,7 +90,7 @@ export default function ProductCard({ product }) {
           <h5 className="d-none d-md-block">
           {product.review.length === 0 ? (
             <span className="text-muted">No reviews yet</span>):            
-            renderStars( product.review[0].rating)
+            renderStars( product.averageRating)
           }  
             
           </h5>
