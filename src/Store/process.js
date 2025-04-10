@@ -96,7 +96,7 @@ const useProcessStore = create((set, get) => ({
         }
       );
       set({ loading: false });
-      toast.success('Request declined successfully');
+      toast.info('Request declined successfully');
     } catch (error) {
       set({ error: error.response?.data?.message || error.message });
       toast.error('Failed to decline request');
