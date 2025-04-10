@@ -1,7 +1,10 @@
 import React from "react";
 import "./StartRenting.css";
+import useAuthStore from "../../Store/Auth";
 
 function StartRenting() {
+  const { token } = useAuthStore();
+
   return (
     <div
       className="start mt-5 d-flex justify-content-between mb-5 flex-wrap gap-4"
@@ -17,14 +20,18 @@ function StartRenting() {
       </div>
 
       <div className="bt d-flex">
-        <button
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#productModal"
-          className="rent-btn mt-auto"
-        >
-          Start Renting Out
-        </button>
+        {token ? (
+          <button
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#productModal"
+            className="rent-btn mt-auto"
+          >
+            Start Renting Out
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

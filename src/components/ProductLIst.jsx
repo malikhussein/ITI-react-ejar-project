@@ -61,7 +61,7 @@ console.log(
     
   return (
     <>
-      <div className="col-md-9" style={{ marginLeft: "-10rem" }}>
+      <div className="col-md-9">
       {isLoading ? (
   <div
   style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "70vh", width: "100%", }}
@@ -70,9 +70,10 @@ console.log(
     <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
       Loading products, please wait...
     </p>
+
   </div>
-        ) : confirmedProducts.length > 0 ? (
-          confirmedProducts.map((product) => (
+        ) : currentProducts.length > 0 ? (
+          currentProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (
