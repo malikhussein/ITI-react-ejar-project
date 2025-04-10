@@ -14,10 +14,6 @@ export default function Listings() {
     getUserProducts(token, userId);
   }, [getUserProducts, token, userId]);
 
-  const confirmedProducts = userProducts.filter(
-    (item) => item.confirmed === true
-  );
-
   return (
     <div className="container">
       <h2 className="my-5 border-bottom pb-3 text-center text-lg-start">
@@ -27,7 +23,7 @@ export default function Listings() {
         {userProducts.length === 0 ? (
           <h3 className="text-center mb-5 h1">No Listings Found</h3>
         ) : (
-          confirmedProducts.map((product) => (
+          userProducts.map((product) => (
             <ListingCard key={product.id} product={product} />
           ))
         )}

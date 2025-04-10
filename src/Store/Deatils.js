@@ -28,14 +28,8 @@ const useProductStore = create((set) => ({
 
       updatedData.confirmed = false;
 
-      // ✅ فضي رسالة التأكيد لو مطلوب
       if (clearMessage) {
         updatedData.confirmMessage = "";
-      }
-
-      // ✅ لو الحالة مش rented، خليه يحولها لـ unavailable
-      if (updatedData.status !== "rented") {
-        updatedData.status = "unavailable";
       }
 
       for (const key in updatedData) {
