@@ -10,10 +10,18 @@ import useWishlistStore from "../../Store/Wishlist";
 
 const ProductDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const { product, fetchProduct, updateProduct, getAllProd, loading, err } =
-    useProductStore();
+  const {
+    product,
+    fetchProduct,
+    updateProduct,
+    getAllProd,
+    loading,
+    err,
+    gteProccesOfProduct,
+    processData,
+  } = useProductStore();
+
   const { token } = useAuthStore();
-  const [errormessage, setErrormessage] = useState(null);
 
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
 
@@ -39,11 +47,10 @@ const ProductDetails = () => {
 
   const { id } = useParams();
 
-  const [error, setError] = useState(null);
-
   useEffect(() => {
     fetchProduct(id);
-  }, [id, fetchProduct]);
+    gteProccesOfProduct(id, token);
+  }, [id, fetchProduct, token]);
 
   let decoded;
   if (token) {
@@ -97,15 +104,13 @@ const ProductDetails = () => {
         newErrors.daily = "Daily price must be a positive number.";
       }
 
-      // لو فيه أخطاء، وقف الحفظ واظهر الرسائل
       if (Object.keys(newErrors).length > 0) {
         setErrors(newErrors);
         return;
       }
 
-      // لو مفيش أخطاء، كمل التحديث
       const updatedProduct = { ...product.data, ...fields };
-      await updateProduct(updatedProduct);
+      await updateProduct(updatedProduct, true);
       setFields(updatedProduct);
       setErrors({});
     }
@@ -204,11 +209,9 @@ const ProductDetails = () => {
                 <div className="alert alert-warning ">
                   <div className="d-flex align-items-center">
                     <i className="fas fa-exclamation-triangle me-2"></i>
-                    <h6>admin check</h6>
+                    <h6>Awaiting admin review</h6>
                   </div>
-                  <span className="d-block">
-                    {product.data.confirmMessage} dd
-                  </span>
+                  <span className="d-block">{product.data.confirmMessage}</span>
                 </div>
               )}
             {!product.data.confirmed &&
@@ -255,8 +258,8 @@ const ProductDetails = () => {
                       height: "120%",
                     },
                     enlargedImageContainerStyle: {
-                      backgroundColor: "#ccc", // اللون الرصاصي
-                      zIndex: 1000, // اختياري لو فيه تداخل مع عناصر تانية
+                      backgroundColor: "#ccc",
+                      zIndex: 1000,
                     },
                   }}
                 />
@@ -426,7 +429,19 @@ const ProductDetails = () => {
                     <option value="unavailable">Unavailable</option>
                   </select>
                 ) : (
-                  <span className="ms-1 text-muted">{fields.status}</span>
+                  <span className="ms-1 text-muted mx-1">{fields.status}</span>
+                )}
+                {processData ? (
+                  <p className="ms-1 text-danger mt-3 ">
+                    <span className="mx-1">Available at</span>
+                    {new Date(processData.endDate).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                ) : (
+                  ""
                 )}
               </div>
 
