@@ -205,7 +205,7 @@ const ProductDetails = () => {
         <div className="   p-4 shadow-lg">
           <div className=" mt-4">
             {!product.data.confirmed &&
-              decoded.id == product?.data?.renterId?._id && (
+              decoded?.id == product?.data?.renterId?._id && (
                 <div className="alert alert-warning ">
                   <div className="d-flex align-items-center">
                     <i className="fas fa-exclamation-triangle me-2"></i>
@@ -215,8 +215,8 @@ const ProductDetails = () => {
                 </div>
               )}
             {!product.data.confirmed &&
-              decoded.id !== product.data.renterId._id &&
-              decoded.role !== "admin" && (
+              decoded?.id !== product.data.renterId._id &&
+              decoded?.role !== "admin" && (
                 <div className="alert alert-warning d-flex align-items-center">
                   <i className="fas fa-exclamation-triangle me-2"></i>
                   <span>
@@ -478,7 +478,7 @@ const ProductDetails = () => {
                 <h4 className="text-danger">{fields.daily} EGP/Day </h4>
               )}
               <div className="mt-3">
-                {decoded.id == product?.data?.renterId?._id ? (
+                {decoded?.id == product?.data?.renterId?._id ? (
                   <div className="d-flex align-items-end">
                     <button
                       className="btn main-back w-25 mx-1"
@@ -491,7 +491,7 @@ const ProductDetails = () => {
                   ""
                 )}
                 {product?.data?.confirmed &&
-                decoded.id !== product?.data?.renterId?._id ? (
+                decoded?.id !== product?.data?.renterId?._id ? (
                   <>
                     <button
                       className="btn btn-primary w-25 me-2"
