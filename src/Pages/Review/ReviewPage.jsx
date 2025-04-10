@@ -2,18 +2,37 @@ import React, { useEffect, useState } from "react";
 import useProcessStore from "../../Store/process";
 import ReviewModl from "./ReviewModel";
 import "./ReviewPage.css";
+import axios from "axios";
 
 const ReviewPage = () => {
   const { getFinishedProcesses, finishedProcesses } = useProcessStore();
   const [selectedProcess, setSelectedProcess] = useState(null);
-  const [reviewCreated, setReviewCreated] = useState();
+  const [reviewedProducts, setReviewedProducts] = useState([]);
+
+  const fetchAllUserReviews = async (userId) => {
+    const res = await axios.get(`http://localhost:3000/api/review/${userId}`);
+    console.log("Response from API:", res);  // طباعة الـ response كاملاً
+    const productIds  = res.data.foundedReview.map(
+      (review) => review.prodid._id
+    );
+    setReviewedProducts(productIds);
+    console.log(reviewedProducts);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("UserToken");
     getFinishedProcesses(token);
-    console.log(finishedProcesses);
     console.log("userProcesses", finishedProcesses);
-  }, [getFinishedProcesses]);
+  }, []);
+
+  useEffect(() => {
+    if (finishedProcesses.length > 0) {
+      const userId = finishedProcesses[0]?.renterId?._id;
+      if (userId) {
+        fetchAllUserReviews(userId);
+      }
+    }
+  }, [finishedProcesses]);
 
   return (
     <>
@@ -48,24 +67,21 @@ const ReviewPage = () => {
                   <h6 className="card-text">Status: {item.status}</h6>
                 </div>
 
-                {reviewCreated ? (
+                {reviewedProducts.includes(item.productId._id) ? (
                   <button className="btn-secandry w-300 h-50" disabled>
                     Review Already Created
                   </button>
                 ) : (
                   <button
-                    style={{ hover: { backgroundColor: "#4524B1" } }}
                     className="btn-secandry w-300 h-50"
                     data-bs-toggle="modal"
                     data-bs-target="#rentModal"
-                    onClick={() => {
-                      setSelectedProcess(item);
-                      
-                    }}
+                    onClick={() => setSelectedProcess(item)}
                   >
                     Create Review
                   </button>
                 )}
+
               </div>
             </div>
           ))}

@@ -33,10 +33,11 @@ export default function ReviewModl({ selected }) {
         }
       );
 
-      setMessage("🎉 Your review was submitted!");
+      setMessage(" Your review was submitted!");
+      
       console.log(message);
       setError("");
-      setTimeout(() => navigate(`/product/${productId}`), 1500);
+      // setTimeout(() => navigate(`/product/${productId}`), 1500);
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong ");
       console.log(error);
