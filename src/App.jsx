@@ -23,21 +23,20 @@ function App() {
   return (
     <>
       <Routes>
-          <Route element={<Layout />}>
+        <Route element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="product" element={<ProductPage />} />
           <Route path="product/:id" element={<ProductDetailsPage />} />
           <Route path="wishlist" element={<Wishlist />} />
-          <Route path="chat" element={<ChatPage />} />
           <Route path="search" element={<Search />} />
 
-          <Route element={<ProtectedRoute/>}>
-          <Route path="ReviewPage" element={<ReviewPage />} />
-          <Route path="profile/:id" element={<ProfilePage />} />
-          <Route path="chat/:chatId" element={<ChatPage />} />
-          <Route path="requests" element={<RequestsPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="ReviewPage" element={<ReviewPage />} />
+            <Route path="chat" element={<ChatPage />} />
+            <Route path="profile/:id" element={<ProfilePage />} />
+            <Route path="chat/:chatId" element={<ChatPage />} />
+            <Route path="requests" element={<RequestsPage />} />
           </Route>
-
         </Route>
 
         <Route path="register" element={<Register />} />
