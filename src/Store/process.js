@@ -60,7 +60,7 @@ const useProcessStore = create((set, get) => ({
         `Request posted successfully\n Wait for the owner to accept it`
       );
     } catch (error) {
-      toast.error('Failed to post request');
+      toast.error(error.response?.data?.message || 'Failed to post request');
       set({ error: error.response?.data?.message || error.message });
     }
   },
