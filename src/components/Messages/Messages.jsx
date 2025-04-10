@@ -108,29 +108,29 @@ export default function Messages({ chatId, token, userId }) {
           <h4 className="mt-2">{otherMember.userName}</h4>
         </div>
       ) : (
-          <div
-            className="w-100"
-            style={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '50vh',
-            }}
-          >
-            <div className="d-flex flex-column justify-content-center align-items-center">
-              <MoonLoader color="#b72a67" size={100} />
-              <p className="mt-3" style={{ color: '#555', fontSize: '16px' }}>
-                Loading conversation, please wait...
-              </p>
-            </div>
+        <div
+          className="w-100"
+          style={{
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '50vh',
+          }}
+        >
+          <div className="d-flex flex-column justify-content-center align-items-center">
+            <MoonLoader color="#b72a67" size={100} />
+            <p className="mt-3" style={{ color: '#555', fontSize: '16px' }}>
+              Loading conversation, please wait...
+            </p>
           </div>
+        </div>
       )}
       <div
         className="d-flex flex-column chat-container"
         style={{ overflowY: 'scroll', flex: 1 }}
       >
-        {chatMessages.length === 0 ? (
+        {!chatMessages && chatMessages.length === 0 ? (
           <div className="d-flex flex-column justify-content-center align-items-center h-100">
             <h2>No messages yet</h2>
           </div>
