@@ -4,7 +4,7 @@
   position: relative;
   transition: 0.3s;
   padding: 10px;
-  height: 311px;
+  /* height: 311px; */
 }
 
 .home-card:hover {
@@ -14,12 +14,14 @@
 
 .home-card .image img {
   height: 200px;
-  width: 100%;
+  width: 100%;  
   border-radius: 5px;
   /* border: 1px solid #eee; */
 }
 
 .home-card .item-name {
+  height: 40px;
+  font-size: 16px !important;
   margin: 0;
 }
 

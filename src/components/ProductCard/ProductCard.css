@@ -1,4 +1,4 @@
-#imgProduct {
+/* #imgProduct {
   border: 100px;
   border-color: blue;
   padding: 0;
@@ -57,5 +57,140 @@ h2#price {
 
   #iconsButtons {
     margin: 0;
+  }
+} */
+
+
+#imgProduct {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 25px;
+  min-height: 260px; /* This makes all image containers equal height */
+  max-height: 260px;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+#imgProduct img {
+  width: 100%;
+  max-width: 250px;
+  height: 100%;
+  object-fit: contain; /* Ensures all images scale the same way */
+  border-radius: 12px;
+}
+
+#data {
+  width: 100%;
+  max-width: 400px;
+  justify-content: space-between;
+  padding-top: 20px;
+  margin-bottom: 25px;
+
+}
+
+#data h5 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+h2#title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #562ddd;
+  margin-bottom: 15px;
+}
+
+h2#price {
+  font-weight: bold;
+  font-size: 36px;
+  color: #a7265e;
+  margin-top: 19px;
+}
+
+#iconsButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 20px;
+}
+
+.fa-star {
+  color: #fbad39;
+}
+
+.fa-heart {
+  color: #ed3f3f;
+  font-size: 22px;
+  transition: transform 0.2s;
+}
+
+.fa-heart:hover {
+  transform: scale(1.2);
+}
+
+.rent-button {
+  width: 180px;
+  padding: 10px 0;
+  border-radius: 10px;
+  margin-bottom: 25px;
+
+}
+/* CARD HOVER ANIMATION */
+.cardProduct-container {
+  transition: transform 0.5s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
+}
+
+.cardProduct-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(52, 27, 133, 0.09);
+}
+
+/* BUTTON HOVER EFFECT */
+.rent-button {
+  width: 180px;
+  padding: 10px 0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.rent-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  #imgProduct img {
+    max-width: 90%;
+  }
+
+  h2#title {
+    font-size: 24px;
+  }
+
+  #data h5 {
+    font-size: 16px;
+  }
+
+  h2#price {
+    font-size: 28px;
+  }
+
+  .rent-button {
+    width: 100%;
+  }
+
+  #iconsButtons {
+    align-items: center;
   }
 }

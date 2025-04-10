@@ -25,6 +25,8 @@ export default function ProductList() {
       });
 
       setProducts(response.data.data);
+      console.log(response.data.data);
+      
     } catch (err) {
       console.log("Error fetching products:", err.message);
     } finally {
@@ -34,25 +36,32 @@ export default function ProductList() {
 
   useEffect(() => {
     fetchProducts();
+    
   }, [categoryName]); // Runs when categoryName changes
+
+  const confirmedProducts = products.filter(
+    (item) => item.confirmed === true
+  );
+
+console.log(
+  confirmedProducts,
+    "confirmedProducts"
+  );
 
   // Calculate the products to be displayed on the current page
   const startIndex = (page - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
-  const currentProducts = products.slice(startIndex, endIndex);
+  const currentProducts = confirmedProducts.slice(startIndex, endIndex);
 
+  console.log(currentProducts, "currentProducts");
+  
   const handlePageChange = (event, value) => {
     setPage(value);
   };
-  console.log(currentProducts);
-  
-  const confirmedProducts = currentProducts.filter(
-    (item) => item.confirmed === true
-  );
-  
+    
   return (
     <>
-      <div className="col-md-9" style={{ marginLeft: "-10rem" }}>
+      <div className="col-md-9">
       {isLoading ? (
   <div
   style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "70vh", width: "100%", }}
@@ -61,9 +70,10 @@ export default function ProductList() {
     <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
       Loading products, please wait...
     </p>
+
   </div>
-        ) : confirmedProducts.length > 0 ? (
-          confirmedProducts.map((product) => (
+        ) : currentProducts.length > 0 ? (
+          currentProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (

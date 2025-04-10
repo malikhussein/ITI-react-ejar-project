@@ -4,6 +4,7 @@ import Sidebar from "../../components/Sidebar";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import NoSearchResults from "../../components/NoSearchResults";
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
@@ -40,8 +41,8 @@ export default function Search() {
   return (
     <>
       <div className="container">
-        <div className="row">
-            {/* <Sidebar/> */}
+        <div className="row mx-5">
+          {/* <Sidebar/> */}
 
           <div className="search-results">
             {isLoading ? (
@@ -51,11 +52,11 @@ export default function Search() {
                 <ProductCard key={product._id} product={product} />
               ))
             ) : (
-              <h2>لا يوجد منتجات بهذا الاسم</h2>
+              <NoSearchResults />
             )}
           </div>
         </div>
       </div>
-     </>
+    </>
   );
 }
