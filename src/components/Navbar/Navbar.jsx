@@ -44,34 +44,62 @@ export default function Navbar() {
 
       // Join the user's notification channel
       socket.emit('joinUserNotifications', userId);
+      console.log(userId);
 
       // Set up the listener for verification changes
       const handleVerificationChange = (data) => {
         console.log('Verification status notification:', data);
 
-        // Show toast notification
-        toast.info(data.message);
-
-        // Add the notification to our store (will be saved to state)
-        if (data.userId === userId) {
-          addNotification({
-            _id: `temp-${Date.now()}`, // Mark with temp- prefix
-            message: data.message,
-            type: 'verification',
-            data: data,
-            createdAt: new Date().toISOString(),
-            read: false,
-            isTemp: true, // Flag to identify socket notifications
-          });
+        if (data.isVerified) {
+          toast.success(data.message);
+        } else {
+          toast.warning(data.message);
         }
+
+        // Add to notification store
+        addNotification({
+          _id: data.notificationId || `temp-${Date.now()}`,
+          message: data.message,
+          type: 'verification',
+          data: data,
+          createdAt: new Date().toISOString(),
+          read: false,
+          isTemp: !data.notificationId,
+        });
+      };
+
+      // Product confirmation notification handler
+      const handleProductConfirmation = (data) => {
+        console.log('Product confirmation notification:', data);
+
+        // Show toast notification
+        if (data.confirmed) {
+          toast.success(data.message);
+        } else {
+          toast.warning(data.message);
+        }
+
+        // Add to notification store
+        addNotification({
+          _id: data.notificationId || `temp-${Date.now()}`,
+          message: data.message,
+          type: 'product_confirmation',
+          data: data,
+          createdAt: new Date().toISOString(),
+          read: false,
+          isTemp: !data.notificationId,
+        });
       };
 
       // Register the listener
       socket.on('userVerificationChanged', handleVerificationChange);
+      // Register the product confirmation listener
+      socket.on('productConfirmationChanged', handleProductConfirmation);
 
       // Clean up function to remove the listener when component unmounts
       return () => {
         socket.off('userVerificationChanged', handleVerificationChange);
+        socket.off('productConfirmationChanged', handleProductConfirmation);
       };
     }
   }, [token, userId, fetchNotifications, addNotification]);
