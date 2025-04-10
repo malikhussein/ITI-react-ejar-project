@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import useChatStore from '../../Store/chatStore';
+import { MoonLoader } from 'react-spinners';
 
 const socket = io('http://localhost:3000');
 
@@ -107,7 +108,23 @@ export default function Messages({ chatId, token, userId }) {
           <h4 className="mt-2">{otherMember.userName}</h4>
         </div>
       ) : (
-        <h4 className="text-center">Loading...</h4>
+          <div
+            className="w-100"
+            style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '50vh',
+            }}
+          >
+            <div className="d-flex flex-column justify-content-center align-items-center">
+              <MoonLoader color="#b72a67" size={100} />
+              <p className="mt-3" style={{ color: '#555', fontSize: '16px' }}>
+                Loading conversation, please wait...
+              </p>
+            </div>
+          </div>
       )}
       <div
         className="d-flex flex-column chat-container"

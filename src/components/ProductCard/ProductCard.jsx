@@ -41,67 +41,35 @@ export default function ProductCard({ product }) {
       <br />
       <br />
 
-      <div className="row g-5 overflow-hidden flex-md-row mb-4 shadow-sm position-relative">
-        <div
-          id="imgProduct"
-          className="col-12 col-md-auto d-flex justify-content-center"
-        >
-          <Link >
-            <img
-              src={product.images[0]}
-              className="bd-placeholder-img img-fluid"
-              width={300}
-              height={260}
-            />
-          </Link>
-        </div>
+<div className="row g-5 overflow-hidden flex-md-row mb-4 position-relative cardProduct-container">
 
-        <div
-          id="data"
-          className="col-12 col-md-6 p-4 d-flex flex-column position-static text-center text-md-start "
-        >
-          <Link to={`/product/${product._id}`}>
-            <h2 id="title" className="d-inline-block mb-2">
-              {product.name}
-            </h2>
-          </Link>
-          <h5>Description:</h5>
-          <h5>{product.description.split(" ").splice(0,13).join(" ")}</h5>
-          <h2 id="price">{product.daily} E.G</h2>
-        </div>
+  <div id="imgProduct" className="col-12 col-md-auto d-flex justify-content-center">
+      <img src={product.images[0]} alt="Product" />
+  </div>
 
-        <div
-          id="iconsButtons"
-          className="col-12 col-md p-4 d-flex flex-column align-items-center align-items-md-end position-static"
-        >
-          <h5
-            onClick={() =>
-              isWishlisted
-                ? removeFromWishlist(product.id)
-                : addToWishlist(product)
-            }
-            style={{ cursor: "pointer" }}
-          >
-            <i
-              className={`fa-heart ${isWishlisted ? "fas text-danger" : "far"}`}
-            ></i>
-          </h5>{" "}
+  <div id="data" className="col-12 col-md-6 d-flex flex-column justify-content-between">
+    <div>
+        <h2 id="title">{product.name}</h2>
+      <h4>Description:</h4>
+      <h5>{product.description.split(" ").splice(0, 15).join(" ")}</h5>
+    </div>
+    <h2 id="price">{product.daily} E.G</h2>
+  </div>
 
-          <h5 className="d-none d-md-block">
-          {product.review.length === 0 ? (
-            <span className="text-muted">No reviews yet</span>):            
-            renderStars( product.review[0].rating)
-          }  
-            
-          </h5>
-          <Link to={`/product/${product._id}`}
-            style={{ width: 180 }}
-            className="btn btn-secondary rent-button py-2"
-          >
-          Get Details         
-          </Link>
-        </div>
-      </div>
+  <div id="iconsButtons" className="col-12 col-md d-flex flex-column align-items-center align-items-md-end justify-content-between">
+    <h5 onClick={() => isWishlisted ? removeFromWishlist(product.id) : addToWishlist(product)} style={{ cursor: "pointer" }}>
+      <i className={`fa-heart ${isWishlisted ? "fas text-danger" : "far"}`}></i>
+    </h5>
+    <h5 className="d-none d-md-block">
+      {product.review.length === 0 ? (
+        <span className="text-muted">No reviews yet</span>
+      ) : renderStars(product.averageRating)}
+    </h5>
+    <Link to={`/product/${product._id}`} className="btn btn-secondary rent-button py-2">
+      <i className="fa-solid fa-circle-info" /> Get Details
+    </Link>
+  </div>
+</div>
     </>
   );
 }

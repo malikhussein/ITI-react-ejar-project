@@ -1,12 +1,13 @@
-import { create } from "zustand";
+import { toast } from 'react-toastify';
+import { create } from 'zustand';
 
 //  Zustand store for Wishlist
 const useWishlistStore = create((set) => ({
   // Initialize wishlist from local storage (or empty array if not found)
-  wishlist: JSON.parse(localStorage.getItem("wishlist")) || [],
+  wishlist: JSON.parse(localStorage.getItem('wishlist')) || [],
 
   //Keep track of the number of items in the wishlist
-  count: JSON.parse(localStorage.getItem("wishlist"))?.length || 0,
+  count: JSON.parse(localStorage.getItem('wishlist'))?.length || 0,
 
   //  Add a product to the wishlist (if it's not already in the list)
   addToWishlist: (product) =>
@@ -14,7 +15,8 @@ const useWishlistStore = create((set) => ({
       if (!state.wishlist.some((p) => p.id === product.id)) {
         // Check if product is already in wishlist
         const updatedWishlist = [...state.wishlist, product]; // Add new product
-        localStorage.setItem("wishlist", JSON.stringify(updatedWishlist)); // Save to local storage
+        localStorage.setItem('wishlist', JSON.stringify(updatedWishlist)); // Save to local storage
+        toast.success('Product added successfully in wishlist');
 
         return { wishlist: updatedWishlist, count: updatedWishlist.length }; // Update state
       }
@@ -28,14 +30,16 @@ const useWishlistStore = create((set) => ({
         (product) => product.id !== productId
       ); // Remove product
 
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist)); // Save updated wishlist
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist)); // Save updated wishlist
+      toast.info('Product removed successfully from wishlist');
       return { wishlist: updatedWishlist, count: updatedWishlist.length }; // Update state
     }),
 
   //  Clear all products from the wishlist
   clearWishlist: () =>
     set(() => {
-      localStorage.removeItem("wishlist"); // Remove wishlist from local storage
+      localStorage.removeItem('wishlist'); // Remove wishlist from local storage
+      toast.info('Wishlist cleared successfully'); // Notify user
       return { wishlist: [], count: 0 }; // Reset wishlist and count in state
     }),
 

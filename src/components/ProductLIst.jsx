@@ -3,6 +3,7 @@ import ProductCard from "./ProductCard/ProductCard";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { Pagination, Stack } from "@mui/material";
+import { MoonLoader } from "react-spinners"; 
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -23,8 +24,9 @@ export default function ProductList() {
         params: categoryName ? { category: categoryName } : {}, // If no category, fetch all products
       });
 
-      console.log("Fetched Products:", response.data.data); // Debugging log
       setProducts(response.data.data);
+      console.log(response.data.data);
+      
     } catch (err) {
       console.log("Error fetching products:", err.message);
     } finally {
@@ -34,33 +36,58 @@ export default function ProductList() {
 
   useEffect(() => {
     fetchProducts();
+    
   }, [categoryName]); // Runs when categoryName changes
+
+  const confirmedProducts = products.filter(
+    (item) => item.confirmed === true
+  );
+
+console.log(
+  confirmedProducts,
+    "confirmedProducts"
+  );
 
   // Calculate the products to be displayed on the current page
   const startIndex = (page - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
-  const currentProducts = products.slice(startIndex, endIndex);
+  const currentProducts = confirmedProducts.slice(startIndex, endIndex);
 
+  console.log(currentProducts, "currentProducts");
+  
   const handlePageChange = (event, value) => {
     setPage(value);
   };
-  const confirmedProducts = currentProducts.filter(
-    (item) => item.confirmed === true
-  );
-
+    
   return (
     <>
-      <div className="col-md-9 ">
-        {isLoading ? (
-          <h1>"Loading..."</h1>
-        ) : confirmedProducts.length > 0 ? (
-          confirmedProducts.map((product) => (
+      <div className="col-md-9">
+      {isLoading ? (
+  <div
+  style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "70vh", width: "100%", }}
+>
+    <MoonLoader color="#b72a67 " size={100} />
+    <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
+      Loading products, please wait...
+    </p>
+
+  </div>
+        ) : currentProducts.length > 0 ? (
+          currentProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         ) : (
-          <div className="text-center">
-            <h2 className="">No products found in this category</h2>
-          </div>
+          <div
+          style={{ textAlign: "center", padding: "50px 20px", color: "#777",  display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "60vh"   }}
+        >
+        <i
+          className="bi bi-box-seam"
+          style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
+        ></i>
+          <h2>No products found in this category</h2>
+          <p>Try exploring a different category or check back later!</p>
+        </div>
+        
         )}
       </div>
 

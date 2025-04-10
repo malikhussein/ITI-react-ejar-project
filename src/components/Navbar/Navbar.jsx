@@ -34,6 +34,13 @@ export default function Navbar() {
       navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
       setSearchQuery('');
     }
+    e.target.reset(); // Reset the form after submission
+
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   useEffect(() => {
@@ -111,7 +118,7 @@ export default function Navbar() {
           {/* Logo */}
           <div className="col-1">
             <Link to="/">
-              <img src={ejarLogo} className="img-fluid " width={50} />
+              <img src={ejarLogo} className="img-fluid" width={50} />
             </Link>
           </div>
 
@@ -146,6 +153,7 @@ export default function Navbar() {
           >
             <i className="fa-solid fa-bars"></i>
           </button>
+
           <div
             className="offcanvas offcanvas-end"
             tabIndex="-1"
@@ -176,7 +184,7 @@ export default function Navbar() {
 
                 {token && (
                   <div className="d-flex flex-lg-row flex-column gap-lg-2">
-                    {/* Message icon in desktop text in mobile */}
+                    {/* Messages */}
                     <li className="nav-item d-none d-lg-block">
                       <Link className="nav-link" to="/chat">
                         <i className="fa-regular fa-message"></i>
@@ -259,6 +267,7 @@ export default function Navbar() {
                     </li>
 
                     {/* Wishlist icon in desktop text in mobile */}
+
                     <li className="nav-item d-none d-lg-block">
                       <Link className="nav-link" to="/wishlist">
                         <i className="fa-regular fa-heart"></i>
@@ -270,7 +279,20 @@ export default function Navbar() {
                       </Link>
                     </li>
 
-                    {/* Profile icon with a dropdown in desktop profile and logout text in mobile */}
+                    {/* History */}
+                    <li className="nav-item d-none d-lg-block">
+                      <Link className="nav-link" to="/ReviewPage">
+                        <i className="fa-solid fa-clock-rotate-left"></i>
+                      </Link>
+                    </li>
+                    <li className="nav-item d-block d-lg-none mx-auto">
+                      <Link className="nav-link" to="/ReviewPage">
+                        <i className="fa-solid fa-clock-rotate-left me-2"></i>{' '}
+                        History
+                      </Link>
+                    </li>
+
+                    {/* Profile & Logout */}
                     <li className="nav-item dropdown d-none d-lg-block">
                       <a
                         className="nav-link dropdown-toggle"
@@ -282,6 +304,7 @@ export default function Navbar() {
                       >
                         <i className="fa-regular fa-user"></i>
                       </a>
+
                       <ul
                         className="dropdown-menu"
                         aria-labelledby="navbarDropdown"
@@ -298,20 +321,21 @@ export default function Navbar() {
                           <a
                             className="dropdown-item"
                             href="#"
-                            onClick={logout}
+                            onClick={handleLogout}
                           >
                             Logout
                           </a>
                         </li>
                       </ul>
                     </li>
+
                     <li className="nav-item d-block d-lg-none mx-auto">
-                      <Link className="nav-link" to="/profile/123">
+                      <Link className="nav-link" to={`/profile/${userId}`}>
                         Profile
                       </Link>
                     </li>
                     <li className="nav-item d-block d-lg-none mx-auto">
-                      <a className="nav-link" href="#" onClick={logout}>
+                      <a className="nav-link" href="#" onClick={handleLogout}>
                         Logout
                       </a>
                     </li>

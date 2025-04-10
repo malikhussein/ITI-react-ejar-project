@@ -14,24 +14,30 @@ import NotFound from './components/NotFound/NotFound';
 import Search from './Pages/SearchPage/Search';
 import RequestsPage from './components/RequestsPage/RequestsPage';
 import ReviewPage from './Pages/Review/ReviewPage';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProtectedRoute from './ProtectedRoutes/ProtectedRoute';
 
 function App() {
   return (
     <>
       <Routes>
-        <Route element={<Layout />}>
+          <Route element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="product" element={<ProductPage />} />
           <Route path="product/:id" element={<ProductDetailsPage />} />
-          <Route path="profile/:id" element={<ProfilePage />} />
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="chat" element={<ChatPage />} />
-          <Route path="chat/:chatId" element={<ChatPage />} />
           <Route path="search" element={<Search />} />
-          <Route path="requests" element={<RequestsPage />} />
+
+          <Route element={<ProtectedRoute/>}>
           <Route path="ReviewPage" element={<ReviewPage />} />
+          <Route path="profile/:id" element={<ProfilePage />} />
+          <Route path="chat/:chatId" element={<ChatPage />} />
+          <Route path="requests" element={<RequestsPage />} />
+          </Route>
+
         </Route>
 
         <Route path="register" element={<Register />} />
@@ -41,7 +47,7 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <ToastContainer position="bottom-right" autoClose={5000} />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </>
   );
 }

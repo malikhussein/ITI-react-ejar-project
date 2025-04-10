@@ -3,17 +3,28 @@ import './ListingCard.css';
 import { Link } from 'react-router-dom';
 
 export default function ListingCard({ product }) {
-  // console.log(product);
   return (
-    <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+    <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
       <div className="card border-0">
         <div className="square-image position-relative d-block">
           <Link to={`/product/${product.id}`}>
             <img src={product.images[0]} alt="" />
           </Link>
-          <h5 onClick={() => console.log('working')}>
-            <span class="position-absolute top-0 start-0 badge rounded-pill bg-success">
-              {product.status}
+          <h5>
+            <span
+              className={`position-absolute top-0 start-0 badge rounded-pill ${
+                !product.confirmed
+                  ? 'bg-warning'
+                  : product.status === 'available'
+                  ? 'bg-success'
+                  : product.status === 'rented'
+                  ? 'bg-danger'
+                  : product.status === 'unavailable'
+                  ? 'bg-secondary'
+                  : ''
+              }`}
+            >
+              {product.confirmed ? product.status : 'not confirmed'}
             </span>
           </h5>
         </div>
