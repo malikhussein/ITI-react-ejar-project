@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../Store/Auth";
 
 export default function ReviewModl({ selected }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const { token } = useAuthStore();
+  
 
   console.log(selected);
 
@@ -17,7 +19,6 @@ export default function ReviewModl({ selected }) {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
-      const token = localStorage.getItem("UserToken");
 
       const res = await axios.post(
         "http://localhost:3000/api/review",
