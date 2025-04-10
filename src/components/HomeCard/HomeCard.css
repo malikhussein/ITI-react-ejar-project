@@ -11,11 +11,11 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.home-card .image img {
+/* .home-card .image img {
   height: 200px;
   width: 100%;  
   border-radius: 5px;
-}
+} */
 
 .home-card .item-name {
   height: 40px;

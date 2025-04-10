@@ -17,7 +17,7 @@ function HomeCard({ item, renderStars }) {
   const isWishlisted = wishlist.some((p) => p.id === item._id);
 
   return (
-    <div className="col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in">
+    <div className="col-sm-6 col-md-4 col-lg-3">
       <div className="home-card mb-4"> 
 
         <div className="card-icons">
@@ -45,7 +45,7 @@ function HomeCard({ item, renderStars }) {
           className="nav-link"
           to={`/product/${item._id}`}
         >
-          <div className="image">
+          <div className="image square-image">
             <img className="img-fluid" src={item.images[0]} alt={item.name} />
           </div>
           <h2 className="fs-5 mt-3 item-name">{item.name}</h2>

@@ -8,7 +8,6 @@ function StartRenting() {
   return (
     <div
       className="start mt-5 d-flex justify-content-between mb-5 flex-wrap gap-4"
-      data-aos="fade-up"
     >
       <div className="text">
         <h2 className="rent-head">Turn Your Unused Items Into Earnings!</h2>
