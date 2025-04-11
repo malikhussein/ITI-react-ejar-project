@@ -6,7 +6,7 @@ import useAuthStore from '../../Store/Auth';
 import useNotificationStore from '../../Store/notificationStore';
 import { jwtDecode } from 'jwt-decode';
 import { io } from 'socket.io-client';
-import { toast } from 'react-toastify'; // You might need to install this package
+import { toast } from 'react-toastify';
 
 const socket = io('http://localhost:3000');
 
@@ -35,7 +35,6 @@ export default function Navbar() {
       setSearchQuery('');
     }
     e.target.reset(); // Reset the form after submission
-
   };
 
   const handleLogout = () => {
@@ -123,7 +122,10 @@ export default function Navbar() {
           </div>
 
           {/* Search bar */}
-          <form onSubmit={handleSearch} className="d-flex col-9 col-lg-5">
+          <form
+            onSubmit={handleSearch}
+            className="d-flex col-9 col-lg-3 col-xl-4 col-xxl-5"
+          >
             <div className="input-group">
               <input
                 className="form-control bg-light rounded-start-1 border-0 ps-4"
@@ -184,6 +186,31 @@ export default function Navbar() {
 
                 {token && (
                   <div className="d-flex flex-lg-row flex-column gap-lg-2">
+                    {/* Wishlist icon in desktop text in mobile */}
+
+                    <li className="nav-item d-none d-lg-block">
+                      <Link className="nav-link" to="/wishlist">
+                        <i class="fa-regular fa-heart"></i>
+                      </Link>
+                    </li>
+                    <li className="nav-item d-block d-lg-none mx-auto">
+                      <Link className="nav-link" to="/wishlist">
+                        Wishlist
+                      </Link>
+                    </li>
+
+                    {/* History */}
+                    <li className="nav-item d-none d-lg-block">
+                      <Link className="nav-link" to="/ReviewPage">
+                        <i className="fa-solid fa-clock-rotate-left"></i>
+                      </Link>
+                    </li>
+                    <li className="nav-item d-block d-lg-none mx-auto">
+                      <Link className="nav-link" to="/ReviewPage">
+                        History
+                      </Link>
+                    </li>
+
                     {/* Messages */}
                     <li className="nav-item d-none d-lg-block">
                       <Link className="nav-link" to="/chat">
@@ -263,32 +290,6 @@ export default function Navbar() {
                             {notifications.length}
                           </span>
                         )}
-                      </Link>
-                    </li>
-
-                    {/* Wishlist icon in desktop text in mobile */}
-
-                    <li className="nav-item d-none d-lg-block">
-                      <Link className="nav-link" to="/wishlist">
-                        <i className="fa-regular fa-heart"></i>
-                      </Link>
-                    </li>
-                    <li className="nav-item d-block d-lg-none mx-auto">
-                      <Link className="nav-link" to="/wishlist">
-                        Wishlist
-                      </Link>
-                    </li>
-
-                    {/* History */}
-                    <li className="nav-item d-none d-lg-block">
-                      <Link className="nav-link" to="/ReviewPage">
-                        <i className="fa-solid fa-clock-rotate-left"></i>
-                      </Link>
-                    </li>
-                    <li className="nav-item d-block d-lg-none mx-auto">
-                      <Link className="nav-link" to="/ReviewPage">
-                        <i className="fa-solid fa-clock-rotate-left me-2"></i>{' '}
-                        History
                       </Link>
                     </li>
 

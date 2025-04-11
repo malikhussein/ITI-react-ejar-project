@@ -32,7 +32,6 @@
   border: #562ddd !important;
 }
 
-/* Add this to your existing CSS */
 .notification-dropdown {
   min-width: 375px;
   padding: 0;
@@ -55,4 +54,14 @@
 
 .notification-item .dropdown-item:hover {
   background-color: #f8f9fa;
+}
+
+.nav-link .fa-heart {
+  color: #000000a1;
+  font-size: 1.1rem;
+}
+
+.nav-link .fa-heart:hover {
+  color: #000000;
+  transform: scale(1);
 }
