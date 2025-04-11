@@ -112,33 +112,36 @@ const ProductDetails = () => {
         return;
       }
       const originalData = product.data;
-      const updatedProduct = { ...originalData, ...fields };
-      
-      if (fields.status === "rented") {
-        return;
-      }
-      
-      const ignoreFields = ["owner", "ownerId", "category"];
-      
-      const changedKeys = Object.keys(fields).filter((key) => {
-        return (
-          !ignoreFields.includes(key) &&
-          fields[key] !== originalData[key]
-        );
-      });
-      
-      const hasOnlyStatusChanged =
-        changedKeys.length === 1 &&
-        changedKeys[0] === "status" &&
-        (fields.status === "available" || fields.status === "unavailable");
-      
-      
-      
-      if (hasOnlyStatusChanged) {
-        await updateProduct(updatedProduct, true);
-      } else {
-        await updateProduct({ ...updatedProduct, confirmed: false }, true);
-      }
+const updatedProduct = { ...originalData, ...fields };
+
+if (fields.status === "ranted") {
+  console.error("❌ Error: 'ranted' is not a valid status value.");
+  return;
+}
+
+const ignoreFields = ["owner", "ownerId", "category"];
+
+const changedKeys = Object.keys(fields).filter((key) => {
+  return (
+    !ignoreFields.includes(key) &&
+    fields[key] !== originalData[key]
+  );
+});
+
+const hasOnlyStatusChanged =
+  changedKeys.length === 1 &&
+  changedKeys[0] === "status" &&
+  (fields.status === "available" || fields.status === "unavailable");
+
+
+
+
+if (hasOnlyStatusChanged) {
+  await updateProduct(updatedProduct, true);
+} else {
+  await updateProduct({ ...updatedProduct, confirmed: false }, true);
+}
+
       
       
 
