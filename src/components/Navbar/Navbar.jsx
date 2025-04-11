@@ -191,7 +191,7 @@ export default function Navbar() {
 
                     <li className="nav-item d-none d-lg-block">
                       <Link className="nav-link" to="/wishlist">
-                        <i class="fa-regular fa-heart"></i>
+                        <i className="fa-regular fa-heart"></i>
                       </Link>
                     </li>
                     <li className="nav-item d-block d-lg-none mx-auto">
