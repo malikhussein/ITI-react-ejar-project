@@ -36,9 +36,16 @@ const useProductStore = create((set) => ({
       }
 
       for (const key in updatedData) {
-        formData.append(key, updatedData[key]);
+        
+        if (Array.isArray(updatedData[key])) {
+          updatedData[key].forEach((item) => {
+            formData.append(key, item);
+          });
+        } else {
+          formData.append(key, updatedData[key]);
+        }
       }
-
+      
       const response = await axios.post(
         `http://localhost:3000/api/product/${updatedData._id}`,
         formData,
