@@ -23,10 +23,7 @@ export default function EditProdileModal({ profile }) {
     userName: Yup.string()
       .min(3, 'Name should be at least 3 characters long')
       .max(29, 'Name should be at most 29 characters long')
-      .matches(
-        /^[a-zA-Z0-9_ ]+$/,
-        'Only letters, numbers, underscores, and spaces are allowed.'
-      )
+      .matches(/^[a-zA-Z_ ]+$/, "Name must only contain letters, underscores, and spaces.")
       .required('Name is required'),
     email: Yup.string()
       .email('Invalid email address')
