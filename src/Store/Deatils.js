@@ -6,21 +6,22 @@ const useProductStore = create((set) => ({
   product: null,
   productList: [],
   processData: null,
-  isLoading: true,
+  loading: false,
+  error: null,
+  isLoading: false,
+  err: true,
   fetchProduct: async (id) => {
-    set({ loading: true, err: null }); 
+    set({ loading: true, error: null });
 
     try {
       const response = await axios.get(
         `http://localhost:3000/api/product/${id}`
       );
-      set({ product: response.data, error: null });
+      set({ product: response.data, error: null , loading: false });
     } catch (error) {
       console.error("Error fetching product:", error);
-      set({ product: null, error: "Product not found or server error." });
-    } finally {
-      set({ loading: false });
-    }
+      set({ product: null, error: error.message, loading: false });
+    } 
   },
 
   updateProduct: async (updatedData, clearMessage = false) => {
@@ -58,26 +59,25 @@ const useProductStore = create((set) => ({
 
   getAllProd: async (id) => {
     try {
-      if (!id) {
-        return;
-      }
-  
-      set({ isLoading: true }); 
-  
+      if (!id) return;
+
+      set({ isLoading: true, err: null });
+
       const categoryId = typeof id === "object" && id !== null ? id._id : id;
-  
+
       const response = await axios.get(
         `http://localhost:3000/api/product/?category=${categoryId.toString()}`
       );
-  
-      
+
+      const data = response.data.data;
+
       set({
-        productList: response.data.data,
-        isLoading: false, 
+        productList: data,
+        isLoading: false,err: null,
       });
     } catch (error) {
       console.error("Error fetching products:", error.message);
-      set({ isLoading: false }); 
+      set({ isLoading: false, err: error.message });
     }
   },
   

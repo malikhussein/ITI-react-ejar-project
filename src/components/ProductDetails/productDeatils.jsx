@@ -7,6 +7,7 @@ import useAuthStore from "../../Store/Auth";
 import "./productDeatils.css";
 import useChatStore from "../../Store/chatStore";
 import useWishlistStore from "../../Store/Wishlist";
+import { MoonLoader } from "react-spinners";
 
 const ProductDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -16,7 +17,7 @@ const ProductDetails = () => {
     updateProduct,
     getAllProd,
     loading,
-    err,
+    error,
     gteProccesOfProduct,
     processData,
   } = useProductStore();
@@ -74,6 +75,8 @@ const ProductDetails = () => {
       
 
     }
+    console.log(product);
+    
     
   }, [product]);
 
@@ -215,22 +218,75 @@ if (hasOnlyStatusChanged) {
   }, []);
 
   if (loading) {
-    return  <>
-    <div className="text-center w-100 py-4">
-
-    <div className="spinner-border text-primary" role="status"></div>
-    <h2>loading</h2>
-    </div>
-    </>
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "70vh",
+          width: "100%",
+        }}
+      >
+        <MoonLoader color="#b72a67" size={80} />
+        <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
+          Loading Product, please wait...
+        </p>
+      </div>
+    );
   }
-
-  if (err) {
-    return <h2 className="text-center text-danger">{err}</h2>;
+  
+  
+  if (error) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          padding: "50px 20px",
+          color: "#777",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "60vh",
+        }}
+      >
+        <i
+          className="bi bi-cart-xbi bi-bag-x"
+          style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
+        ></i>
+        <h2>Oops! Couldn't load Product</h2>
+        <p>Please check your internet connection or try again later.</p>
+      </div>
+    );
   }
-
-  if (!product) {
-    return <h2 className="text-center">No product data available.</h2>;
+  
+  
+  if (!product?.data || product.data.length === 0) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          padding: "50px 20px",
+          color: "#777",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "60vh",
+        }}
+      >
+        <i
+          className="bi bi-search"
+          style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
+        ></i>
+        <h2>No product found</h2>
+        <p>Try adjusting your search or check back later.</p>
+      </div>
+    );
   }
+  
 
   const chatWithOwner = async () => {
     const chat = await createChat(product.data.renterId._id, token);
@@ -246,7 +302,7 @@ if (hasOnlyStatusChanged) {
       <div className="container  my-5">
         <div className="p-4">
           <div className=" mt-4">
-            {!product.data.confirmed &&
+            {!product?.data?.confirmed &&
               decoded?.id == product?.data?.renterId?._id && (
                 <div className="alert alert-warning ">
                   <div className="d-flex align-items-center">
@@ -256,8 +312,8 @@ if (hasOnlyStatusChanged) {
                   <span className="d-block">{product.data.confirmMessage}</span>
                 </div>
               )}
-            {!product.data.confirmed &&
-              decoded?.id !== product.data.renterId._id &&
+            {!product?.data?.confirmed &&
+              decoded?.id !== product?.data?.renterId?._id &&
               decoded?.role !== "admin" && (
                 <div className="alert alert-warning d-flex align-items-center">
                   <i className="fas fa-exclamation-triangle me-2"></i>
@@ -421,7 +477,7 @@ if (hasOnlyStatusChanged) {
                 </div>
               </div>
 
-              {product.data.review.length === 0 ? (
+              {product?.data?.review?.length === 0 ? (
                 <span className="badge bg-success">NEW</span>
               ) : (
                 <p className="text-muted">
@@ -429,19 +485,19 @@ if (hasOnlyStatusChanged) {
                     <i
                       key={i}
                       className={`fa-star ${
-                        i + 1 <= Number(product.data.averageRating)
+                        i + 1 <= Number(product?.data?.averageRating)
                           ? "fas"
                           : "far"
                       }`}
                       style={{
                         color:
-                          i + 1 <= Number(product.data.averageRating)
+                          i + 1 <= Number(product?.data?.averageRating)
                             ? "#FFAD33"
                             : "lightgray",
                       }}
                     ></i>
                   ))}
-                  ({product.data.review.length})
+                  ({product?.data?.review?.length})
                 </p>
               )}
 
