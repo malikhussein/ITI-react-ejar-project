@@ -71,7 +71,10 @@ const ProductDetails = () => {
         ownerId: product?.data?.renterId?._id || "",
         images: product.data.images || [],
       });
+      
+
     }
+    
   }, [product]);
 
   useEffect(() => {
@@ -108,9 +111,39 @@ const ProductDetails = () => {
         setErrors(newErrors);
         return;
       }
+      const originalData = product.data;
+      const updatedProduct = { ...originalData, ...fields };
+      
+      if (fields.status === "rented") {
+        return;
+      }
+      
+      const ignoreFields = ["owner", "ownerId", "category"];
+      
+      const changedKeys = Object.keys(fields).filter((key) => {
+        return (
+          !ignoreFields.includes(key) &&
+          fields[key] !== originalData[key]
+        );
+      });
+      
+      const hasOnlyStatusChanged =
+        changedKeys.length === 1 &&
+        changedKeys[0] === "status" &&
+        (fields.status === "available" || fields.status === "unavailable");
+      
+      
+      
+      if (hasOnlyStatusChanged) {
+        await updateProduct(updatedProduct, true);
+      } else {
+        await updateProduct({ ...updatedProduct, confirmed: false }, true);
+      }
+      
+      
 
-      const updatedProduct = { ...product.data, ...fields };
-      await updateProduct(updatedProduct, true);
+      
+      
       setFields(updatedProduct);
       setErrors({});
     }
@@ -160,7 +193,7 @@ const ProductDetails = () => {
 
       setFields((prev) => ({
         ...prev,
-        images: [...new Set([...prev.images, ...data.product.images])], // 🔹 منع التكرار
+        images: [...new Set([...prev.images, ...data.product.images])], 
       }));
 
       setNewImage(null);
@@ -179,7 +212,13 @@ const ProductDetails = () => {
   }, []);
 
   if (loading) {
-    return <h2 className="text-center">Loading...</h2>;
+    return  <>
+    <div className="text-center w-100 py-4">
+
+    <div className="spinner-border text-primary" role="status"></div>
+    <h2>loading</h2>
+    </div>
+    </>
   }
 
   if (err) {
@@ -202,7 +241,7 @@ const ProductDetails = () => {
   return (
     <>
       <div className="container  my-5">
-        <div className="   p-4 shadow-lg">
+        <div className="p-4">
           <div className=" mt-4">
             {!product.data.confirmed &&
               decoded?.id == product?.data?.renterId?._id && (
@@ -227,42 +266,50 @@ const ProductDetails = () => {
           </div>
 
           <div className="row">
-            <div className="col-md-6 text-center">
+            <div className="col-md-6 text- ">
               {isSmallScreen ? (
-                <img
-                  src={mainImage}
-                  alt="Product Image"
-                  style={{
-                    width: "400px",
-                    height: "400px",
-                    objectFit: "cover",
-                  }}
-                />
+
+<div className="square image">
+  
+  <img 
+  className="mx-auto "
+    src={mainImage}
+    alt="Product Image"
+    style={{
+      width: "400px",
+      height: "400px",
+      objectFit: "cover",
+    }}
+  />
+</div>
               ) : (
-                <ReactImageMagnify
-                  {...{
-                    smallImage: {
-                      alt: "Product Image",
-                      isFluidWidth: false,
-                      src: mainImage,
-                      width: 400,
-                      height: 400,
-                    },
-                    largeImage: {
-                      src: mainImage,
-                      width: 1200,
-                      height: 1200,
-                    },
-                    enlargedImageContainerDimensions: {
-                      width: "120%",
-                      height: "120%",
-                    },
-                    enlargedImageContainerStyle: {
-                      backgroundColor: "#ccc",
-                      zIndex: 1000,
-                    },
-                  }}
-                />
+                <div className="parent-div">
+  <ReactImageMagnify
+    {...{
+      smallImage: {
+        alt: "Product Image",
+        isFluidWidth: false,
+        src: mainImage,
+        width: 400,
+        height: 400,
+      },
+      largeImage: {
+        src: mainImage,
+        width: 1200,
+        height: 1200,
+      },
+      enlargedImageContainerDimensions: {
+        width: "120%",
+        height: "120%",
+      },
+      enlargedImageContainerStyle: {
+        backgroundColor: "#ccc",
+        zIndex: 1000,
+      },
+    }}
+  />
+</div>
+
               )}
 
               <div className="d-flex justify-content-center mt-3 flex-wrap">
@@ -424,8 +471,8 @@ const ProductDetails = () => {
                     className="form-select ms-2"
                     style={{ maxWidth: "150px" }}
                   >
-                    <option value="available">Available</option>
-                    <option value="rented">Rented</option>
+                    <option value="available">available</option>
+                    <option disabled value="rented">Rented</option>
                     <option value="unavailable">Unavailable</option>
                   </select>
                 ) : (
@@ -478,40 +525,73 @@ const ProductDetails = () => {
                 <h4 className="text-danger">{fields.daily} EGP/Day </h4>
               )}
               <div className="mt-3">
-                {decoded?.id == product?.data?.renterId?._id ? (
-                  <div className="d-flex align-items-end">
-                    <button
-                      className="btn main-back w-25 mx-1"
-                      onClick={toggleEdit}
-                    >
-                      {isEditing ? "Save" : "Edit"}
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
-                {product?.data?.confirmed &&
-                decoded?.id !== product?.data?.renterId?._id ? (
-                  <>
-                    <button
-                      className="btn btn-primary w-25 me-2"
-                      onClick={chatWithOwner}
-                    >
-                      <i className="fa-solid fa-comment"></i> Chat
-                    </button>
+              {decoded?.id == product?.data?.renterId?._id ? (
+  product?.data?.status !== "rented" ? (
+    <div className="d-flex align-items-end">
+      <button
+        className="btn main-back w-25 mx-1"
+        onClick={toggleEdit}
+      >
+        {isEditing ? "Save" : "Edit"}
+      </button>
+    </div>
+  ) : (
+    <p className="text-muted mt-3">
+    You can’t edit this product until the rental time is over.
+  </p>
+  
+  )
+) : (
+  ""
+)}
 
-                    <button
-                      type="button"
-                      data-bs-toggle="modal"
-                      data-bs-target="#rentModal"
-                      className="btn btn-primary w-25"
-                    >
-                      <i className="fa-solid fa-cart-shopping"></i> Rent
-                    </button>
-                  </>
-                ) : (
-                  ""
-                )}
+
+
+{product?.data?.confirmed &&
+decoded?.id !== product?.data?.renterId?._id ? (
+  <>
+    <button
+      className="btn btn-primary w-25 me-2"
+      onClick={() => {
+        if (!decoded?.id) {
+          window.location.href = "/login";
+        } else {
+          chatWithOwner();
+        }
+      }}
+    >
+      <i className="fa-solid fa-comment"></i> Chat
+    </button>
+
+
+
+    {decoded?.id && product?.data?.status !== "rented" ? (
+  <button
+    type="button"
+    data-bs-toggle="modal"
+    data-bs-target="#rentModal"
+    className="btn btn-primary w-25"
+  >
+    <i className="fa-solid fa-cart-shopping"></i> Rent
+  </button>
+) : !decoded?.id ? (
+  <button
+    type="button"
+    className="btn btn-primary w-25"
+    onClick={() => {
+      window.location.href = "/login";
+    }}
+  >
+    <i className="fa-solid fa-cart-shopping"></i> Rent
+  </button>
+) : null}
+
+
+  </>
+) : (
+  ""
+)}
+
               </div>
             </div>
           </div>

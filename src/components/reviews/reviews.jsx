@@ -12,6 +12,8 @@ const Reviews = () => {
 
   const [showAll, setShowAll] = useState(false);
 
+
+
   return (
     <div className="container mt-5">
       <h4 className="mb-3">
@@ -21,10 +23,10 @@ const Reviews = () => {
       {rev.slice(0, showAll ? rev.length : 2).map((review) => (
         <div key={review._id} className="d-flex align-items-start mb-4">
           <Link to={`/profile/${review.createdBy}`}>
-            {review.image ? (
+            {review?.createdBy?.profilePicture ? (
               <img
-                src={review.image}
-                alt={review.name}
+                src={review?.createdBy?.profilePicture}
+                alt={review?.createdBy?.userName}
                 className="rounded-circle me-3"
                 width={50}
                 height={50}
@@ -41,7 +43,7 @@ const Reviews = () => {
                   fontWeight: "bold",
                 }}
               >
-                {review?.name?.charAt(0).toUpperCase()}
+                {review?.createdBy?.userName?.charAt(0).toUpperCase()}
               </div>
             )}
           </Link>
@@ -50,7 +52,7 @@ const Reviews = () => {
             <div className="d-flex justify-content-between">
               <div>
                 <Link className="nav-link" to={`/profile/${review.createdBy}`}>
-                  <h6 className="mb-0">{review.name}</h6>
+                  <h6 className="mb-0">{review?.createdBy?.userName}</h6>
                 </Link>
                 <p className="mt-2">{review.comment}</p>
               </div>

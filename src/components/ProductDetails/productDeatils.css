@@ -18,3 +18,10 @@
 .star.empty i {
   color: #666;
 }
+
+.parent-div {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+ 
+}

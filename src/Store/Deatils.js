@@ -6,8 +6,9 @@ const useProductStore = create((set) => ({
   product: null,
   productList: [],
   processData: null,
+  isLoading: true,
   fetchProduct: async (id) => {
-    set({ loading: true, err: null }); // ابدأ التحميل وامسح أي خطأ قديم
+    set({ loading: true, err: null }); 
 
     try {
       const response = await axios.get(
@@ -26,7 +27,6 @@ const useProductStore = create((set) => ({
     try {
       const formData = new FormData();
 
-      updatedData.confirmed = false;
 
       if (clearMessage) {
         updatedData.confirmMessage = "";
@@ -46,7 +46,6 @@ const useProductStore = create((set) => ({
         }
       );
 
-      console.log("Product updated", response.data);
     } catch (error) {
       console.error(
         "Error updating product:",
@@ -58,21 +57,28 @@ const useProductStore = create((set) => ({
   getAllProd: async (id) => {
     try {
       if (!id) {
-        console.warn("ID is undefined, waiting for data...");
         return;
       }
-
+  
+      set({ isLoading: true }); 
+  
       const categoryId = typeof id === "object" && id !== null ? id._id : id;
-
+  
       const response = await axios.get(
         `http://localhost:3000/api/product/?category=${categoryId.toString()}`
       );
-
-      set({ productList: response.data.data });
+  
+      
+      set({
+        productList: response.data.data,
+        isLoading: false, 
+      });
     } catch (error) {
       console.error("Error fetching products:", error.message);
+      set({ isLoading: false }); 
     }
   },
+  
   gteProccesOfProduct: async (id, token) => {
     try {
       if (!id) {
