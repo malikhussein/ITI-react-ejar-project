@@ -129,7 +129,11 @@ export default function Wishlist() {
               <div key={product.id} className="col-sm-6 col-md-4 col-lg-3 d-flex">
                 <div style={itemStyle} className="w-100 position-relative">
                   {product.review.length === 0 && (
-                    <span className="position-absolute top-0 start-0 m-2 badge bg-success">New</span>
+                   <span 
+                   style={{ backgroundColor: "#06c954" }} 
+                   className="position-absolute top-0 start-0 m-2 badge ">
+                   New
+                 </span>
                   )}
                   <button
                     className="position-absolute top-0 end-0 m-2"
