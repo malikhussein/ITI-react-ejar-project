@@ -78,8 +78,9 @@ export default function Navbar() {
       const handleProductConfirmation = (data) => {
         console.log('Product confirmation notification:', data);
 
+        console.log(typeof data.confirmed);
         // Show toast notification
-        if (data.confirmed) {
+        if (data.confirmed === true) {
           toast.success(data.message);
         } else {
           toast.warning(data.message);
