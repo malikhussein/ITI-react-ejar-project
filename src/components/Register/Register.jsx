@@ -35,7 +35,7 @@ export default function Register() {
     userName: Yup.string()
       .min(3, "Name should be at least 3 characters long")
       .max(29, "Name should be at most 29 characters long")
-      .matches(/^[a-zA-Z0-9_ ]+$/, "Only letters, numbers, underscores, and spaces are allowed.")
+      .matches(/^[a-zA-Z_ ]+$/, "Name must only contain letters, underscores, and spaces.")
       .required("Name is required"),
     email: Yup.string().email("Invalid email address").required("Email is required"),
     password: Yup.string()
@@ -58,6 +58,8 @@ export default function Register() {
       .matches(/^01[0-9]{9}$/, "Phone number must be a valid Egyptian number (01xxxxxxxxx)")
       .required("Phone number is required"),
       dob: Yup.date()
+      .typeError("Date of birth must be a valid date")
+      .min(new Date(new Date().setFullYear(new Date().getFullYear() - 70)), "You must not be older than 70 years old")
       .max(new Date(new Date().setFullYear(new Date().getFullYear() - 15)), "You must be at least 15 years old")
       .required("Date of birth is required"),
     
