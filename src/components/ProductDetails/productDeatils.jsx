@@ -253,7 +253,7 @@ if (hasOnlyStatusChanged) {
         }}
       >
         <i
-          className="bi bi-cart-xbi bi-bag-x"
+          className="bi bi-box-seam"
           style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
         ></i>
         <h2>Oops! Couldn't load Product</h2>

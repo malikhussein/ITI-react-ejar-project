@@ -28,8 +28,15 @@ export default function Listings() {
       </h2>
       <div className="row gx-5 mx-5">
         {userProducts.length === 0 ? (
-          <h3 className="text-center mb-5 h1">No Listings Found</h3>
-        ) : (
+          <div className="text-center" style={{ color: "#777" }}>
+          <i
+            className="bi bi-card-list"
+            style={{ fontSize: "60px", marginBottom: "20px", color: "#b72a67" }}
+          />
+          <h3 className="h1">No Listings Found</h3>
+          <p>Try adding a new product or check back later.</p>
+          </div>
+          ) : (
           confirmedProducts.map((product) => (
             <ListingCard key={product.id} product={product} />
           ))
