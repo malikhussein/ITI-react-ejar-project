@@ -36,8 +36,10 @@ export default function ListingCard({ product }) {
             {product.name}
           </Link>
           <div className="d-flex flex-column justify-content-between">
-            <p className="card-title h5 mt-1">Listed on 10/2/2025</p>
-            <p className="card-title h5 mt-1">{product.daily}/day</p>
+            <p className="card-title h5 mt-1">
+              Listed on {new Date(product.createdAt).toLocaleDateString()}
+            </p>
+            <p className="card-title h5 mt-1">EGP {product.daily}</p>
           </div>
         </div>
       </div>
