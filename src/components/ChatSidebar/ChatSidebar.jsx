@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useChatStore from '../../Store/chatStore';
 import { MoonLoader } from 'react-spinners';
+import './ChatSidebar.css';
 
 export default function ChatSidebar({ chatId, token, userId }) {
   const { chatLoading, userChats, getUserChats } = useChatStore();
-
 
   useEffect(() => {
     getUserChats(token);
@@ -14,20 +14,34 @@ export default function ChatSidebar({ chatId, token, userId }) {
   if (chatLoading) {
     return (
       <div
-        className="h-100 border-end"
-        style={{   width: '375px', display: 'flex', justifyContent: 'center', alignItems: 'center',  minHeight: '50vh',  }}
+        className="h-100"
+        style={{
+          width: '375px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '50vh',
+        }}
       >
         <MoonLoader color="#b72a67" size={40} />
       </div>
     );
   }
-  
-//  extra check to see if userChats is empty and show a message
+
+  //  extra check to see if userChats is empty and show a message
   if (userChats.length === 0) {
     return (
       <div
-        style={{ textAlign: 'center',
-          padding: '1rem', color: '#777', display: 'flex', flexDirection: 'column', justifyContent: 'center',  alignItems: 'center', height: '60vh',}}
+        style={{
+          textAlign: 'center',
+          padding: '1rem',
+          color: '#777',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '60vh',
+        }}
       >
         <i
           className="bi bi-messenger"
@@ -39,12 +53,9 @@ export default function ChatSidebar({ chatId, token, userId }) {
     );
   }
   //  extra check to see if userChats is empty and show a message
-  
+
   return (
-    <div
-      className="h-100 border-end"
-      style={{ overflowY: 'scroll', width: '375px' }}
-    >
+    <div className="h-100 chat-sidebar">
       {userChats.map((chat) => (
         <Link to={`/chat/${chat._id}`} key={chat._id} className="nav-link">
           <div

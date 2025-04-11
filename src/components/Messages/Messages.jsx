@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import useChatStore from '../../Store/chatStore';
 import { MoonLoader } from 'react-spinners';
+import './Messages.css';
 
 const socket = io('http://localhost:3000');
 
@@ -92,7 +93,7 @@ export default function Messages({ chatId, token, userId }) {
   }
 
   return (
-    <div className="w-100 h-100 me-3 d-flex flex-column">
+    <div className="h-100 d-flex flex-column chat-messages">
       {otherMember ? (
         <div className="border-bottom d-flex d-lg-none flex-row justify-content-center align-items-center">
           <img
@@ -130,7 +131,7 @@ export default function Messages({ chatId, token, userId }) {
         className="d-flex flex-column chat-container"
         style={{ overflowY: 'scroll', flex: 1 }}
       >
-        {!chatMessages && chatMessages.length === 0 ? (
+        {otherMember && chatMessages.length === 0 ? (
           <div className="d-flex flex-column justify-content-center align-items-center h-100">
             <h2>No messages yet</h2>
           </div>

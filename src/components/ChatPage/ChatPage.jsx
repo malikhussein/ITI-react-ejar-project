@@ -9,18 +9,18 @@ export default function ChatPage() {
   const { token } = useAuthStore();
   const userId = jwtDecode(token).id;
   const { chatId } = useParams();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 993);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 993);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h2 className="w-100 p-4">Your messages</h2>
       <div className="d-flex flex-row" style={{ height: '80vh' }}>
         {(!isMobile || !chatId) && (
