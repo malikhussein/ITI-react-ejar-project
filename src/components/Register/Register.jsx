@@ -55,7 +55,7 @@ export default function Register() {
       .required("Confirm password is required"),
     
     phone: Yup.string()
-      .matches(/^01[0-9]{9}$/, "Phone number must be a valid Egyptian number (01xxxxxxxxx)")
+      .matches(/^01[0125][0-9]{8}$/, "Phone number must be a valid Egyptian number (01xxxxxxxxx)")
       .required("Phone number is required"),
       dob: Yup.date()
       .typeError("Date of birth must be a valid date")
