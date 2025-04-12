@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function ListingCard({ product }) {
   return (
-    <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+    <div className=" mb-3" style={{ width: '18rem' }}>
       <div className="card border-0">
         <div className="square-image position-relative d-block">
           <Link to={`/product/${product.id}`}>
@@ -12,7 +12,7 @@ export default function ListingCard({ product }) {
           </Link>
           <h5>
             <span
-              className={`position-absolute top-0 start-0 badge rounded-pill ${
+              className={`position-absolute badge rounded-pill ${
                 !product.confirmed
                   ? 'bg-warning'
                   : product.status === 'available'
@@ -23,6 +23,10 @@ export default function ListingCard({ product }) {
                   ? 'bg-secondary'
                   : ''
               }`}
+              style={{
+                left: '10px',
+                top: '10px',
+              }}
             >
               {product.confirmed ? product.status : 'not confirmed'}
             </span>
