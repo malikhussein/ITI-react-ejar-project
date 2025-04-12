@@ -18,10 +18,14 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './ProtectedRoutes/ProtectedRoute';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 function App() {
   return (
     <>
+  {/* scroll to the top when you change the page */}
+    <ScrollToTop />
+      {/*  */}
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
