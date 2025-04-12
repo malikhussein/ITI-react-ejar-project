@@ -78,7 +78,6 @@ export default function Navbar() {
       const handleProductConfirmation = (data) => {
         console.log('Product confirmation notification:', data);
 
-        console.log(typeof data.confirmed);
         // Show toast notification
         if (data.confirmed === true) {
           toast.success(data.message);
@@ -184,6 +183,21 @@ export default function Navbar() {
                     </li>
                   )}
                 </div>
+
+                {!token && (
+                  <div className="d-flex flex-lg-row flex-column gap-lg-2">
+                    <li className="nav-item d-none d-lg-block">
+                      <Link className="nav-link" to="/wishlist">
+                        <i className="fa-regular fa-heart"></i>
+                      </Link>
+                    </li>
+                    <li className="nav-item d-block d-lg-none mx-auto">
+                      <Link className="nav-link" to="/wishlist">
+                        Wishlist
+                      </Link>
+                    </li>
+                  </div>
+                )}
 
                 {token && (
                   <div className="d-flex flex-lg-row flex-column gap-lg-2">
