@@ -64,7 +64,7 @@ const ProductDetails = () => {
         name: product.data.name || "",
         description: product.data.description || "",
         daily: Number(product.data.daily) || 0,
-        category: product.data.category?._id || "",
+        category: product.data.category?.id || "",
         confirmed: Boolean(product.data.confirmed),
         confirmMessage: product.data.confirmMessage || "",
         status: product.data.status || "",
@@ -94,7 +94,7 @@ const ProductDetails = () => {
     if (isEditing) {
       const newErrors = {};
 
-  
+  // دالة لإزالة الرموز الخاصة من النص
   const removeSpecialChars = (text) => {
     return text.replace(/[^a-zA-Z0-9\u0600-\u06FF\s]/g, '');
   };
@@ -514,7 +514,7 @@ if (hasOnlyStatusChanged) {
                 <i className="fa-solid fa-tags me-2 text-secondary"></i>
                 <span className="fw-semibold">Category:</span>
                 <span className="ms-1 text-muted">
-                  {fields.category || "N/A"}
+                  {product.data.category?.name || "N/A"}
                 </span>
               </div>
 
