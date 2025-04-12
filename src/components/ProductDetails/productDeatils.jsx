@@ -94,26 +94,34 @@ const ProductDetails = () => {
     if (isEditing) {
       const newErrors = {};
 
-      if (!fields.name || fields.name.length < 3) {
-        newErrors.name = "Name must be at least 3 characters.";
-      }
 
-      if (!["available", "rented", "unavailable"].includes(fields.status)) {
-        newErrors.status = "Please choose a valid status.";
-      }
+  const removeSpecialChars = (text) => {
+    return text.replace(/[^a-zA-Z0-9\u0600-\u06FF\s]/g, '');
+  };
 
-      if (!fields.description || fields.description.length < 10) {
-        newErrors.description = "Description must be at least 10 characters.";
-      }
+  const nameLength = removeSpecialChars(fields.name || "").length;
+  const descLength = removeSpecialChars(fields.description || "").length;
 
-      if (!fields.daily || isNaN(fields.daily) || Number(fields.daily) <= 0) {
-        newErrors.daily = "Daily price must be a positive number.";
-      }
+  if (!fields.name || nameLength < 3) {
+    newErrors.name = "Name must be at least 3 characters (excluding symbols).";
+  }
 
-      if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-        return;
-      }
+  if (!["available", "rented", "unavailable"].includes(fields.status)) {
+    newErrors.status = "Please choose a valid status.";
+  }
+
+  if (!fields.description || descLength < 10) {
+    newErrors.description = "Description must be at least 10 characters (excluding symbols).";
+  }
+
+  if (!fields.daily || isNaN(fields.daily) || Number(fields.daily) <= 0) {
+    newErrors.daily = "Daily price must be a positive number.";
+  }
+
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
       const originalData = product.data;
 const updatedProduct = { ...originalData, ...fields };
 
@@ -153,6 +161,7 @@ if (hasOnlyStatusChanged) {
       setFields(updatedProduct);
       setErrors({});
     }
+    
 
     setIsEditing((prev) => !prev);
   };
@@ -324,7 +333,8 @@ if (hasOnlyStatusChanged) {
           
 
           <div className="row row1">
-            <div className="col-md-6 text- ">
+          <div className="col-md-6 center-on-small">
+
               {isSmallScreen ? (
 
 <div className="square image">
@@ -438,7 +448,7 @@ if (hasOnlyStatusChanged) {
               )}
             </div>
 
-            <div className="col-md-6">
+            <div className="col-md-6 ">
               <div className="d-flex justify-content-between">
                 <div>
                   {isEditing ? (
@@ -448,7 +458,7 @@ if (hasOnlyStatusChanged) {
                         value={fields.name}
                         placeholder="Product Name"
                         onChange={(e) => handleChange(e, "name")}
-                        className="form-control form-control1 mb-3 w-100"
+                        className="form-control form-control1 mb-3 w-100 "
                       />
                       {errors.name && (
                         <div className="text-danger d-block">{errors.name}</div>
