@@ -11,12 +11,6 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-/* .home-card .image img {
-  height: 200px;
-  width: 100%;  
-  border-radius: 5px;
-} */
-
 .home-card .item-name {
   height: 40px;
   font-size: 16px !important;
@@ -44,39 +38,15 @@
 }
 
 .home-card .card-icons .icon {
-  background-color: #eee;
   width: 30px;
   height: 30px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #eee;
 }
 
-
-/* .home-card::after,
-.home-card::before {
-  position: absolute;
-  content: "";
-  height: 1px;
-  background-color: #b72a67;
-  width: 0;
-  transition: 0.5s;
+.home-card .card-icons .icon i {
+  color: black;
 }
-
-.home-card::after {
-  right: 0;
-  top: 0;
-}
-
-.home-card::before {
-  left: 0;
-  bottom: 0;
-}
-
-.home-card:hover::after {
-  width: 100%;
-}
-.home-card:hover::before {
-  width: 100%;
-} */
