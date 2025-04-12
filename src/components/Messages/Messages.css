@@ -17,3 +17,24 @@
     width: 100%;
   }
 }
+
+.chat-send {
+  width: 20%;
+}
+
+@media (max-width: 1400px) {
+  .chat-send {
+    width: 25%;
+  }
+}
+@media (max-width: 1200px) {
+  .chat-send {
+    width: 30%;
+  }
+}
+
+@media (max-width: 992px) {
+  .chat-send {
+    width: 40%;
+  }
+}

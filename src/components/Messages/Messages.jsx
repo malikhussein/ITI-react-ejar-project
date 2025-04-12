@@ -77,17 +77,49 @@ export default function Messages({ chatId, token, userId }) {
 
   if (messagesError === 404) {
     return (
-      <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
-        <h2 className="text-center">Chat not found</h2>
-        <p className="text-center">Please select a chat from the sidebar.</p>
+      <div
+        style={{
+          width: '100%',
+          textAlign: 'center',
+          padding: '50px 20px',
+          color: '#777',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '60vh',
+        }}
+      >
+        <i
+          className="bi bi-chat-dots"
+          style={{ fontSize: '80px', marginBottom: '20px', color: '#b72a67' }}
+        />
+        <h2>Chat not found</h2>
+        <p>Please select a chat from the sidebar.</p>
       </div>
     );
   }
+
   if (messagesError === 500) {
     return (
-      <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
-        <h2 className="text-center">Server error</h2>
-        <p className="text-center">Please try again later.</p>
+      <div
+        style={{
+          width: '100%',
+          textAlign: 'center',
+          color: '#777',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '60vh',
+        }}
+      >
+        <i
+          className="bi bi-exclamation-triangle-fill"
+          style={{ fontSize: '80px', marginBottom: '20px', color: '#b72a67' }}
+        />
+        <h2>Server error</h2>
+        <p>Please try again later.</p>
       </div>
     );
   }
@@ -95,7 +127,7 @@ export default function Messages({ chatId, token, userId }) {
   return (
     <div className="h-100 d-flex flex-column chat-messages">
       {otherMember ? (
-        <div className="border-bottom d-flex d-lg-none flex-row justify-content-center align-items-center">
+        <div className="border-bottom mb-3 d-flex d-lg-none flex-row justify-content-center align-items-center">
           <img
             className="rounded-circle p-2"
             src={otherMember.profilePicture}
@@ -132,8 +164,28 @@ export default function Messages({ chatId, token, userId }) {
         style={{ overflowY: 'scroll', flex: 1 }}
       >
         {otherMember && chatMessages.length === 0 ? (
-          <div className="d-flex flex-column justify-content-center align-items-center h-100">
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '50px 20px',
+              color: '#777',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '60vh',
+            }}
+          >
+            <i
+              className="bi bi-chat-left-text"
+              style={{
+                fontSize: '60px',
+                marginBottom: '20px',
+                color: '#b72a67',
+              }}
+            />
             <h2>No messages yet</h2>
+            <p>Start the conversation by sending a message!</p>
           </div>
         ) : (
           chatMessages.map((msg, index) =>
@@ -176,8 +228,8 @@ export default function Messages({ chatId, token, userId }) {
           }}
           placeholder="Type your message ..."
         />
-        <button className="btn btn-primary" onClick={sendMessage}>
-          Send
+        <button className="btn btn-primary chat-send" onClick={sendMessage}>
+          <i className="fa-solid fa-paper-plane me-2"></i>Send
         </button>
       </div>
     </div>
