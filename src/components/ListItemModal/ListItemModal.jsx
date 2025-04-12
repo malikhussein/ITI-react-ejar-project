@@ -30,14 +30,15 @@ export default function ListItemModal() {
   const validationSchema = Yup.object({
     name: Yup.string()
       .min(3, 'Title should be at least 3 characters long')
-      .max(29, 'Title should be at most 29 characters long')
+      .max(30, 'Title should be at most 30 characters long')
       .matches(
         /^[a-zA-Z0-9_ ]+$/,
         'Only letters, numbers, underscores, and spaces are allowed.'
       )
       .required('Title is required'),
     description: Yup.string()
-      .min(3, 'Description should be at least 3 characters long')
+      .min(20, 'Description should be at least 20 characters long')
+      .max(300, 'Description should be at most 300 characters long')
       .required('Description is required'),
     category: Yup.string().required('Category is required'),
     image1: Yup.string().required('Image 1 is required'),
@@ -45,7 +46,9 @@ export default function ListItemModal() {
     image3: Yup.string(),
     image4: Yup.string(),
     daily: Yup.number()
-      .min(0, 'Price should be at least 0')
+      .min(1, 'Price should be at least 1')
+      .max(10000, 'Price should be at most 10000')
+      .typeError('Price must be a number')
       .required('Price is required'),
   });
 
@@ -104,8 +107,8 @@ export default function ListItemModal() {
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-fullscreen-lg-down">
-        <div className="modal-content">
+      <div className="modal-dialog">
+        <div className="modal-content" style={{ backgroundColor: 'white' }}>
           <div className="modal-header">
             <h1 className="modal-title fs-5" id="exampleModalLabel">
               Rent your product
@@ -157,7 +160,7 @@ export default function ListItemModal() {
                   </div>
                 )}
               </div>
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-start">
                 <FileInput
                   label="Main Image"
                   fieldName="image1"
@@ -165,7 +168,7 @@ export default function ListItemModal() {
                 />
               </div>
               <label className="h6">Additional Images</label>
-              <div className="d-flex justify-content-between">
+              <div className="d-flex flex-column flex-lg-row justify-content-between">
                 <FileInput label="Image 1" fieldName="image2" formik={formik} />
                 <FileInput label="Image 2" fieldName="image3" formik={formik} />
                 <FileInput label="Image 3" fieldName="image4" formik={formik} />
