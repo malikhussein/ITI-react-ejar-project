@@ -127,7 +127,7 @@ export default function Messages({ chatId, token, userId }) {
   return (
     <div className="h-100 d-flex flex-column chat-messages">
       {otherMember ? (
-        <div className="border-bottom d-flex d-lg-none flex-row justify-content-center align-items-center">
+        <div className="border-bottom mb-3 d-flex d-lg-none flex-row justify-content-center align-items-center">
           <img
             className="rounded-circle p-2"
             src={otherMember.profilePicture}
