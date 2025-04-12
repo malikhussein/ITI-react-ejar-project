@@ -73,9 +73,9 @@ export default function Register() {
       .min(7, "Address must be at least 7 characters.")
       .max(50, "Address must not exceed 50 characters.")
       .matches(
-        /^[a-zA-Z0-9\s,'-]+$/,
-        "Only letters, numbers, spaces, commas, and dashes are allowed."
-      )
+        /^(?=(?:.*[a-zA-Z]){3,})[a-zA-Z0-9\s,'-]+$/,
+        "Address must contain at least three letters. Only letters, numbers, spaces, commas, apostrophes, and dashes are allowed."
+      )    
       .required("Address is required, Please enter your full address (street, city, etc.)."),
     idNumber: Yup.string()
       .matches(/^[2-3][0-9]{13}$/, "Invalid Egyptian ID number (must start with 2 or 3 and be 14 digits)")

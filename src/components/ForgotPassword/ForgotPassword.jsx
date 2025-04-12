@@ -45,6 +45,10 @@ export default function ForgotPassword() {
     validationSchema: Yup.object({
       email: Yup.string()
         .email('Enter a valid email (e.g., user@example.com).')
+        .matches(
+          /^[\w-.]+@([\w-]+\.)+(com|net|org|eg)$/i,
+          "Please enter a valid email ending in .com, .net, .org, or .eg"
+        )
         .required('Email is required.'),
     }),
     onSubmit: async (values, { setSubmitting }) => {
