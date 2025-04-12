@@ -44,7 +44,7 @@ export default function ProfilePage() {
         <p>Sorry, check your internet connection or try again later.</p>
       </div>
     );
-  if (!errorStatus || errorStatus === 500)
+  if (errorStatus === 500)
     return (
       <div
         className="d-flex flex-column justify-content-center align-items-center"
