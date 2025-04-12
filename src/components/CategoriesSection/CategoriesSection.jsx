@@ -59,7 +59,7 @@ function CategoriesSection() {
     return (
       <div
         style={{  textAlign: "center",  padding: "50px 20px", color: "#777",  display: "flex", flexDirection: "column", 
-           justifyContent: "center",  alignItems: "center",  height: "50vh",  }}
+          justifyContent: "center",  alignItems: "center",  height: "50vh",  }}
       >
       
         <i

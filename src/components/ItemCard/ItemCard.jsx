@@ -43,11 +43,11 @@ function ItemCard({ item, renderStars }) {
           className="nav-link"
           to={`/product/${item._id}`}
         >
-          <div className="image">
+          <div className="image square-image">
             <img src={item.images[0]} alt={item.name} />
           </div>
 
-          <h3 className="mt-3 mb-0 fs-5 fw-normal text-center text-md-start">{item.name}</h3>
+          <h3 className="mt-3 mb-0 fs-6 fw-normal text-center text-md-start item-name">{item.name}</h3>
 
         </Link>
 
