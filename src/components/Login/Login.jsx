@@ -44,7 +44,7 @@ export default function Login() {
       if (emailRegex.test(value)) {
         return true; // Valid email
       }
-      const phoneRegex = /^01[0-9]{9}$/;
+      const phoneRegex = /^01[0125][0-9]{8}$/; // Egyptian phone number format
       if (phoneRegex.test(value)) {
         return true; // Valid phone number
       }
