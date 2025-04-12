@@ -2,7 +2,15 @@
   position: relative;
   display: flex !important;
   flex-direction: column;
-  height: 270px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 10px;
+  transition: .3s;
+}
+
+.item:hover {
+  transform: translateY(-10px);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .item .image {
@@ -11,28 +19,21 @@
   border-radius: 4px;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
 }
 
 .item img {
   max-width: 100%;
-  padding: 20px;
   height: 180px;
   transition: 0.3s;
-}
-
-.item img:hover {
-  transform: scale(1.08);
 }
 
 .item h3 {
   font-weight: 600 !important;
 }
 
-.item .price{
-  color: #B72A67;
+.item .price {
+  color: #b72a67;
 }
-
 
 .newItem {
   background-color: #06c954;
@@ -64,7 +65,7 @@
 }
 
 .star.filled i {
-  color: #FFAD33;
+  color: #ffad33;
 }
 
 .star.empty i {

@@ -43,7 +43,7 @@ function ItemCard({ item, renderStars }) {
           className="nav-link"
           to={`/product/${item._id}`}
         >
-          <div className="image">
+          <div className="image square-image">
             <img src={item.images[0]} alt={item.name} />
           </div>
 
