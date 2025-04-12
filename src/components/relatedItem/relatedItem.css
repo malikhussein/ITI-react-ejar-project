@@ -82,3 +82,11 @@
 .icon.heart.filled {
   color: red;
 }
+
+
+@media (max-width: 899px) {
+  .related-title {
+    display: block;
+    text-align: center;
+  }
+}

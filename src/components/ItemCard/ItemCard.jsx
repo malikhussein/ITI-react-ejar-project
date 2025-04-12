@@ -47,20 +47,22 @@ function ItemCard({ item, renderStars }) {
             <img src={item.images[0]} alt={item.name} />
           </div>
 
-          <h3 className="mt-3 mb-0 fs-5 fw-normal">{item.name}</h3>
+          <h3 className="mt-3 mb-0 fs-5 fw-normal text-center text-md-start">{item.name}</h3>
+
         </Link>
 
-        <div className="d-flex gap-3 mt-2">
-          <p className="price fw-bold m-0">EGP {item.daily}</p>
-          {item.averageRating === 0 ? (
-            <div className="newItem m-0">NEW!</div>
-          ) : (
-            <div className="rating d-flex gap-3 m-0">
-              <div className="m-0">{renderStars(item.averageRating)}</div>
-              <p className="m-0">{`(${item.review.length})`}</p>
-            </div>
-          )}
-        </div>
+        <div className="d-flex gap-3 mt-2 flex-column flex-md-row align-items-center align-items-md-start text-center text-md-start">
+  <p className="price fw-bold m-0">EGP {item.daily}</p>
+  {item.averageRating === 0 ? (
+    <div className="newItem m-0">NEW!</div>
+  ) : (
+    <div className="rating d-flex gap-3 m-0">
+      <div className="m-0">{renderStars(item.averageRating)}</div>
+      <p className="m-0">{`(${item.review.length})`}</p>
+    </div>
+  )}
+</div>
+
       </div>
     </>
   );

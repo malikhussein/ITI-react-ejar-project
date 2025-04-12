@@ -26,10 +26,11 @@ const RelatedProducts = () => {
 
 
 
-  return (
+  return ( <>
+  
+  <h5 className="text-danger fw-bold text-center related-title">Related Item</h5>
     <div className="container my-5">
-      <h5 className="text-danger fw-bold">Related Item</h5>
-     <div className="row">
+<div className="row">
      {isLoading ? (
   <div className="text-center w-100 py-4">
     <div
@@ -116,6 +117,8 @@ const RelatedProducts = () => {
    
   </div>
     </div>
+  </>
+
   );
 };
 

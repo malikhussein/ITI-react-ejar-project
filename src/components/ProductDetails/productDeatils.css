@@ -25,3 +25,36 @@
   align-items: center;
  
 }
+
+@media (max-width: 1000px) {
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-direction: row;
+  }
+
+  .form-box {
+    width: 40%;
+  }
+
+  .text-container {
+    width: 40%;
+    text-align: start;
+  }
+
+  .form-control {
+    width: 100%;
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .row .form-control {
+    width: 100%;
+  }
+}

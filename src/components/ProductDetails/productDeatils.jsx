@@ -301,7 +301,6 @@ if (hasOnlyStatusChanged) {
     <>
       <div className="container  my-5">
         <div className="p-4">
-          <div className=" mt-4">
             {!product?.data?.confirmed &&
               decoded?.id == product?.data?.renterId?._id && (
                 <div className="alert alert-warning ">
@@ -322,7 +321,7 @@ if (hasOnlyStatusChanged) {
                   </span>
                 </div>
               )}
-          </div>
+          
 
           <div className="row">
             <div className="col-md-6 text- ">
