@@ -64,7 +64,7 @@ const ProductDetails = () => {
         name: product.data.name || "",
         description: product.data.description || "",
         daily: Number(product.data.daily) || 0,
-        category: product.data.category?.name || "",
+        category: product.data.category?._id || "",
         confirmed: Boolean(product.data.confirmed),
         confirmMessage: product.data.confirmMessage || "",
         status: product.data.status || "",
@@ -94,7 +94,7 @@ const ProductDetails = () => {
     if (isEditing) {
       const newErrors = {};
 
-
+  
   const removeSpecialChars = (text) => {
     return text.replace(/[^a-zA-Z0-9\u0600-\u06FF\s]/g, '');
   };

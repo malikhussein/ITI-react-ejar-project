@@ -28,9 +28,6 @@ const useProductStore = create((set) => ({
     try {
       const formData = new FormData();
 
-
-
-
       if (clearMessage) {
         updatedData.confirmMessage = "";
       }
