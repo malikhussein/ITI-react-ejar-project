@@ -293,11 +293,15 @@ export default function Navbar() {
                       </ul>
                     </li>
 
-                    {/* Mobile notification link */}
-                    <li className="nav-item d-block d-lg-none mx-auto">
-                      <Link
-                        className="nav-link position-relative"
-                        to="/notifications"
+                    {/* Mobile notification with dropdown instead of page navigation */}
+                    <li className="nav-item dropdown d-block d-lg-none mx-auto">
+                      <a
+                        className="nav-link dropdown-toggle position-relative"
+                        href="#"
+                        id="mobileNotificationDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
                       >
                         Notifications
                         {hasUnread && (
@@ -305,7 +309,40 @@ export default function Navbar() {
                             {notifications.length}
                           </span>
                         )}
-                      </Link>
+                      </a>
+                      <ul
+                        className="dropdown-menu notification-dropdown"
+                        aria-labelledby="mobileNotificationDropdown"
+                      >
+                        {notifications.length > 0 ? (
+                          notifications.map((notification) => (
+                            <li
+                              key={notification._id}
+                              className="notification-item"
+                            >
+                              <button
+                                className="dropdown-item"
+                                onClick={() =>
+                                  markAsRead(notification._id, token)
+                                }
+                              >
+                                {notification.message}
+                                <small className="text-muted d-block">
+                                  {new Date(
+                                    notification.createdAt
+                                  ).toLocaleString()}
+                                </small>
+                              </button>
+                            </li>
+                          ))
+                        ) : (
+                          <li>
+                            <span className="dropdown-item">
+                              No new notifications
+                            </span>
+                          </li>
+                        )}
+                      </ul>
                     </li>
 
                     {/* Profile & Logout */}

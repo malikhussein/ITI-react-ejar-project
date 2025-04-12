@@ -35,7 +35,7 @@ export default function ListingCard({ product }) {
         <div className="card-body">
           <Link
             className="card-title text-nowrap overflow-hidden fw-bold h4 text-center text-decoration-none d-block"
-            to="/product/123"
+            to={`/product/${product.id}`}
           >
             {product.name}
           </Link>

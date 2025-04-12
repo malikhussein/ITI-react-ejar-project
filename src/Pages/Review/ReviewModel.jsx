@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../Store/Auth";
 
 export default function ReviewModl({ selected }) {
@@ -9,17 +8,15 @@ export default function ReviewModl({ selected }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const { token } = useAuthStore();
-  
 
   console.log(selected);
 
   const productId = selected?.selectedProcess?.productId?._id;
- console.log(productId);
+  console.log(productId);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
-
       const res = await axios.post(
         "http://localhost:3000/api/review",
         {
@@ -34,11 +31,24 @@ export default function ReviewModl({ selected }) {
         }
       );
 
-      setMessage(" Your review was submitted!");
-      
-      console.log(message);
-      setError("");
-      // setTimeout(() => navigate(`/product/${productId}`), 1500);
+      // Close the modal using DOM manipulation
+      const modalElement = document.getElementById("rentModal");
+      if (modalElement) {
+        // Remove modal-specific classes and styles
+        modalElement.classList.remove("show");
+        modalElement.style.display = "none";
+
+        // Remove the backdrop
+        const backdrop = document.querySelector(".modal-backdrop");
+        if (backdrop) {
+          backdrop.parentNode.removeChild(backdrop);
+        }
+
+        setMessage(" Your review was submitted!");
+
+        console.log(message);
+        setError("");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong ");
       console.log(error);
@@ -67,7 +77,7 @@ export default function ReviewModl({ selected }) {
                   <label htmlFor="startDate" className="form-label">
                     your Rating (1 to 5)
                   </label>
-<br />
+                  <br />
                   <input
                     type="number"
                     min={1}
@@ -80,8 +90,8 @@ export default function ReviewModl({ selected }) {
 
                 <div className="mb-3">
                   <label htmlFor="endDate" className="form-label">
-                    your comment                 
-                    </label>
+                    your comment
+                  </label>
                   <textarea
                     rows={4}
                     value={comment}
