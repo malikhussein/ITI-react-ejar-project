@@ -27,7 +27,7 @@
 }
 
 @media (max-width: 1000px) {
-  .container {
+  .container1 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,26 +35,21 @@
     flex-direction: row;
   }
 
-  .form-box {
-    width: 40%;
-  }
 
-  .text-container {
-    width: 40%;
-    text-align: start;
-  }
 
-  .form-control {
+ 
+
+  .form-control1 {
     width: 100%;
   }
 
-  .row {
+  .row1 {
     display: flex;
     gap: 10px;
     width: 100%;
   }
 
-  .row .form-control {
+  .row1 .form-control1 {
     width: 100%;
   }
 }

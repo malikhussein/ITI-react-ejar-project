@@ -299,7 +299,7 @@ if (hasOnlyStatusChanged) {
 
   return (
     <>
-      <div className="container  my-5">
+      <div className="container container1  my-5">
         <div className="p-4">
             {!product?.data?.confirmed &&
               decoded?.id == product?.data?.renterId?._id && (
@@ -323,7 +323,7 @@ if (hasOnlyStatusChanged) {
               )}
           
 
-          <div className="row">
+          <div className="row row1">
             <div className="col-md-6 text- ">
               {isSmallScreen ? (
 
@@ -448,7 +448,7 @@ if (hasOnlyStatusChanged) {
                         value={fields.name}
                         placeholder="Product Name"
                         onChange={(e) => handleChange(e, "name")}
-                        className="form-control mb-3 w-100"
+                        className="form-control form-control1 mb-3 w-100"
                       />
                       {errors.name && (
                         <div className="text-danger d-block">{errors.name}</div>
@@ -555,7 +555,7 @@ if (hasOnlyStatusChanged) {
                   <textarea
                     value={fields.description}
                     onChange={(e) => handleChange(e, "description")}
-                    className="form-control mb-2"
+                    className="form-control form-control1 mb-2"
                     placeholder="Description"
                   />
                   {errors.description && (
@@ -573,7 +573,7 @@ if (hasOnlyStatusChanged) {
                     value={fields.daily}
                     placeholder="Daily Price"
                     onChange={(e) => handleChange(e, "daily")}
-                    className="form-control mb-2"
+                    className="form-control form-control1 mb-2"
                   />
                   {errors.daily && (
                     <div className="text-danger">{errors.daily}</div>
