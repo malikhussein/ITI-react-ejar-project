@@ -25,9 +25,14 @@ export default function EditProdileModal({ profile }) {
       .max(30, 'Name should be at most 30 characters long')
       .matches(/^[a-zA-Z_ ]+$/, "Name must only contain letters, underscores, and spaces.")
       .required('Name is required'),
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required'),
+      email: Yup.string()
+      .email("Invalid email address")
+      .matches(
+        /^[\w-.]+@([\w-]+\.)+(com|net|org|eg)$/i,
+        "Please enter a valid email ending in .com, .net, .org, or .eg"
+      )
+      .required("Email is required"),
+    
     newPassword: Yup.string()
       .min(8, 'Password should be at least 8 characters long')
       .matches(

@@ -37,7 +37,13 @@ export default function Register() {
       .max(30, "Name should be at most 30 characters long")
       .matches(/^[a-zA-Z_ ]+$/, "Name must only contain letters, underscores, and spaces.")
       .required("Name is required"),
-    email: Yup.string().email("Invalid email address").required("Email is required"),
+      email: Yup.string()
+      .email("Invalid email address")
+      .matches(
+        /^[\w-.]+@([\w-]+\.)+(com|net|org|eg)$/i,
+        "Please enter a valid email ending in .com, .net, .org, or .eg"
+      )
+      .required("Email is required"),    
     password: Yup.string()
     .min(8, "Password should be at least 8 characters long")
     .matches(
@@ -55,7 +61,7 @@ export default function Register() {
       .required("Confirm password is required"),
     
     phone: Yup.string()
-      .matches(/^01[0-9]{9}$/, "Phone number must be a valid Egyptian number (01xxxxxxxxx)")
+      .matches(/^01[0125][0-9]{8}$/, "Phone number must be a valid Egyptian number (01[0,1,2,5]xxxxxxxx) and be 11 digits")
       .required("Phone number is required"),
       dob: Yup.date()
       .typeError("Date of birth must be a valid date")
@@ -67,9 +73,9 @@ export default function Register() {
       .min(7, "Address must be at least 7 characters.")
       .max(50, "Address must not exceed 50 characters.")
       .matches(
-        /^[a-zA-Z0-9\s,'-]+$/,
-        "Only letters, numbers, spaces, commas, and dashes are allowed."
-      )
+        /^(?=(?:.*[a-zA-Z]){3,})[a-zA-Z0-9\s,'-]+$/,
+        "Address must contain at least three letters. Only letters, numbers, spaces, commas, apostrophes, and dashes are allowed."
+      )    
       .required("Address is required, Please enter your full address (street, city, etc.)."),
     idNumber: Yup.string()
       .matches(/^[2-3][0-9]{13}$/, "Invalid Egyptian ID number (must start with 2 or 3 and be 14 digits)")
