@@ -13,6 +13,29 @@ export default function RequestsPage() {
   }, [getProcesses, token]);
   console.log(userProcesses);
 
+  if (error === 'no products were found') {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '60vh',
+          color: '#777',
+          textAlign: 'center',
+        }}
+      >
+        <i
+          className="bi bi-bookmark-x-fill"
+          style={{ fontSize: '60px', color: '#b72a67', marginBottom: '20px' }}
+        ></i>
+        <h2>Your requests is empty</h2>
+        <p>Add your first product to start receiving rental requests</p>
+      </div>
+    );
+  }
+
   if (error) {
     return (
       <div
