@@ -453,13 +453,21 @@ if (hasOnlyStatusChanged) {
                 <div>
                   {isEditing ? (
                     <>
+                    <div class="form-floating mb-3">
+
+  
                       <input
+                      id="floatingInput"
                         type="text"
+                        
                         value={fields.name}
                         placeholder="Product Name"
                         onChange={(e) => handleChange(e, "name")}
                         className="form-control form-control1 mb-3 w-100 "
                       />
+                      <label for="floatingInput">Title</label>
+                      </div>
+
                       {errors.name && (
                         <div className="text-danger d-block">{errors.name}</div>
                       )}
@@ -540,7 +548,7 @@ if (hasOnlyStatusChanged) {
                     style={{ maxWidth: "150px" }}
                   >
                     <option value="available">available</option>
-                    <option disabled value="rented">Rented</option>
+                 
                     <option value="unavailable">Unavailable</option>
                   </select>
                 ) : (
@@ -562,12 +570,21 @@ if (hasOnlyStatusChanged) {
 
               {isEditing ? (
                 <>
-                  <textarea
+
+
+<div class="form-floating">
+<textarea
                     value={fields.description}
                     onChange={(e) => handleChange(e, "description")}
                     className="form-control form-control1 mb-2"
                     placeholder="Description"
+                    id="floatingTextarea"
                   />
+
+  <label for="floatingTextarea">Description</label>
+</div>
+
+             
                   {errors.description && (
                     <div className="text-danger">{errors.description}</div>
                   )}
@@ -578,13 +595,23 @@ if (hasOnlyStatusChanged) {
               <div className="d-flex flex-wrap mb-3"></div>
               {isEditing ? (
                 <>
-                  <input
+
+<div class="form-floating mb-3">
+
+<input
                     type="number"
                     value={fields.daily}
                     placeholder="Daily Price"
                     onChange={(e) => handleChange(e, "daily")}
                     className="form-control form-control1 mb-2"
+                    id="floatingInput"
                   />
+
+  <label for="floatingInput">Daily</label>
+</div>
+
+                
+
                   {errors.daily && (
                     <div className="text-danger">{errors.daily}</div>
                   )}
