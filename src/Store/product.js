@@ -24,7 +24,7 @@ const useProductStore = create((set, get) => ({
       );
       console.log(response.data.product.name);
     } catch (error) {
-      toast.error('Failed to post product');
+      toast.error(error.response?.data?.message || error.message);
       set({ error: error.response?.data?.message || error.message });
     }
   },

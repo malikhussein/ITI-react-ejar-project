@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { create } from 'zustand';
+import { toast } from 'react-toastify';
 
 const useChatStore = create((set, get) => ({
   userChats: [],
@@ -24,6 +25,7 @@ const useChatStore = create((set, get) => ({
       set({ chatLoading: false });
       return chat;
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
       set({
         chatError: error.response?.data?.message || error.message,
         chatLoading: false,

@@ -5,6 +5,7 @@ import './ReviewPage.css';
 import axios from 'axios';
 import useAuthStore from '../../Store/Auth';
 import { MoonLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
 const ReviewPage = () => {
   const { getFinishedProcesses, finishedProcesses } = useProcessStore();
@@ -23,6 +24,7 @@ const ReviewPage = () => {
       setReviewedProducts(productIds);
       console.log(reviewedProducts);
     } catch (err) {
+      toast.error(err.response?.data?.message || 'Error fetching reviews');
       console.error('Error fetching reviews:', err.message);
     }
   };
@@ -116,7 +118,8 @@ const ReviewPage = () => {
                       EGP {item.price}
                     </h4>
                     <h6 className="card-text">
-                      Start Date: {new Date(item.startDate).toLocaleDateString()}
+                      Start Date:{' '}
+                      {new Date(item.startDate).toLocaleDateString()}
                     </h6>
                     <h5 className="card-text">
                       End Date: {new Date(item.endDate).toLocaleDateString()}

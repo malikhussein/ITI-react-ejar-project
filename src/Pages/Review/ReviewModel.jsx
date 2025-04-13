@@ -1,12 +1,13 @@
-import axios from "axios";
-import React, { useState } from "react";
-import useAuthStore from "../../Store/Auth";
+import axios from 'axios';
+import React, { useState } from 'react';
+import useAuthStore from '../../Store/Auth';
+import { toast } from 'react-toastify';
 
 export default function ReviewModl({ selected }) {
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [comment, setComment] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const { token } = useAuthStore();
 
   console.log(selected);
@@ -18,7 +19,7 @@ export default function ReviewModl({ selected }) {
     e.preventDefault(); // Prevent default form submission behavior
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/review",
+        'http://localhost:3000/api/review',
         {
           rating,
           comment,
@@ -32,25 +33,26 @@ export default function ReviewModl({ selected }) {
       );
 
       // Close the modal using DOM manipulation
-      const modalElement = document.getElementById("rentModal");
+      const modalElement = document.getElementById('rentModal');
       if (modalElement) {
         // Remove modal-specific classes and styles
-        modalElement.classList.remove("show");
-        modalElement.style.display = "none";
+        modalElement.classList.remove('show');
+        modalElement.style.display = 'none';
 
         // Remove the backdrop
-        const backdrop = document.querySelector(".modal-backdrop");
+        const backdrop = document.querySelector('.modal-backdrop');
         if (backdrop) {
           backdrop.parentNode.removeChild(backdrop);
         }
 
-        setMessage(" Your review was submitted!");
+        setMessage(' Your review was submitted!');
 
         console.log(message);
-        setError("");
+        setError('');
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong ");
+      toast.error(err.response?.data?.message || 'Error fetching reviews');
+      setError(err.response?.data?.message || 'Something went wrong ');
       console.log(error);
     }
   };
