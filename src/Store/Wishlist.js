@@ -1,52 +1,73 @@
-import { toast } from 'react-toastify';
 import { create } from 'zustand';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-//  Zustand store for Wishlist
-const useWishlistStore = create((set) => ({
-  // Initialize wishlist from local storage (or empty array if not found)
-  wishlist: JSON.parse(localStorage.getItem('wishlist')) || [],
+const useWishlistStore = create((set, get) => ({
+  wishlist: [],
+  count: 0,
 
-  //Keep track of the number of items in the wishlist
-  count: JSON.parse(localStorage.getItem('wishlist'))?.length || 0,
+  fetchWishlist: async (token) => {
+    try {
+      const res = await axios.get('http://localhost:3000/api/wishlist', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const wishlist = res.data.wishlist.map((item) => ({
+        ...item,
+        id: item._id,
+        review: item.review || [], // prevent undefined access
+      }));
+      set({ wishlist, count: wishlist.length });
+    } catch (err) {
+      toast.error('Failed to fetch wishlist');
+      throw err; // rethrow to let the component handle it
 
-  //  Add a product to the wishlist (if it's not already in the list)
-  addToWishlist: (product) =>
-    set((state) => {
-      if (!state.wishlist.some((p) => p.id === product.id)) {
-        // Check if product is already in wishlist
-        const updatedWishlist = [...state.wishlist, product]; // Add new product
-        localStorage.setItem('wishlist', JSON.stringify(updatedWishlist)); // Save to local storage
-        toast.success('Product added successfully in wishlist');
+    }
+  },
 
-        return { wishlist: updatedWishlist, count: updatedWishlist.length }; // Update state
-      }
-      return state; // Return same state if product already exists
-    }),
+  addToWishlist: async (product, token) => {
+    const productId = product.id || product._id;
+    try {
+      await axios.post(
+        `http://localhost:3000/api/wishlist/add/${productId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const updated = [...get().wishlist, { ...product, id: productId }];
+      set({ wishlist: updated, count: updated.length });
+      toast.success('Product added to wishlist');
+    } catch (err) {
+      toast.error('Failed to add to wishlist');
+    }
+  },
 
-  //  Remove a product from the wishlist by ID
-  removeFromWishlist: (productId) =>
-    set((state) => {
-      const updatedWishlist = state.wishlist.filter(
-        (product) => product.id !== productId
-      ); // Remove product
+  removeFromWishlist: async (productId, token) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/wishlist/remove/${productId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const updated = get().wishlist.filter((item) => item.id !== productId);
+      set({ wishlist: updated, count: updated.length });
+      toast.info('Product removed from wishlist');
+    } catch (err) {
+      toast.error('Failed to remove from wishlist');
+    }
+  },
 
-      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist)); // Save updated wishlist
-      toast.info('Product removed successfully from wishlist');
-      return { wishlist: updatedWishlist, count: updatedWishlist.length }; // Update state
-    }),
+  clearWishlist: async (token) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/wishlist/clear`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      set({ wishlist: [], count: 0 });
+      toast.info('Wishlist cleared');
+    } catch (err) {
+      toast.error('Failed to clear wishlist');
+    }
+  },
 
-  //  Clear all products from the wishlist
-  clearWishlist: () =>
-    set(() => {
-      localStorage.removeItem('wishlist'); // Remove wishlist from local storage
-      toast.info('Wishlist cleared successfully'); // Notify user
-      return { wishlist: [], count: 0 }; // Reset wishlist and count in state
-    }),
-
-  //  Check if a specific product is in the wishlist
-  isWishlisted: (productId) => (state) => {
-    return state.wishlist.some((product) => product.id === productId); // Return true if product exists
+  isWishlisted: (productId) => {
+    return get().wishlist.some((item) => item.id === productId);
   },
 }));
 
-export default useWishlistStore; // Export store for use in components
+export default useWishlistStore;
