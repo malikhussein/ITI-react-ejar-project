@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import useWishlistStore from "../../Store/Wishlist";
 import "./ItemCard.css";
 import { useProductStore } from "../../Store/Deatils";
+import useAuthStore from "../../Store/Auth"; //  NEW
+import { toast } from "react-toastify";     //  NEW
 
 function ItemCard({ item, renderStars }) {
   const handleFetchProduct = (id) => {
@@ -12,28 +14,33 @@ function ItemCard({ item, renderStars }) {
   };
 
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
-  const isWishlisted = wishlist.some((p) => p.id === item._id);
   const { fetchProduct } = useProductStore();
+  const { token } = useAuthStore(); //  Get token
+
+  const isWishlisted = wishlist.some((p) => p.id === item._id);
+
+  const handleToggleWishlist = (e) => {
+    e.preventDefault();
+
+    if (!token) {
+      toast.info("Please sign in or create an account to use the wishlist");
+      return;
+    }
+
+    isWishlisted
+      ? removeFromWishlist(item._id, token) //  pass token
+      : addToWishlist(item, token);         // pass token
+  };
 
 
   return (
     <>
       <div className="item mb-4">
-        <div className="card-icons">
+      <div className="card-icons">
           <div>
-            <div
-              onClick={(e) => {
-                e.preventDefault();
-                isWishlisted
-                  ? removeFromWishlist(item._id)
-                  : addToWishlist(item);
-              }}
-              style={{ cursor: "pointer" }}
-            >
+            <div onClick={handleToggleWishlist} style={{ cursor: "pointer" }}>
               <i
-                className={`fa-heart ${
-                  isWishlisted ? "fas text-danger" : "far"
-                }`}
+                className={`fa-heart ${isWishlisted ? "fas text-danger" : "far"}`}
               ></i>
             </div>
           </div>

@@ -8,6 +8,7 @@ import "./productDeatils.css";
 import useChatStore from "../../Store/chatStore";
 import useWishlistStore from "../../Store/Wishlist";
 import { MoonLoader } from "react-spinners";
+import { toast } from "react-toastify"; //new
 
 const ProductDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -30,6 +31,19 @@ const ProductDetails = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const { createChat } = useChatStore();
   const navigate = useNavigate();
+  
+const handleToggleWishlist = () => {
+  if (!token) {
+    toast.info("Please sign in or create an account to use the wishlist");
+    return;
+  }
+
+  if (isWishlisted) {
+    removeFromWishlist(product?.data?._id, token);
+  } else {
+    addToWishlist(product?.data, token);
+  }
+};
   const isWishlisted = wishlist.some((p) => p?.id === product?.data?._id);
   const [fields, setFields] = useState({
     name: "",
@@ -468,21 +482,8 @@ if (hasOnlyStatusChanged) {
                     <h3 className="mb-3 main-text fw-bold">{fields.name}</h3>
                   )}
                 </div>
-
-                <div
-                  onClick={(e) => {
-                    e.preventDefault();
-                    isWishlisted
-                      ? removeFromWishlist(product?.data?._id)
-                      : addToWishlist(product?.data);
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  <i
-                    className={`fa-heart ${
-                      isWishlisted ? "fas text-danger" : "far"
-                    }`}
-                  ></i>
+                 <div onClick={handleToggleWishlist} style={{ cursor: "pointer" }}>
+                  <i className={`fa-heart ${isWishlisted ? "fas text-danger" : "far"}`}></i>
                 </div>
               </div>
 

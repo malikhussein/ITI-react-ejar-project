@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import "./ProductCard.css";
 import useWishlistStore from "../../Store/Wishlist";
+import useAuthStore from "../../Store/Auth"; //  NEW
+import { toast } from "react-toastify"; //  NEW
+
 
 export default function ProductCard({ product }) {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
@@ -8,8 +11,21 @@ export default function ProductCard({ product }) {
   console.log("ProductCard", product);
   
 
-  const isWishlisted = wishlist.some((p) => p.id === product.id);
-
+  const { token } = useAuthStore(); //  Get token
+  const isWishlisted = wishlist.some((p) => p.id === (product.id || product._id)); //  Support backend data
+  
+  const handleToggleWishlist = async () => {
+    if (!token) {
+      toast.info("Please sign in or create an account to use the wishlist");
+      return;
+    }
+  
+    if (isWishlisted) {
+      await removeFromWishlist(product.id || product._id, token); //  Send token
+    } else {
+      await addToWishlist(product, token); // Send token
+    }
+  };
   const renderStars = (rating) => {
     const totalStars = 5;
     const filledStars = parseInt(rating, 10);
@@ -57,7 +73,7 @@ export default function ProductCard({ product }) {
   </div>
 
   <div id="iconsButtons" className="col-12 col-md d-flex flex-column align-items-center align-items-md-end justify-content-between">
-    <h5 onClick={() => isWishlisted ? removeFromWishlist(product.id) : addToWishlist(product)} style={{ cursor: "pointer" }}>
+    <h5 onClick={handleToggleWishlist} style={{ cursor: "pointer" }}>
       <i className={`fa-heart ${isWishlisted ? "fas text-danger" : "far"}`}></i>
     </h5>
     <h5 className="d-none d-md-block">
