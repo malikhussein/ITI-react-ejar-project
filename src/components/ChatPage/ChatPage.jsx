@@ -12,6 +12,8 @@ export default function ChatPage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 993);
 
   useEffect(() => {
+    document.title = 'Your Chats | EJAR';
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 993);
     };

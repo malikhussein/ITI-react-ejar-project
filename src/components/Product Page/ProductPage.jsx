@@ -1,20 +1,21 @@
-import React from 'react'
-import Sidebar from '../Sidebar'
-import ProductLIst from '../ProductLIst'
+import React, { useEffect } from 'react';
+import Sidebar from '../Sidebar';
+import ProductLIst from '../ProductLIst';
 
 export default function ProductPage() {
- 
-    return (
-    <> 
-    <div className="container">
-      <div className="row">
-      <Sidebar/>
+  useEffect(() => {
+    document.title = 'Explore Products | EJAR';
+  }, []);
 
-      <ProductLIst/>      
-      
+  return (
+    <>
+      <div className="container">
+        <div className="row">
+          <Sidebar />
+
+          <ProductLIst />
+        </div>
       </div>
-    </div>
-    
     </>
-  )
+  );
 }

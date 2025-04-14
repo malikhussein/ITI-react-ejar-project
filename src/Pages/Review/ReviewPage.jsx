@@ -30,6 +30,10 @@ const ReviewPage = () => {
   };
 
   useEffect(() => {
+    document.title = 'History | EJAR';
+  }, []);
+
+  useEffect(() => {
     const load = async () => {
       setIsLoading(true);
       await getFinishedProcesses(token);

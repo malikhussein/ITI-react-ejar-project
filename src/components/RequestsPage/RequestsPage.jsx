@@ -9,6 +9,10 @@ export default function RequestsPage() {
   const { token } = useAuthStore();
 
   useEffect(() => {
+    document.title = 'Pending Requests | EJAR';
+  }, []);
+
+  useEffect(() => {
     getProcesses(token);
   }, [getProcesses, token]);
   console.log(userProcesses);

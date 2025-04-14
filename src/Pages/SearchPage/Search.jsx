@@ -1,19 +1,23 @@
-import React from "react";
-import ProductList from "../../components/ProductLIst";
-import Sidebar from "../../components/Sidebar";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import ProductCard from "../../components/ProductCard/ProductCard";
-import NoSearchResults from "../../components/NoSearchResults";
-import { MoonLoader } from "react-spinners";
+import React from 'react';
+import ProductList from '../../components/ProductLIst';
+import Sidebar from '../../components/Sidebar';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import NoSearchResults from '../../components/NoSearchResults';
+import { MoonLoader } from 'react-spinners';
 
 const useQuery = () => new URLSearchParams(useLocation().search);
 
 export default function Search() {
   const query = useQuery();
-  const searchTerm = query.get("query"); // القيمة اللي جت من النـاف بار
+  const searchTerm = query.get('query'); // القيمة اللي جت من النـاف بار
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    document.title = 'Search Results | EJAR';
+  }, []);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -48,22 +52,22 @@ export default function Search() {
           <div className="search-results">
             {isLoading ? (
               <div className="text-center w-100 py-4">
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "70vh",
-                      width: "100%",
-                    }}
-                  >
-                    <MoonLoader color="#b72a67" size={80} />
-                    <p style={{ marginTop: 20, fontSize: "18px", color: "#555" }}>
-                      Searching now , please wait...
-                    </p>
-                  </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '70vh',
+                    width: '100%',
+                  }}
+                >
+                  <MoonLoader color="#b72a67" size={80} />
+                  <p style={{ marginTop: 20, fontSize: '18px', color: '#555' }}>
+                    Searching now , please wait...
+                  </p>
                 </div>
+              </div>
             ) : results.length > 0 ? (
               results.map((product) => (
                 <ProductCard key={product._id} product={product} />

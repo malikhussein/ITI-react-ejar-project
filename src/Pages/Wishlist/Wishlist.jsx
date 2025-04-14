@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useWishlistStore from '../../Store/Wishlist';
@@ -14,7 +13,7 @@ export default function Wishlist() {
     fetchWishlist,
     removeFromWishlist,
     clearWishlist,
-    addToWishlist
+    addToWishlist,
   } = useWishlistStore();
 
   const [loadingRecommendations, setLoadingRecommendations] = useState(false);
@@ -23,6 +22,9 @@ export default function Wishlist() {
   const [loadingWishlist, setLoadingWishlist] = useState(true);
   const [wishlistError, setWishlistError] = useState(null);
 
+  useEffect(() => {
+    document.title = 'Wishlist | EJAR';
+  }, []);
 
   useEffect(() => {
     const loadWishlist = async () => {
@@ -34,15 +36,13 @@ export default function Wishlist() {
       } catch (err) {
         console.error('Error fetching wishlist:', err.message);
         setWishlistError('Oops! Couldn’t load your wishlist.');
-
       } finally {
         setLoadingWishlist(false);
       }
     };
-  
+
     loadWishlist();
   }, [token]);
-  
 
   useEffect(() => {
     if (wishlist.length === 0) return;
@@ -53,15 +53,19 @@ export default function Wishlist() {
         setRecommendError(null);
 
         const res = await axios.get('http://localhost:3000/api/product');
-        const confirmed = res.data.data.filter(p => p.confirmed === true);
+        const confirmed = res.data.data.filter((p) => p.confirmed === true);
 
         const wishlistIds = wishlist.map((w) => w.id);
-        const related = confirmed.filter((item) => !wishlistIds.includes(item._id));
+        const related = confirmed.filter(
+          (item) => !wishlistIds.includes(item._id)
+        );
 
         setRecommendedItems(related.slice(0, 4));
       } catch (err) {
         console.error('Error fetching related items:', err.message);
-        setRecommendError('Failed to load related items. Please try again later.');
+        setRecommendError(
+          'Failed to load related items. Please try again later.'
+        );
       } finally {
         setLoadingRecommendations(false);
       }
@@ -95,16 +99,18 @@ export default function Wishlist() {
     return (
       <div
         className="d-flex flex-column justify-content-center align-items-center text-center"
-        style={{ height: '60vh', color: '#777',
+        style={{
+          height: '60vh',
+          color: '#777',
           textAlign: 'center',
-              padding: '50px 20px',
-              color: '#777',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '60vh',
-         }}
+          padding: '50px 20px',
+          color: '#777',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '60vh',
+        }}
       >
         <i
           className="fa-regular fa-heart"
@@ -112,7 +118,7 @@ export default function Wishlist() {
         ></i>
         <h2>You're not logged in</h2>
         <p> Please log in to view your wishlist.</p>
-  
+
         <Link
           to="/login"
           className="btn mt-3 px-4 py-2 d-inline-flex align-items-center justify-content-center gap-2"
@@ -122,7 +128,6 @@ export default function Wishlist() {
             borderRadius: '12px',
             fontWeight: 500,
             fontSize: '1rem',
-            
           }}
           onMouseEnter={(e) =>
             (e.currentTarget.style.backgroundColor = '#3f1fa7')
@@ -137,19 +142,27 @@ export default function Wishlist() {
       </div>
     );
   }
-  
+
   if (loadingWishlist) {
     return (
-      <div className="container mt-4 wishlist-page d-flex flex-column justify-content-center align-items-center" style={{ height: '60vh' }}>
-      <MoonLoader color="#b72a67" size={80} />
-        <p className="mt-3 text-muted fs-5">Loading your wishlist, please wait...</p>
+      <div
+        className="container mt-4 wishlist-page d-flex flex-column justify-content-center align-items-center"
+        style={{ height: '60vh' }}
+      >
+        <MoonLoader color="#b72a67" size={80} />
+        <p className="mt-3 text-muted fs-5">
+          Loading your wishlist, please wait...
+        </p>
       </div>
     );
   }
-  
+
   if (wishlistError) {
     return (
-      <div className="container mt-4 wishlist-page d-flex flex-column justify-content-center align-items-center text-center" style={{ height: '60vh' }}>
+      <div
+        className="container mt-4 wishlist-page d-flex flex-column justify-content-center align-items-center text-center"
+        style={{ height: '60vh' }}
+      >
         <div
           style={{
             display: 'flex',
@@ -168,15 +181,13 @@ export default function Wishlist() {
           <h2>Oops! Couldn’t load your wishlist</h2>
           <p>Please check your internet connection or try again later.</p>
         </div>
-        </div>
-
+      </div>
     );
   }
-  
 
   return (
-     <div className="container mt-4 wishlist-page">
-         {/* ===== Header ===== */}
+    <div className="container mt-4 wishlist-page">
+      {/* ===== Header ===== */}
       <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
         <h1 style={{ color: '#562DDD', fontWeight: 600, fontSize: '2.2rem' }}>
           Wishlist ({wishlist.length})
@@ -197,8 +208,12 @@ export default function Wishlist() {
               alignItems: 'center',
               gap: '8px',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#3f1fa7')}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#562DDD')}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#3f1fa7')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = '#562DDD')
+            }
           >
             <i className="fa-solid fa-trash"></i> Clear All
           </button>
@@ -206,13 +221,15 @@ export default function Wishlist() {
       </div>
 
       <hr />
-      
 
       {wishlist.length > 0 ? (
         <>
           <div className="row gy-4 mb-5 mt-4">
             {wishlist.map((product) => (
-              <div key={product.id} className="col-sm-6 col-md-4 col-lg-3 d-flex">
+              <div
+                key={product.id}
+                className="col-sm-6 col-md-4 col-lg-3 d-flex"
+              >
                 <div
                   className="w-100 position-relative"
                   style={{
@@ -245,8 +262,12 @@ export default function Wishlist() {
                       fontSize: '1.25rem',
                       transition: 'transform 0.2s ease-in-out',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.2)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = 'scale(1.2)')
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = 'scale(1)')
+                    }
                   >
                     <i className="fa-solid fa-trash text-danger"></i>
                   </button>
@@ -265,7 +286,10 @@ export default function Wishlist() {
                     />
                   </div>
 
-                  <h3 className="mt-3 mb-0 fs-6 fw-semibold text-center" style={{ minHeight: '3.4rem' }}>
+                  <h3
+                    className="mt-3 mb-0 fs-6 fw-semibold text-center"
+                    style={{ minHeight: '3.4rem' }}
+                  >
                     {product.name}
                   </h3>
 
@@ -274,12 +298,19 @@ export default function Wishlist() {
                     <div className="d-flex flex-column align-items-center gap-1 small">
                       <div className="d-flex align-items-center gap-1">
                         {renderStars(product.averageRating)}
-                        <span className="text-muted" style={{ fontSize: '0.85rem' }}>
+                        <span
+                          className="text-muted"
+                          style={{ fontSize: '0.85rem' }}
+                        >
                           {product.averageRating?.toFixed(1)} / 5
                         </span>
                       </div>
-                      <div className="text-muted" style={{ fontSize: '0.8rem' }}>
-                        {product.review.length} {product.review.length === 1 ? 'review' : 'reviews'}
+                      <div
+                        className="text-muted"
+                        style={{ fontSize: '0.8rem' }}
+                      >
+                        {product.review.length}{' '}
+                        {product.review.length === 1 ? 'review' : 'reviews'}
                       </div>
                     </div>
                   </div>
@@ -289,7 +320,12 @@ export default function Wishlist() {
                   <Link
                     to={`/product/${product.id}`}
                     className="btn btn-outline-dark w-100 mt-3"
-                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '6px',
+                    }}
                   >
                     <i className="fa-solid fa-eye"></i> See Details
                   </Link>
@@ -311,14 +347,16 @@ export default function Wishlist() {
                 <p className="text-muted mt-3">Loading more products...</p>
               </div>
             ) : recommendError ? (
-              <div
-                className="d-flex flex-column justify-content-center align-items-center text-center my-5"
-              >
-                <i className="fa-solid fa-circle-exclamation" style={{ fontSize: '48px', color: '#dc3545' }}></i>
-                <h5 className="mt-3 text-danger">Unable to load recommendations</h5>
+              <div className="d-flex flex-column justify-content-center align-items-center text-center my-5">
+                <i
+                  className="fa-solid fa-circle-exclamation"
+                  style={{ fontSize: '48px', color: '#dc3545' }}
+                ></i>
+                <h5 className="mt-3 text-danger">
+                  Unable to load recommendations
+                </h5>
                 <p className="text-muted mb-0">{recommendError}</p>
               </div>
-
             ) : recommendedItems.length > 0 ? (
               <div className="row">
                 {recommendedItems.map((product) => (
@@ -332,54 +370,55 @@ export default function Wishlist() {
                 ))}
               </div>
             ) : (
-              <div className="text-center text-muted mt-5">No additional products found.</div>
+              <div className="text-center text-muted mt-5">
+                No additional products found.
+              </div>
             )}
           </div>
         </>
       ) : (
         <div
-        style={{
-          textAlign: 'center',
-          padding: '50px 20px',
-          color: '#777',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '60vh',
-        }}
-      >
-        <i
-          className="fa-regular fa-heart"
-          style={{ fontSize: '70px', marginBottom: '20px', color: '#b72a67' }}
-        ></i>
-        <h2>Your wishlist is empty</h2>
-        <p>Start exploring and add products you love!</p>
-        <Link
-          to="/"
-          className="btn mt-3"
           style={{
-            backgroundColor: '#562DDD',
-            color: '#fff',
-            fontWeight: 500,
-            padding: '0.6rem 1.2rem',
-            borderRadius: '12px',
-            textDecoration: 'none',
-            display: 'inline-flex',
+            textAlign: 'center',
+            padding: '50px 20px',
+            color: '#777',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
             alignItems: 'center',
-            gap: '8px',
+            height: '60vh',
           }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = '#3f1fa7')
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = '#562DDD')
-          }
         >
-          <i className="fa-solid fa-arrow-right-to-bracket"></i> Back to Home
-        </Link>
-      </div>      
-    
+          <i
+            className="fa-regular fa-heart"
+            style={{ fontSize: '70px', marginBottom: '20px', color: '#b72a67' }}
+          ></i>
+          <h2>Your wishlist is empty</h2>
+          <p>Start exploring and add products you love!</p>
+          <Link
+            to="/"
+            className="btn mt-3"
+            style={{
+              backgroundColor: '#562DDD',
+              color: '#fff',
+              fontWeight: 500,
+              padding: '0.6rem 1.2rem',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = '#3f1fa7')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = '#562DDD')
+            }
+          >
+            <i className="fa-solid fa-arrow-right-to-bracket"></i> Back to Home
+          </Link>
+        </div>
       )}
     </div>
   );
