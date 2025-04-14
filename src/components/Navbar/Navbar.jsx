@@ -183,22 +183,6 @@ export default function Navbar() {
                     </li>
                   )}
                 </div>
-
-                {!token && (
-                  <div className="d-flex flex-lg-row flex-column gap-lg-2">
-                    <li className="nav-item d-none d-lg-block">
-                      <Link className="nav-link" to="/wishlist">
-                        <i className="fa-regular fa-heart"></i>
-                      </Link>
-                    </li>
-                    <li className="nav-item d-block d-lg-none mx-auto">
-                      <Link className="nav-link" to="/wishlist">
-                        Wishlist
-                      </Link>
-                    </li>
-                  </div>
-                )}
-
                 {token && (
                   <div className="d-flex flex-lg-row flex-column gap-lg-2">
                     {/* Wishlist icon in desktop text in mobile */}
