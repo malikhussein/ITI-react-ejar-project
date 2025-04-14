@@ -1,6 +1,6 @@
-import React from "react";
-import useProcessStore from "../../Store/process";
-import { useProductStore } from "../../Store/Deatils";
+import React from 'react';
+import useProcessStore from '../../Store/process';
+import { useProductStore } from '../../Store/Deatils';
 
 export default function RequestCard({ process, token }) {
   const { acceptProcess, declineProcess, getProcesses } = useProcessStore();
@@ -11,7 +11,7 @@ export default function RequestCard({ process, token }) {
     await getProcesses(token);
     await updateProduct({
       _id: process.productId._id,
-      status: "rented",
+      status: 'rented',
       confirmed: true,
     });
 
@@ -29,7 +29,7 @@ export default function RequestCard({ process, token }) {
 
   return (
     <div>
-      <div className="card" style={{ width: "18rem" }}>
+      <div className="card" style={{ width: '18rem' }}>
         <div className="square-image">
           <img
             src={process?.productId?.images?.[0]}
@@ -45,18 +45,21 @@ export default function RequestCard({ process, token }) {
             Renter: {process?.renterId?.userName}
           </li>
           <li className="list-group-item">
-            From {new Date(process?.startDate).toLocaleDateString()} To{" "}
+            From {new Date(process?.startDate).toLocaleDateString()} To{' '}
             {new Date(process?.endDate).toLocaleDateString()}
           </li>
           <li className="list-group-item">
-            Duration:{" "}
+            Duration:{' '}
             {Math.ceil(
               (new Date(process?.endDate) - new Date(process?.startDate)) /
                 (1000 * 60 * 60 * 24)
-            )}{" "}
+            )}{' '}
             days
           </li>
-          <li className="list-group-item">Total Price: {process?.price}</li>
+          <li className="list-group-item">
+            Total Price: {process?.price} EGP
+            <div>- 20 EGP delivery fees</div>
+          </li>
         </ul>
         <div className="card-body d-flex justify-content-end gap-2">
           <button className="btn btn-danger" onClick={handleDecline}>
