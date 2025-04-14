@@ -7,6 +7,7 @@ import useNotificationStore from '../../Store/notificationStore';
 import { jwtDecode } from 'jwt-decode';
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
+import useWishlistStore from '../../Store/Wishlist';
 
 const socket = io('http://localhost:3000');
 
@@ -41,6 +42,20 @@ export default function Navbar() {
     logout();
     navigate('/');
   };
+  
+const { fetchWishlist } = useWishlistStore();
+
+useEffect(() => {
+  if (token) {
+    fetchWishlist(token);
+  } else {
+    // Clear wishlist when logging out
+    useWishlistStore.setState({ wishlist: [], count: 0 });
+  }
+}, [token]);
+
+  const { count } = useWishlistStore(); // Get wishlist count from store
+
 
   useEffect(() => {
     // Only join and set up listeners if we have a token and userId
@@ -186,15 +201,24 @@ export default function Navbar() {
                 {token && (
                   <div className="d-flex flex-lg-row flex-column gap-lg-2">
                     {/* Wishlist icon in desktop text in mobile */}
-
                     <li className="nav-item d-none d-lg-block">
                       <Link className="nav-link" to="/wishlist">
                         <i className="fa-regular fa-heart"></i>
-                      </Link>
+                        {count > 0 && (
+                    <span className="position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger">
+                      {count}
+                    </span>
+                     )}
+                   </Link>
                     </li>
                     <li className="nav-item d-block d-lg-none mx-auto">
                       <Link className="nav-link" to="/wishlist">
                         Wishlist
+                        {count > 0 && (
+                          <span className="badge rounded-pill bg-danger ms-1">
+                      {count}
+                    </span>
+                     )}
                       </Link>
                     </li>
 
