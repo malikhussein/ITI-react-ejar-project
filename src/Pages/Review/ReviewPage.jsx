@@ -59,10 +59,11 @@ const ReviewPage = () => {
   return (
     <>
       <div className="container">
-        <h2 className="my-3">
-          {' '}
-          Orders You Rent {finishedProcesses[0]?.renterId?.userName}
-        </h2>
+        <h2 className="my-3"> Products You Rented</h2>
+        <h5 className="text-muted">
+          Help us improve our website and give an honest review for your recent
+          rentals
+        </h5>
         <br />
         <div className="row">
           {isLoading ? (
@@ -128,7 +129,9 @@ const ReviewPage = () => {
                     <h5 className="card-text">
                       End Date: {new Date(item.endDate).toLocaleDateString()}
                     </h5>
-                    <h6 className="card-text">Status: {item.status}</h6>
+                    <h6 className="card-text text-capitalize">
+                      Status: {item.status}
+                    </h6>
                   </div>
 
                   {reviewedProducts.includes(item.productId._id) ? (
