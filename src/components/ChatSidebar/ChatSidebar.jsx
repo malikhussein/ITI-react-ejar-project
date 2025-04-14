@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useChatStore from '../../Store/chatStore';
 import { MoonLoader } from 'react-spinners';
@@ -59,7 +59,6 @@ export default function ChatSidebar({ chatId, token, userId }) {
       {userChats.map((chat) => (
         <Link to={`/chat/${chat._id}`} key={chat._id} className="nav-link">
           <div
-            key={chat._id}
             className={`d-flex flex-row border-bottom align-items-center m-2 rounded ${
               chat._id === chatId ? 'bg-light' : ''
             }`}
@@ -67,7 +66,7 @@ export default function ChatSidebar({ chatId, token, userId }) {
             {chat.members.map(
               (member) =>
                 member._id !== userId && (
-                  <>
+                  <Fragment key={member._id}>
                     <img
                       className="rounded-circle p-2"
                       src={member.profilePicture}
@@ -78,10 +77,8 @@ export default function ChatSidebar({ chatId, token, userId }) {
                         objectFit: 'cover',
                       }}
                     />
-                    <h4 className="mt-2" key={member._id}>
-                      {member.userName}
-                    </h4>
-                  </>
+                    <h4 className="mt-2">{member.userName}</h4>
+                  </Fragment>
                 )
             )}
           </div>
