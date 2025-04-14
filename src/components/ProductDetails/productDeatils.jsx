@@ -449,7 +449,7 @@ const ProductDetails = () => {
                 <div>
                   {isEditing ? (
                     <>
-                      <div class="form-floating mb-3">
+                      <div className="form-floating mb-3">
                         <input
                           id="floatingInput"
                           type="text"
@@ -557,7 +557,7 @@ const ProductDetails = () => {
 
               {isEditing ? (
                 <>
-                  <div class="form-floating">
+                  <div className="form-floating">
                     <textarea
                       value={fields.description}
                       onChange={(e) => handleChange(e, 'description')}
@@ -579,7 +579,7 @@ const ProductDetails = () => {
               <div className="d-flex flex-wrap mb-3"></div>
               {isEditing ? (
                 <>
-                  <div class="form-floating mb-3">
+                  <div className="form-floating mb-3">
                     <input
                       type="number"
                       value={fields.daily}
