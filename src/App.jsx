@@ -23,8 +23,8 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 function App() {
   return (
     <>
-  {/* scroll to the top when you change the page */}
-    <ScrollToTop />
+      {/* scroll to the top when you change the page */}
+      <ScrollToTop />
       {/*  */}
       <Routes>
         <Route element={<Layout />}>
@@ -35,7 +35,7 @@ function App() {
           <Route path="search" element={<Search />} />
 
           <Route element={<ProtectedRoute />}>
-            <Route path="ReviewPage" element={<ReviewPage />} />
+            <Route path="history" element={<ReviewPage />} />
             <Route path="chat" element={<ChatPage />} />
             <Route path="profile/:id" element={<ProfilePage />} />
             <Route path="chat/:chatId" element={<ChatPage />} />

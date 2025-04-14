@@ -200,12 +200,12 @@ export default function Navbar() {
 
                     {/* History */}
                     <li className="nav-item d-none d-lg-block">
-                      <Link className="nav-link" to="/ReviewPage">
+                      <Link className="nav-link" to="/history">
                         <i className="fa-solid fa-clock-rotate-left"></i>
                       </Link>
                     </li>
                     <li className="nav-item d-block d-lg-none mx-auto">
-                      <Link className="nav-link" to="/ReviewPage">
+                      <Link className="nav-link" to="/history">
                         History
                       </Link>
                     </li>
@@ -277,7 +277,7 @@ export default function Navbar() {
                       </ul>
                     </li>
 
-                    {/* Mobile notification with dropdown instead of page navigation */}
+                    {/* Mobile notification with dropdown */}
                     <li className="nav-item dropdown d-block d-lg-none mx-auto">
                       <a
                         className="nav-link dropdown-toggle position-relative"
