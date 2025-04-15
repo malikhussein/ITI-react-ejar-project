@@ -167,6 +167,8 @@ export default function RentProductModal() {
                 )}
               </div>
 
+              <div className="mb-3">+ 20 EGP delivery fees</div>
+
               <div className="modal-footer">
                 <button
                   type="button"

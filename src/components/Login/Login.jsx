@@ -21,6 +21,8 @@ export default function Login() {
 
   // SECURITY: Block token-in-URL issue from affecting React login
   useEffect(() => {
+    document.title = 'Login | EJAR';
+
     const query = new URLSearchParams(window.location.search);
     if (query.has('token')) {
       console.warn('Token in URL detected — clearing it from React app');

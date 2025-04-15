@@ -30,6 +30,10 @@ const ReviewPage = () => {
   };
 
   useEffect(() => {
+    document.title = "History | EJAR";
+  }, []);
+
+  useEffect(() => {
     const load = async () => {
       setIsLoading(true);
       await getFinishedProcesses(token);
@@ -43,7 +47,7 @@ const ReviewPage = () => {
     console.log("userProcesses", finishedProcesses);
   }, []);
 
-  useLayoutEffect (() => {
+  useLayoutEffect(() => {
     if (finishedProcesses.length > 0) {
       const userId = finishedProcesses[0]?.renterId?._id;
       if (userId) {
@@ -55,10 +59,11 @@ const ReviewPage = () => {
   return (
     <>
       <div className="container">
-        <h2 className="my-3">
-          {" "}
-          Orders You Rent {finishedProcesses[0]?.renterId?.userName}
-        </h2>
+        <h2 className="my-3"> Products You Rented</h2>
+        <h5 className="text-muted">
+          Help us improve our website and give an honest review for your recent
+          rentals
+        </h5>
         <br />
         <div className="row">
           {isLoading ? (
@@ -103,40 +108,39 @@ const ReviewPage = () => {
             </div>
           ) : (
             finishedProcesses.map((item) => (
-              <div className="col-md-3" key={item._id}>
-                <div
-                  className="w-100 position-relative"
-                  style={{
-                    position: "relative",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                    borderRadius: "8px",
-                    padding: "16px",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div className="text-center">
-                    <img
-                      src={item.productId.images[0]}
-                      alt={item.productId.name}
-                      className="card-img-top"
-                      style={{
-                        width: "100%",
-                        aspectRatio: "1 / 1",
-                        objectFit: "contain",
-                        borderRadius: "5px",
-                        backgroundColor: "#f8f9fa",
-                      }}
-                    />
-                  </div>
-                  <div className="card-body">
-                    <h3 className="card-title my-4">{item.productId.name}</h3>
-                    <div className="card-details mx-4">
-                      <h3 style={{ color: "#B72A67" }} className="card-price">
+              <>
+                <div className="col-md-3" key={item._id}>
+                  <div
+                    className="w-100 position-relative"
+                    style={{
+                      position: "relative",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                      borderRadius: "8px",
+                      padding: "16px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div className="text-center">
+                      <img
+                        src={item.productId.images[0]}
+                        alt={item.productId.name}
+                        className="card-img-top"
+                        style={{
+                          width: "100%",
+                          aspectRatio: "1 / 1",
+                          objectFit: "contain",
+                          borderRadius: "5px",
+                          backgroundColor: "#f8f9fa",
+                        }}
+                      />
+                    </div>
+                    <div className="card-body">
+                      <h2 className="card-title">{item.productId.name}</h2>
+                      <h4 style={{ color: "#B72A67" }} className="card-price">
                         EGP {item.price}
-                      </h3>
-
+                      </h4>
                       <h6 className="card-text">
                         Start Date:{" "}
                         {new Date(item.startDate).toLocaleDateString()}
@@ -144,25 +148,36 @@ const ReviewPage = () => {
                       <h5 className="card-text">
                         End Date: {new Date(item.endDate).toLocaleDateString()}
                       </h5>
+                      <h6 className="card-text text-capitalize">
+                        Status: {item.status}
+                      </h6>
                     </div>
+
+                    <h6 className="card-text">
+                      Start Date:{" "}
+                      {new Date(item.startDate).toLocaleDateString()}
+                    </h6>
+                    <h5 className="card-text">
+                      End Date: {new Date(item.endDate).toLocaleDateString()}
+                    </h5>
                   </div>
-<br />
-                  {reviewedProducts.includes(item.productId._id) ? (
-                    <button className="btn-secandry w-300 h-90" disabled>
-                      Review Already Created
-                    </button>
-                  ) : (
-                    <button
-                      className="btn-secandry w-300 h-50"
-                      data-bs-toggle="modal"
-                      data-bs-target="#rentModal"
-                      onClick={() => setSelectedProcess(item)}
-                    >
-                      Create Review
-                    </button>
-                  )}
                 </div>
-              </div>
+                <br />
+                {reviewedProducts.includes(item.productId._id) ? (
+                  <button className="btn-secandry w-300 h-90" disabled>
+                    Review Already Created
+                  </button>
+                ) : (
+                  <button
+                    className="btn-secandry w-300 h-50"
+                    data-bs-toggle="modal"
+                    data-bs-target="#rentModal"
+                    onClick={() => setSelectedProcess(item)}
+                  >
+                    Create Review
+                  </button>
+                )}
+          </>
             ))
           )}
         </div>

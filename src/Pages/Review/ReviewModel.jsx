@@ -70,8 +70,14 @@ export default function ReviewModl({ selected }) {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="rentModalLabel">
-                Rent Product
+                Give an honest review
               </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
@@ -105,8 +111,15 @@ export default function ReviewModl({ selected }) {
                 </div>
 
                 <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
                   <button type="submit" className="btn btn-primary">
-                    sbmit review
+                    Submit Review
                   </button>
                 </div>
               </form>

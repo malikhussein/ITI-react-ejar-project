@@ -7,11 +7,21 @@ import useAuthStore from '../../Store/Auth';
 import useProfileStore from '../../Store/profile';
 import { useEffect } from 'react';
 import { MoonLoader } from 'react-spinners';
+import { jwtDecode } from 'jwt-decode';
 
 export default function ProfilePage() {
   const { id: userId } = useParams();
   const { token } = useAuthStore();
+  const { id: loggedInUserId } = jwtDecode(token);
   const { profile, loading, errorStatus, fetchProfile } = useProfileStore();
+
+  useEffect(() => {
+    if (profile && profile._id !== loggedInUserId) {
+      document.title = `${profile.userName} | EJAR`;
+    } else if (profile) {
+      document.title = 'Your Profile | EJAR';
+    }
+  }, [profile, loggedInUserId]);
 
   useEffect(() => {
     fetchProfile(userId, token);
