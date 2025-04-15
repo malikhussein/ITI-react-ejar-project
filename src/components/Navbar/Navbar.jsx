@@ -12,6 +12,7 @@ import useWishlistStore from '../../Store/Wishlist';
 const socket = io('http://localhost:3000');
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const { token, logout } = useAuthStore();
   const {
     notifications,
@@ -21,7 +22,6 @@ export default function Navbar() {
     addNotification,
   } = useNotificationStore();
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate();
 
   let decodedToken;
   if (token) {
@@ -75,6 +75,11 @@ useEffect(() => {
           toast.success(data.message);
         } else {
           toast.warning(data.message);
+        // Logout the user and redirect to login page
+          setTimeout(() => {
+           logout();
+            navigate('/login');
+          }, 1500); 
         }
 
         // Add to notification store
