@@ -626,7 +626,7 @@ const ProductDetails = () => {
                       className="btn btn-primary w-25 me-2"
                       onClick={() => {
                         if (!decoded?.id) {
-                          window.location.href = '/login';
+                          navigate('/login');
                         } else {
                           chatWithOwner();
                         }
@@ -649,7 +649,7 @@ const ProductDetails = () => {
                         type="button"
                         className="btn btn-primary w-25"
                         onClick={() => {
-                          window.location.href = '/login';
+                          navigate('/login');
                         }}
                       >
                         <i className="fa-solid fa-cart-shopping"></i> Rent
