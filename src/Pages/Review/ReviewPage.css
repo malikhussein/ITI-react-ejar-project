@@ -32,7 +32,6 @@
     font-weight: 500;
     border-radius: 8px;
     width: calc(100% - 32px);
-    margin: 0 16px 16px;
     transition: background-color 0.2s ease;
   }
   
