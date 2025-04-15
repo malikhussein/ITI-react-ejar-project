@@ -61,7 +61,7 @@ console.log(
     
   return (
     <>
-      <div className="col-md-9">
+      <div className="col-md-9 my-5">
       {isLoading ? (
   <div
   style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "70vh", width: "100%", }}

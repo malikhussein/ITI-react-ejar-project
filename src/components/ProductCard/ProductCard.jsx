@@ -78,7 +78,7 @@ export default function ProductCard({ product }) {
     </h5>
     <h5 className="d-none d-md-block">
       {product.review.length === 0 ? (
-        <span className="text-muted">No reviews yet</span>
+        <span className="text-star">new!</span>
       ) : renderStars(product.averageRating)}
     </h5>
     <Link to={`/product/${product._id}`} className="btn btn-secondary rent-button py-2">
