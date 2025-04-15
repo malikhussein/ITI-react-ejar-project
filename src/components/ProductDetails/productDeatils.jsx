@@ -332,8 +332,8 @@ const ProductDetails = () => {
               </div>
             )}
 
-          <div className="row row1">
-            <div className="col-md-6 center-on-small">
+      <div className="row">
+        <div className="col-12 col-md-6 mb-4">
               {isSmallScreen ? (
                 <div className="square image">
                   <img
@@ -341,9 +341,10 @@ const ProductDetails = () => {
                     src={mainImage}
                     alt="Product Image"
                     style={{
-                      width: '400px',
-                      height: '400px',
+                      maxWidth: '100%',
+                      maxHeight: '400px',
                       objectFit: 'cover',
+                      borderRadius: '8px',
                     }}
                   />
                 </div>
