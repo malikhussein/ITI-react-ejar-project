@@ -31,7 +31,6 @@ export default function Sidebar() {
 
 
   return (
-    <div className="sidebar d-none d-md-block col-md-3 ">
       <div className="">
         <div className="sidebar-header">
           <svg className="bi pe-none me-2" width="30" height="24">
@@ -82,6 +81,5 @@ export default function Sidebar() {
           />
         </div> */}
       </div>
-    </div>
   );
 }

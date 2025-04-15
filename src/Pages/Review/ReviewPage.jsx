@@ -138,46 +138,40 @@ const ReviewPage = () => {
                     </div>
                     <div className="card-body">
                       <h2 className="card-title">{item.productId.name}</h2>
-                      <h4 style={{ color: "#B72A67" }} className="card-price">
+                      <br />
+                      <h4
+                        style={{ color: "#B72A67" }}
+                        className="card-price mx-4"
+                      >
                         EGP {item.price}
                       </h4>
-                      <h6 className="card-text">
+                      <h6 className="card-text mx-4">
                         Start Date:{" "}
                         {new Date(item.startDate).toLocaleDateString()}
                       </h6>
-                      <h5 className="card-text">
+                      <h5 className="card-text mx-4">
                         End Date: {new Date(item.endDate).toLocaleDateString()}
                       </h5>
-                      <h6 className="card-text text-capitalize">
-                        Status: {item.status}
-                      </h6>
                     </div>
-
-                    <h6 className="card-text">
-                      Start Date:{" "}
-                      {new Date(item.startDate).toLocaleDateString()}
-                    </h6>
-                    <h5 className="card-text">
-                      End Date: {new Date(item.endDate).toLocaleDateString()}
-                    </h5>
+                    <br />
+                    {reviewedProducts.includes(item.productId._id) ? (
+                      <button className="btn-secandry w-100 h-90" disabled>
+                        Review Already Created
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-secandry w-50 h-50"
+                        data-bs-toggle="modal"
+                        data-bs-target="#rentModal"
+                        onClick={() => setSelectedProcess(item)}
+                      >
+                        Create Review
+                      </button>
+                    )}
                   </div>
                 </div>
                 <br />
-                {reviewedProducts.includes(item.productId._id) ? (
-                  <button className="btn-secandry w-300 h-90" disabled>
-                    Review Already Created
-                  </button>
-                ) : (
-                  <button
-                    className="btn-secandry w-300 h-50"
-                    data-bs-toggle="modal"
-                    data-bs-target="#rentModal"
-                    onClick={() => setSelectedProcess(item)}
-                  >
-                    Create Review
-                  </button>
-                )}
-          </>
+              </>
             ))
           )}
         </div>
