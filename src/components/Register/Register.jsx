@@ -95,12 +95,35 @@ export default function Register() {
       .required(
         'Address is required, Please enter your full address (street, city, etc.).'
       ),
-    idNumber: Yup.string()
+      idNumber: Yup.string()
       .matches(
         /^[2-3][0-9]{13}$/,
         'Invalid Egyptian ID number (must start with 2 or 3 and be 14 digits)'
       )
-      .required('ID Number is required'),
+      .required('ID Number is required')
+      .test('dob-match', 'ID Number does not match Date of Birth', function (idNumber) {
+        const { dob } = this.parent;
+        if (!dob || !idNumber) return true; // Don't validate if either is missing
+    
+        const dobDate = new Date(dob);
+        const year = dobDate.getFullYear();
+        const month = String(dobDate.getMonth() + 1).padStart(2, '0');
+        const day = String(dobDate.getDate()).padStart(2, '0');
+    
+        const idCentury = idNumber.charAt(0) === '2' ? 1900 : 2000;
+        const idYear = parseInt(idNumber.substring(1, 3), 10);
+        const idMonth = idNumber.substring(3, 5);
+        const idDay = idNumber.substring(5, 7);
+    
+        const fullIdYear = idCentury + idYear;
+    
+        return (
+          year === fullIdYear &&
+          month === idMonth &&
+          day === idDay
+        );
+      }),
+    
     gender: Yup.string()
       .oneOf(['male', 'female'])
       .required('Gender is required'),
