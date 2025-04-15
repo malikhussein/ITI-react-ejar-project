@@ -170,7 +170,7 @@ h2#price {
 }
 
   
-@media (max-width: 1400px) {
+@media (max-width: 1404px) {
   .cardProduct-container {
     flex-direction: column;
     align-items: center;
@@ -180,9 +180,9 @@ h2#price {
 
   #imgProduct {
     display: flex !important;
-    flex-direction: row;
     justify-content: center !important;
-
+    align-items: center  !important;
+    margin: auto;
     padding-top: 15px;
     min-height: 220px;
     max-height: 220px;
@@ -195,12 +195,12 @@ h2#price {
     flex-direction: row;
     justify-content: center !important;
 
-    max-width: 40%;
+    max-width: 50%;
     height: 450px;
-    margin-left: 70px;
   }
 
   #data {
+    margin: auto;
     padding-top: 10px;
     margin-bottom: 20px;
     max-width: 90%;
@@ -220,13 +220,10 @@ h2#price {
 
   #iconsButtons {
     display: flex !important;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     align-items: center !important;
-    width: 100% !important;
-    margin: 20px auto 0 auto;
     text-align: center;
+     margin: auto;
   }
 
   .rent-button {
