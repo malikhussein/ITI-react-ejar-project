@@ -1,10 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
-import Slider from "react-slick";
 import "./HomeItemsSection.css";
 import { Link } from "react-router-dom";
 import useProductStore from "../../Store/productsStore";
-import ItemCard from "../ItemCard/ItemCard";
 import { MoonLoader } from "react-spinners";
 import HomeCard from "../HomeCard/HomeCard";
 
