@@ -1,6 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import Bannar from '../../assets/Banar.png'
+import Banar from '../../assets/banar2.jpg'
 import './HomeSlider.css'
 
 function PauseOnHover() {
@@ -23,7 +24,7 @@ function PauseOnHover() {
             <img className="w-100" src={Bannar} alt="Home Bannar" />
           </div>
           <div>
-            <img className="w-100" src={Bannar} alt="Home Bannar" />
+            <img className="w-100" src={Banar} alt="Home Bannar" />
           </div>
           <div>
             <img className="w-100" src={Bannar} alt="Home Bannar" />
