@@ -26,9 +26,6 @@ function PauseOnHover() {
           <div>
             <img className="w-100" src={Banar} alt="Home Bannar" />
           </div>
-          <div>
-            <img className="w-100" src={Bannar} alt="Home Bannar" />
-          </div>
         </Slider>
       </div>
     </div>
