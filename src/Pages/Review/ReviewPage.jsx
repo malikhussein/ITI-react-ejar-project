@@ -122,7 +122,7 @@ const ReviewPage = () => {
                       flexDirection: "column",
                     }}
                   >
-                    <div className="text-center">
+                    <div className="text-center my-2">
                       <img
                         src={item.productId.images[0]}
                         alt={item.productId.name}
@@ -136,12 +136,11 @@ const ReviewPage = () => {
                         }}
                       />
                     </div>
-                    <div className="card-body">
-                      <h2 className="card-title">{item.productId.name}</h2>
-                      <br />
+                    <div className="card-body my-2">
+                      <h2 className="card-title my-3">{item.productId.name}</h2>
                       <h4
                         style={{ color: "#B72A67" }}
-                        className="card-price mx-4"
+                        className="card-price mx-4 my-2"
                       >
                         EGP {item.price}
                       </h4>
@@ -160,7 +159,7 @@ const ReviewPage = () => {
                       </button>
                     ) : (
                       <button
-                        className="btn-secandry w-50 h-50"
+                        className="btn-secandry w-100 h-90"
                         data-bs-toggle="modal"
                         data-bs-target="#rentModal"
                         onClick={() => setSelectedProcess(item)}
