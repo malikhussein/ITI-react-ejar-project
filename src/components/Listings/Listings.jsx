@@ -41,7 +41,7 @@ export default function Listings() {
             <p>Try adding a new product or check back later.</p>
           </div>
         ) : (
-          <div className="d-flex flex-row flex-wrap justify-content-center justify-content-lg-start gap-4">
+          <div className="row d-flex flex-row flex-wrap justify-content-center justify-content-lg-start">
             {confirmedProducts.map((product) => (
               <ListingCard key={product.id} product={product} />
             ))}

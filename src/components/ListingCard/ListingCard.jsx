@@ -4,7 +4,12 @@ import { Link } from 'react-router-dom';
 
 export default function ListingCard({ product }) {
   return (
-    <div className=" mb-3" style={{ width: '18rem' }}>
+    <div
+      className="mb-3 col-12 col-sm-6 col-md-4 col-lg-3 rounded-3"
+      style={{
+        boxShadow: '5px 5px 8px rgba(0,0,0,0.1)',
+      }}
+    >
       <div className="card border-0">
         <div className="square-image position-relative d-block">
           <Link to={`/product/${product.id}`}>
